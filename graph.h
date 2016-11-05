@@ -57,5 +57,13 @@ void ResetGraph(Graph *G, int n);
 /* I.S. Graph G kosong, n <= MaxNbEL(G) */
 /* F.S. Terbentuk Graph dengan neff = n namun kosong */
 
+int GoTo(Graph G, int now, int n);
+/* berpindah ke graph lain yang adjacent dengan dia */
+/* Jika n=1 pindah ke kiri
+        n=2 pindah ke atas
+        n=3 pindah ke kanan
+        n=4 pindah ke bawah
+*/
+
 #endif // GRAPH_H
 
