@@ -107,7 +107,7 @@ void CopyMATRIKS (MATRIKS MIn, MATRIKS * MHsl){
 }
 
 /* ********** KELOMPOK BACA/TULIS ********** */
-void BacaMATRIKS (MATRIKS *M1, int NB, int NK){
+void BacaMATRIKS (MATRIKS *M1, MATRIKS *M2, MATRIKS *M3, MATRIKS *M4, MATRIKS *M5, int NB, int NK){
 /* I.S. IsIdxValid(NB,NK) */
 /* F.S. M terdefinisi nilai elemen efektifnya, berukuran NB x NK */
     //kamus
@@ -116,6 +116,10 @@ void BacaMATRIKS (MATRIKS *M1, int NB, int NK){
 
     //algoritma
     MakeMATRIKS(NB,NK,M1);
+    MakeMATRIKS(NB,NK,M2);
+    MakeMATRIKS(NB,NK,M3);
+    MakeMATRIKS(NB,NK,M4);
+    MakeMATRIKS(NB,NK,M5);
 
     fin = malloc(10 * sizeof(char));
     fin = "peta.txt";
@@ -128,9 +132,40 @@ void BacaMATRIKS (MATRIKS *M1, int NB, int NK){
                 ADV();
             }
         }
+        for(i = 1; i <= NB; i++){
+            for(j= 1; j <= NK; j++){
+                Elmt(*M2,i,j) = CC;
+                ADV();
+                ADV();
+            }
+        }
+        for(i = 1; i <= NB; i++){
+            for(j= 1; j <= NK; j++){
+                Elmt(*M3,i,j) = CC;
+                ADV();
+                ADV();
+            }
+        }
+        for(i = 1; i <= NB; i++){
+            for(j= 1; j <= NK; j++){
+                Elmt(*M4,i,j) = CC;
+                ADV();
+                ADV();
+            }
+        }
+        for(i = 1; i <= NB; i++){
+            for(j= 1; j <= NK; j++){
+                Elmt(*M5,i,j) = CC;
+                ADV();
+                ADV();
+            }
+        }
     }
-
     SearchWayOut(M1);
+    SearchWayOut(M2);
+    SearchWayOut(M3);
+    SearchWayOut(M4);
+    SearchWayOut(M5);
 }
 void TulisMATRIKS (MATRIKS M){
 /* I.S. M terdefinisi */

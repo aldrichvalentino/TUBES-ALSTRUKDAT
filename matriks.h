@@ -65,7 +65,7 @@ void CopyMATRIKS (MATRIKS MIn, MATRIKS * MHsl);
 /* Melakukan assignment MHsl  MIn */
 
 /* ********** KELOMPOK BACA/TULIS ********** */
-void BacaMATRIKS (MATRIKS *M1, int NB, int NK);
+void BacaMATRIKS (MATRIKS *M1, MATRIKS *M2, MATRIKS *M3, MATRIKS *M4, MATRIKS *M5, int NB, int NK);
 /* I.S. IsIdxValid(NB,NK) */
 /* F.S. M terdefinisi nilai elemen efektifnya, berukuran NB x NK */
 /* Proses: Melakukan MakeMATRIKS(M,NB,NK) dan mengisi nilai efektifnya */
