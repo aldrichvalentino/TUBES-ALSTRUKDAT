@@ -7,14 +7,17 @@
 
 #include "boolean.h"
 #include "mesinkata.h"
+#include "point.h"
+
 //#include "tree.h"
 /* *** Definisi TYPE PLAYER *** */
-typedef struct { 
+typedef struct {
 	Kata NAME;
 	int HP;
 	int STR;
 	int DEF;
 	int EXP;
+	POINT POS;
 	// BinTree SKILL;
 } PLAYER;
 
@@ -24,6 +27,8 @@ typedef struct {
 #define PSTR(P) (P).STR
 #define PDEF(P) (P).DEF
 #define PEXP(P) (P).EXP
+#define PosisiX(P) (P).POS.X
+#define PosisiY(P) (P).POS.Y
 // #define PSkill(P) (P).SKILL
 
 void CreateEmptyPlayer(PLAYER *P, Kata X);
