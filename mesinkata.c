@@ -137,3 +137,15 @@ int KataToInt (Kata K)
 	}
 	return val;	
 }
+boolean IsKataSama (Kata K1, Kata K2){
+	int i;
+	if (K1.Length != K2.Length){
+		return false;
+	} else {
+		i = 1;
+		while ((K1.TabKata[i] == K2.TabKata[i])&&(i < K1.Length)){
+			i += 1;
+		}
+		return (K1.TabKata[i] == K2.TabKata[i]);
+	}
+}
