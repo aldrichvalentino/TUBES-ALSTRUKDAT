@@ -4,11 +4,17 @@
 #include "mesinkata.h"
 #include "mesinkar.h"
 #include "matriks.h"
+#include "point.h"
 
 
 int main (){
-
+    //KAMUS
     Kata pilihan,Nama,NG,SG,LG,EXIT;
+    MATRIKS M1,M2,M3,M4,M5,M6;
+    boolean NamaDone;
+
+
+    //ALGORITMA
     NG.TabKata[0] = 'N';
     NG.TabKata[1] = 'E';
     NG.TabKata[2] = 'W';
@@ -48,6 +54,8 @@ int main (){
     EXIT.TabKata[3] = 'T';
     EXIT.Length = 4;
 
+    NamaDone = false;
+
     printf("Welcome to brightsouls guyz\n");
     printf("Pilih satu plz jgn banyak2\n");
     printf("NEW GAME\n");
@@ -71,10 +79,15 @@ int main (){
             printf("Nama harus dibawah 16 Huruf\n");
             InputUser(&Nama);
         }
+        NamaDone = true;
+        BacaMATRIKS(&M1,&M2,&M3,&M4,&M5,20,20);
+        M6 = GenerateMAP(M1);
+        TulisMATRIKS(M6);
+        printf("\n");
     }
     else if (IsKataSama(pilihan,SG))
     {
-        if (Nama.Length = 0)
+        if (!NamaDone)
         {
             printf("Masukkan Nama User terlebih dahulu :\n");
             InputUser(&Nama);
@@ -84,10 +97,9 @@ int main (){
                 InputUser(&Nama);
             }
         }
-        else
-        {
-
-        }
+        BacaMATRIKS(&M1,&M2,&M3,&M4,&M5,20,20);
+        TulisMATRIKS(M1);
+        printf("\n");
     }
     else if (IsKataSama(pilihan,LG))
     {
