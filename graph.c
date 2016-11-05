@@ -71,7 +71,19 @@ void ResetGraph(Graph *G, int n)
     NeffG(*G) = n;
 }
 
-int main()
+int GoTo(Graph G, int now, int n)
+/* berpindah ke graph lain yang adjacent dengan dia */
+/* Jika n=1 pindah ke kiri
+        n=2 pindah ke atas
+        n=3 pindah ke kanan
+        n=4 pindah ke bawah
+*/
 {
-    return 0;
+    address P = FirstList(G,now);
+    int cnt = n;
+    while (n>1)
+    {
+        P = Next(P);
+        --n;
+    }
 }
