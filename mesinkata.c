@@ -65,7 +65,7 @@ void SalinKata()
           CC adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi NMax, maka sisa kata "dipotong" */
 {
-	int i = 1;
+	int i = 0;
 	
 	for (;;)
 	{
@@ -90,15 +90,23 @@ void SalinKata()
 	}	
 }
 
-void InputUser(char *c)
+void InputUser(Kata K)
 {
-	scanf("%s", c);
+	char c;
+	int i=0;
+	scanf("%c",&c);
+	while (c!='\n')
+	{
+		K.TabKata[i] = c;
+		++i;
+		scanf("%c",&c);
+	}
 }
 
 void PrintKata (Kata K)
 /* mencetak Kata K tanpa karakter apapun diawal dan diakhir */
 {
-	int i =1;
+	int i =0;
 	while (i<=K.Length)
 	{
 		printf("%c", K.TabKata[i]);
@@ -109,7 +117,7 @@ void PrintKata (Kata K)
 int KataToInt (Kata K)
 {
 	int val = 0;
-	int i = 1;
+	int i = 0;
 	while (i<=K.Length)
 	{
 		val = val * 10;
