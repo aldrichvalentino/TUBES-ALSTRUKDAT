@@ -1,3 +1,24 @@
 CICAK 100 100 100 10
+A B B F
+B B B B
+B A A A
+F F A B
+F A A B
+B A F A
+A A A B
+A F F A
+B B F A
+A A A F
 TIKUS 200 200 200 20
+A A A A
+A B A B
+B B F A
+F F A A
+B A A F
+F F F B
+F B F F
+A B A F
+A F F A
+B A F A
+.
 .

@@ -13,12 +13,12 @@
 /* Nil adalah stack dengan elemen kosong . */
 /* Karena indeks dalam bhs C dimulai 0 maka tabel dg indeks 0 tidak dipakai */
 
-typedef Queue infotypeS;
+typedef int infotypeS;
 typedef int addressS;   /* indeks tabel */
 
 /* Contoh deklarasi variabel bertype stack dengan ciri TOP : */
 /* Versi I : dengan menyimpan tabel dan alamat top secara eksplisit*/
-typedef struct { 
+typedef struct {
 	infotypeS T[MaxElS+1]; /* tabel penyimpan elemen */
 	addressS TOP;  /* alamat TOP: elemen puncak */
 } Stack;

@@ -1,90 +1,96 @@
 /* File: enemy.c */
+
 #include "enemy.h"
 #include <stdio.h>
-void PrintKata (Kata K)
-/* mencetak Kata K tanpa karakter apapun diawal dan diakhir */
-{
-	int i =1;
-	while (i<=K.Length)
-	{
-		printf("%c", K.TabKata[i]);
-		i++;
-	}
-}
-
-int KataToInt (Kata K)
-{
-	int val = 0;
-	int i = 1;
-	while (i<=K.Length)
-	{
-		val = val * 10;
-		switch (K.TabKata[i]){
-			case '0' : val += 0; break;
-			case '1' : val += 1; break;
-			case '2' : val += 2; break;
-			case '3' : val += 3; break;
-			case '4' : val += 4; break;
-			case '5' : val += 5; break;
-			case '6' : val += 6; break;
-			case '7' : val += 7; break;
-			case '8' : val += 8; break;
-			case '9' : val += 9; break;
-		};
-		i++;
-	}
-	return val;	
-}
+#include <time.h>
+#include <stdlib.h>
 
 void LoadEnemy(TE *T)
+/* I.S. Sembarang, file eksternal berisi data enemy tersedia, jumlah musuh <= MaxEl dari TE */
+/* F.S. Semua data sudah dipindahkan ke program */
 /* Membuka file eksternal dan menyimpan semua ke array of ENEMY */
 {
-	FILE * fin;
-	int retval;
-	char C;
-	Kata X;
-	int i,j,n;
-	
-	void AD()
-	{
-		i=1;
-		X.Length=0;
-		do
-		{
-			retval = fscanf(fin,"%C",&C);
-			if ((C!=' ')&&(C!='\n'))
-			{
-				X.TabKata[i]=C;
-				X.Length++;
-				i++;
-			}
-			else if (C=='.')
-			{
-				break;
-			}
-		}
-		while ((C!=' ')&&(C!='\n'));
-	}
+    char c[10] = "enemy.txt";
+    STARTKATA(c);
+    ENEMY E;
+    Queue Q;
+    int i,j,k=IdxMinTE;
+    while (!EndKata)
+    {
+        CopyKata(CKata,&EName(E));
+        ADVKATA(); EHP(E) = KataToInt(CKata);
+        ADVKATA(); ESTR(E) = KataToInt(CKata);
+        ADVKATA(); EDEF(E) = KataToInt(CKata);
+        ADVKATA(); EEXP(E) = KataToInt(CKata);
+        for (i=IdxMinAksi;i<=IdxMaxAksi;++i)
+        {
+            CreateEmptyQ(&Q,4);
+            for (j=0;j<4;++j)
+            {
+                ADVKATA();
+                AddQ(&Q,KataToChar(CKata));
+            }
+            EAksi(E)[i] = Q;
+        }
+        InfoT(*T,k) = E;
+        ++k;
+        ADVKATA();
+    }
+    NeffT(*T) = k;
+}
 
-	j=1;
-	fin = fopen("enemy.txt","r");
-	for(n = 1;n<=2;n++)	//repeat n times
-	{
-		do	
-	{	
-		AD();
-		EName((*T).Tab[j])=X;
-		AD();
-		EHP((*T).Tab[j])=KataToInt(X);
-		AD();
-		ESTR((*T).Tab[j])=KataToInt(X);
-		AD();
-		EDEF((*T).Tab[j])=KataToInt(X);
-		AD();
-		EEXP((*T).Tab[j])=KataToInt(X);
-		j++;
-	}
-		while (C!='\n');
-	}
-	fclose(fin);
+void CreateEnemy(ENEMY *E,TE T,int i)
+/* I.S. T terdefinsi, E sembarang, i<IdxMaxTE */
+/* F.S. E berisi data musuh yang terdapat pada tabel T pada indeks i */
+{
+    CopyKata(EName(InfoT(T,i)),&EName(*E));
+    EHP(*E) = EHP(InfoT(T,i));
+    ESTR(*E) = ESTR(InfoT(T,i));
+    EDEF(*E) = EDEF(InfoT(T,i));
+    EEXP(*E) = EEXP(InfoT(T,i));
+    EDie(*E) = false;
+}
+
+void RandomStack(Stack *S,int n)
+/* I.S. S sembarang */
+/* F.S. S berisi angka permutasi random dari 1 sampai n */
+{
+    int i,j,k,l;
+    int set[n],temp;
+    long long modulo = 1;
+    for (i = 2;i<=n;++i) modulo*=i;
+    srand((unsigned)time(NULL));
+    long long random = (rand()%modulo);
+    for (i = 0;i<n;++i) set[i] = i+1;
+    while (random>0)
+    {
+        for (i = 0;i<n;++i)
+        {
+            if (set[i+1]>set[i]) j = i;
+        }
+        for (i = j+1;i<n;++i)
+        {
+            if (set[i]>set[j]) l = i;
+        }
+        temp = set[j];
+        set[j] = set[l];
+        set[l] = temp;
+        k = (9-j)/2;
+        for (i = 0;i<k;++i)
+        {
+            temp = set[j+i+1];
+            set[j+i+1] = set[9-i];
+            set[9-i] = temp;
+        }
+        --random;
+    }
+    for (i = 0;i<n;++i) PushStack(S,set[i]);
+}
+
+void LostHP(ENEMY *E,int lost)
+/* I.S. EDie(E) = False(E belum mati) */
+/* F.S. HP musuh berkurang sebanyak lost, EDie(E) = true jika HP-Lost=0 */
+{
+    if (EHP(*E)-lost>0) EHP(*E)-=lost;
+    else EDie(*E) = true;
 }
