@@ -70,7 +70,7 @@ void SalinKata()
 	for (;;)
 	{
 		CKata.TabKata[i] = CC;
-		ADV();`
+		ADV();
 		if ((CC == MARK ) || (CC == BLANK1 ) || (CC == BLANK2))
 		{
 			break;
@@ -86,7 +86,7 @@ void SalinKata()
 	}
 	else
 	{
-		CKata.Length = i;
+		CKata.Length = i+1;
 	}
 }
 
@@ -119,6 +119,7 @@ void PrintKata (Kata K)
 }
 
 int KataToInt (Kata K)
+/* Kata K berisi integer dalam bentuk kata, mengkonversinya ke int */
 {
 	int val = 0;
 	int i = 0;
@@ -140,6 +141,12 @@ int KataToInt (Kata K)
 		i++;
 	}
 	return val;
+}
+
+char KataToChar (Kata K)
+/* K.Length = 1 , mengeluarkan konversi K ke char */
+{
+    return (K.TabKata[0]);
 }
 
 boolean IsKataSama (Kata K1, Kata K2)

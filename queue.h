@@ -32,13 +32,14 @@ typedef struct { infotype * T;   /* tabel penyimpan elemen */
 #define MaxElQ(Q) (Q).MaxElQ
 
 /* ********* Prototype ********* */
+int NBElmtQ (Queue Q);
+/* Mengirimkan banyaknya elemen queue. Mengirimkan 0 jika Q kosong. */
+
 boolean IsEmptyQ (Queue Q);
 /* Mengirim true jika Q kosong: lihat definisi di atas */
 boolean IsFullQ (Queue Q);
 /* Mengirim true jika tabel penampung elemen Q sudah penuh */
 /* yaitu mengandung elemen sebanyak MaxEl */
-int NBElmtQ (Queue Q);
-/* Mengirimkan banyaknya elemen queue. Mengirimkan 0 jika Q kosong. */
 
 /* *** Kreator *** */
 void CreateEmptyQ (Queue * Q, int Max);
@@ -64,5 +65,10 @@ void DelQ (Queue * Q, infotype * X);
 /* I.S. Q tidak mungkin kosong */
 /* F.S. X = nilai elemen HEAD pd I.S., HEAD "maju" dengan mekanisme circular buffer;
         Q mungkin kosong */
+
+void PrintQueue(Queue Q);
+/* I.S. Q sembarang */
+/* Isi queue dicetak ke layar */
+/* mendelete elemen sampai habis dan menuliskan semuanya ke layar */
 
 #endif
