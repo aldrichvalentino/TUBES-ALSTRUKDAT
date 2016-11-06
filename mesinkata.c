@@ -12,7 +12,7 @@ void IgnoreBlank()
    I.S. : CC sembarang
    F.S. : CC ≠ BLANK atau CC = MARK */
 {
-	while ((CC == BLANK) && (CC != MARK))
+	while (((CC == BLANK1)||(CC == BLANK2)) && (CC != MARK))
 	{
 		ADV();
 	}
@@ -24,7 +24,7 @@ void STARTKATA(char *namafile)
           atau EndKata = false, CKata adalah kata yang sudah diakuisisi,
           CC karakter pertama sesudah karakter terakhir kata */
 {
-	START(*namafile);
+	START(namafile);
 	IgnoreBlank();
 	if (CC == MARK)
 	{
@@ -70,8 +70,8 @@ void SalinKata()
 	for (;;)
 	{
 		CKata.TabKata[i] = CC;
-		ADV();
-		if ((CC == MARK ) || (CC == BLANK ))
+		ADV();`
+		if ((CC == MARK ) || (CC == BLANK1 ) || (CC == BLANK2))
 		{
 			break;
 		}
@@ -91,6 +91,8 @@ void SalinKata()
 }
 
 void InputUser(Kata *K)
+/* I.S. Sembarang */
+/* F.S. menginput masukan kata dari user dan menyimpannya di K */
 {
 	char c;
 	int i = 0;
@@ -105,7 +107,8 @@ void InputUser(Kata *K)
 }
 
 void PrintKata (Kata K)
-/* mencetak Kata K tanpa karakter apapun diawal dan diakhir */
+/* I.S. Kata K terdefinisi */
+/* F.S. K tercetak di layar tanpa karakter tambahan di awal maupun di akhir */
 {
 	int i = 0;
 	while (i<K.Length)
@@ -119,7 +122,7 @@ int KataToInt (Kata K)
 {
 	int val = 0;
 	int i = 0;
-	while (i<=K.Length)
+	while (i<K.Length)
 	{
 		val = val * 10;
 		switch (K.TabKata[i]){
@@ -139,7 +142,9 @@ int KataToInt (Kata K)
 	return val;
 }
 
-boolean IsKataSama (Kata K1, Kata K2){
+boolean IsKataSama (Kata K1, Kata K2)
+/* Mengeluarkan true jika K1 sama dengan K2 */
+{
 	int i;
 	boolean found;
 	found = false;
@@ -154,4 +159,29 @@ boolean IsKataSama (Kata K1, Kata K2){
 		}
 		return (K1.TabKata[i] == K2.TabKata[i]);
 	}
+}
+
+void CreateKata(char c[],Kata *K)
+/* I.S. string c[] terdefinisi, K sembarang */
+/* F.S. Megkonversi bentuk string ke Kata K */
+{
+    int i = 0;
+    while (c[i]!='\0')
+    {
+        (*K).TabKata[i] = c[i];
+        ++i;
+    }
+    (*K).Length = i;
+}
+
+void CopyKata(Kata K1,Kata *K2)
+/* I.S. K1 terdefinsi, K2 sembarang */
+/* F.S. K2 merupakan copyan dari K1, berisi sama dengan K1 */
+{
+    (*K2).Length = K1.Length;
+    int i,len = K1.Length;
+    for (i = 0;i<len;++i)
+    {
+        (*K2).TabKata[i] = K1.TabKata[i];
+    }
 }
