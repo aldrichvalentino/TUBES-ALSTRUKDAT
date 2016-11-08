@@ -6,6 +6,7 @@
 #include "mesinkata.h"
 #include "point.h"
 #define cplayer 'P'
+#define cmedicine 50
 void CreateEmptyPlayer(PLAYER *P, Kata X)
 /* Membuat Player dengan nama X, exp = 0,
    HP = STR = DEF = 100, skill = tree kosong */
@@ -114,8 +115,7 @@ void BacaCommand (PLAYER *P, MATRIKS *M, char *mode) //parameter lain menyusul
 	{
 		switch (C){
 		case'-' : Elmt(*M,PosisiX(*P),PosisiY(*P)) = cplayer; break;
-		case'M' : Elmt(*M,PosisiX(*P),PosisiY(*P)) = cplayer; break;
-				//masukkan prosedur medicine disini
+		case'M' : Elmt(*M,PosisiX(*P),PosisiY(*P)) = cplayer; PHP(*P)+=cmedicine; break;
 		case'#' : 
 			(*P).POS = PrecPos;
 			Elmt(*M,PosisiX(*P),PosisiY(*P)) = '#';
