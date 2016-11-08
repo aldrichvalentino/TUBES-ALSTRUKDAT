@@ -26,27 +26,27 @@ int NBElmtQ (Queue Q)
     return ret;
 }
 
-boolean IsEmptyQ (Queue Q)
+boolean IsEmptyQueue (Queue Q)
 /* Mengirim true jika Q kosong: lihat definisi di atas */
 {
     return ((Head(Q) == Nil) && (Tail(Q) == Nil));
 }
-boolean IsFullQ (Queue Q)
+boolean IsFullQueue (Queue Q)
 /* Mengirim true jika tabel penampung elemen Q sudah penuh */
 /* yaitu mengandung elemen sebanyak MaxEl */
 {
-    return (NBElmtQ(Q) == MaxElQ(Q));
+    return (NBElmtQueue(Q) == MaxElQ(Q));
 }
 
 /* *** Kreator *** */
-void CreateEmptyQ (Queue * Q, int Max)
+void CreateEmptyQueue (Queue * Q, int Max)
 /* I.S. sembarang */
 /* F.S. Sebuah Q kosong terbentuk dan salah satu kondisi sbb: */
 /* Jika alokasi berhasil, Tabel memori dialokasi berukuran Max */
 /* atau : jika alokasi gagal, Q kosong dg MaxEl=0 */
 /* Proses : Melakukan alokasi,Membuat sebuah Q kosong */
 {
-    (*Q).T = (infotype *) malloc ((Max + 1) * sizeof(infotype));
+    (*Q).T = (infotypeQ *) malloc ((Max + 1) * sizeof(infotypeQ));
     if ((*Q).T == NULL)
     {
         MaxElQ(*Q) = Nil;
@@ -59,7 +59,7 @@ void CreateEmptyQ (Queue * Q, int Max)
     }
 }
 /* *** Destruktor *** */
-void DeAlokasiQ (Queue * Q)
+void DealokasiQueue (Queue * Q)
 /* Proses: Mengembalikan memori Q */
 /* I.S. Q pernah dialokasi */
 /* F.S. Q menjadi tidak terdefinisi lagi, MaxEl(Q) diset 0 */
@@ -68,12 +68,12 @@ void DeAlokasiQ (Queue * Q)
     free((*Q).T);
 }
 /* *** Primitif Add/Delete *** */
-void AddQ (Queue * Q, infotype X)
+void AddQueue (Queue * Q, infotypeQ X)
 /* Proses: Menambahkan X pada Q dengan aturan FIFO */
 /* I.S. Q mungkin kosong, tabel penampung elemen Q TIDAK penuh */
 /* F.S. X menjadi TAIL yang baru, TAIL "maju" dengan mekanisme circular buffer */
 {
-    if (IsEmptyQ(*Q))
+    if (IsEmptyQueue(*Q))
     {
         Head(*Q) = 1;
         Tail(*Q) = 1;
@@ -94,7 +94,7 @@ void AddQ (Queue * Q, infotype X)
 
 }
 
-void DelQ (Queue * Q, infotype * X)
+void DelQueue (Queue * Q, infotypeQ * X)
 /* Proses: Menghapus X pada Q dengan aturan FIFO */
 /* I.S. Q tidak mungkin kosong */
 /* F.S. X = nilai elemen HEAD pd I.S., HEAD "maju" dengan mekanisme circular buffer;
@@ -102,10 +102,10 @@ void DelQ (Queue * Q, infotype * X)
 {
     Queue Qt;
     Qt = *Q;
-    infotype y;
+    infotypeQ y;
     y = InfoHead(Qt);
     *X = y;
-    if (NBElmtQ(Qt) == 1)
+    if (NBElmtQueue(Qt) == 1)
     {
         Head(Qt) = Nil;
         Tail(Qt) = Nil;
@@ -130,9 +130,9 @@ void PrintQueue(Queue Q)
 /* mendelete elemen sampai habis dan menuliskan semuanya ke layar */
 {
     char c;
-    while (!IsEmptyQ(Q))
+    while (!IsEmptyQueue(Q))
     {
-        DelQ(&Q,&c);
+        DelQueue(&Q,&c);
         printf("%c",c);
     }
 }
