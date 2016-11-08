@@ -1,6 +1,6 @@
 /* File : graph.h */
 /* Definisi ADT Graph */
-/* Menggunakan array of list */
+/* Menggunakan representai multilist */
 
 #ifndef GRAPH_H
 #define GRAPH_H
@@ -8,62 +8,59 @@
 #include "boolean.h"
 #include "listlinier.h"
 
-/* Kamus umum */
-#define IdxMax 10
-#define IdxMin 1
-#define IdxUndef -999
-
-/* Definisi tipe graph */
-typedef int IdxType; /* tipe indeks */
-typedef struct
-{
-    List list[IdxMax+1]; /* memori tempat menyimpan elemen */
-    int neff; /* nilai efektif tabel */
+typedef List infotypeG; /* tipe info */
+typedef struct tElmtGraph *addressG;
+typedef struct tElmtGraph {
+    infotypeG info;
+    addressG next;
+} ElmtGraph;
+typedef struct {
+    addressG FirstG;
 } Graph;
 
 /* SELEKTOR */
-#define NeffG(G) (G).neff
-#define List(G,i) ((G).list)[i]
-#define FirstList(G,i) ((G).list[i]).First
+#define Info(P) (P)->info
+#define Next(P) (P)->next
+#define FirstG(G) (G).FirstG
 
-void MakeEmptyGraph(Graph *G);
+/****************** PEMBUATAN GRAPH KOSONG ******************/
+void CreateEmptyGraph(Graph *G);
 /* I.S. G sembarang */
 /* F.S. Terbentuk graph kosong */
 
-IdxType GetFirstIdx(Graph G);
-/* Mengeluarkan indeks minimum */
-
-IdxType GetLastIdx(Graph G);
-/* Mengeluarkan indeks terakhir */
-
-IdxType GetLastIdxEff(Graph G);
-/* Mengeluarkan indeks terakhir yang efektif */
-
-int MaxNbEl(Graph G);
-/* mengeluarkan nilai maksimum yang dapat ditampung */
-
-boolean IsEmptyG(Graph G);
+/****************** TEST GRAPH KOSONG ******************/
+boolean IsEmptyGraph(Graph G);
 /* mengeluarkan true jika graph G kosong */
 
-boolean IsFullG(Graph G);
-/* mengeluarkan true jika graph G penuh */
+/****************** Manajemen Memori ******************/
+addressG AlokasiGraph (infotypeG X);
+/* Mengirimkan address hasil alokasi sebuah elemen */
+/* Jika alokasi berhasil, maka address tidak nil, dan misalnya */
+/* menghasilkan P, maka Info(P)=X, Next(P)=Nil */
+/* Jika alokasi gagal, mengirimkan Nil */
+void DealokasiGraph (addressG *P);
+/* I.S. P terdefinisi */
+/* F.S. P dikembalikan ke sistem */
+/* Melakukan dealokasi/pengembalian address P */
 
-void SetFirst(Graph *G);
-/* I.S. G sembarang, G tidak penuh */
-/* F.S. Neff dari G bertambah satu dan first sudah dialokasi */
-/* First dialokasi, jika alokasi gagal, maka IS=FS*/
+/*** PENAMBAHAN ELEMEN ***/
+void InsVFirstGraph (Graph *G, infotypeG X);
+/* I.S. G mungkin kosong */
+/* F.S. Melakukan alokasi sebuah elemen dan */
+/* menambahkan elemen pertama dengan list X jika alokasi berhasil */
+void InsVLastGraph(Graph *G, infotypeG X);
+/* I.S. G mungkin kosong */
+/* F.S. Melakukan alokasi sebuah elemen dan */
+/* menambahkan elemen graph di akhir: elemen terakhir yang baru */
+/* merupakan list X jika alokasi berhasil. Jika alokasi gagal: I.S.= F.S. */
 
 void ResetGraph(Graph *G, int n);
-/* I.S. Graph G kosong, n <= MaxNbEL(G) */
-/* F.S. Terbentuk Graph dengan neff = n namun kosong */
+/* I.S. Graph G sembarang */
+/* F.S. Terbentuk Graph dengan semua info merupakan list kosong */
 
-int GoTo(Graph G, int now, int n);
-/* berpindah ke graph lain yang adjacent dengan dia */
-/* Jika n=1 pindah ke kiri
-        n=2 pindah ke atas
-        n=3 pindah ke kanan
-        n=4 pindah ke bawah
-*/
+/*** PENCARIAN ELEMEN ***/
+infotypeG SearchGraph(Graph G, int n);
+/* NbElmtGraph(G) lebih besar dari n, mengeluarkan list yang merupakan info dari elemen ke n graph G */
 
 #endif // GRAPH_H
 

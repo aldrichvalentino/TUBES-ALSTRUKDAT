@@ -2,88 +2,120 @@
 
 #include "graph.h"
 #include "listlinier.h"
+#include <stdlib.h>
 
-void MakeEmptyGraph(Graph *G)
+/****************** PEMBUATAN GRAPH KOSONG ******************/
+void CreateEmptyGraph(Graph *G)
 /* I.S. G sembarang */
 /* F.S. Terbentuk graph kosong */
 {
-    NeffG(*G) = 0;
+    FirstG(*G) = Nil;
 }
 
-IdxType GetFirstIdx(Graph G)
-/* Mengeluarkan indeks minimum */
-{
-    return IdxMin;
-}
-
-IdxType GetLastIdx(Graph G)
-/* Mengeluarkan indeks terakhir */
-{
-    return (IdxMax-IdxMin+1);
-}
-
-IdxType GetLastIdxEff(Graph G)
-/* Mengeluarkan indeks terakhir yang efektif */
-{
-    return (NeffG(G)-IdxMin+1);
-}
-
-int MaxNbEl(Graph G)
-/* mengeluarkan nilai maksimum yang dapat ditampung */
-{
-    return (IdxMax-IdxMin+1);
-}
-
-boolean IsEmptyG(Graph G)
+/****************** TEST GRAPH KOSONG ******************/
+boolean IsEmptyGraph(Graph G)
 /* mengeluarkan true jika graph G kosong */
 {
-    return (NeffG(G)==0);
+    return (FirstG(G)==Nil);
 }
 
-boolean IsFullG(Graph G)
-/* mengeluarkan true jika graph G penuh */
+/****************** Manajemen Memori ******************/
+addressG AlokasiGraph(infotypeG X)
+/* Mengirimkan address hasil alokasi sebuah elemen */
+/* Jika alokasi berhasil, maka address tidak nil, dan misalnya */
+/* menghasilkan P, maka Info(P)=X, Next(P)=Nil */
+/* Jika alokasi gagal, mengirimkan Nil */
 {
-    return (NeffG(G)==MaxNbEl(G));
-}
-
-void SetFirst(Graph *G)
-/* I.S. G sembarang, G tidak penuh */
-/* F.S. Neff dari G bertambah satu dan first sudah dialokasi */
-/* First dialokasi, jika alokasi gagal, maka IS=FS*/
-{
-    address P = Alokasi(0);
+    addressG P = (addressG) malloc(sizeof(ElmtGraph));
     if (P!=Nil)
     {
-        ++NeffG(*G);
-        FirstList(*G,GetLastIdxEff(*G)) = P;
+        Info(P) = X;
+        Next(P) = Nil;
     }
 }
-
-void ResetGraph(Graph *G, int n)
-/* I.S. Graph G kosong, n <= MaxNbEL(G) */
-/* F.S. Terbentuk Graph dengan neff = n namun kosong */
+void DealokasiGraph(addressG *P)
+/* I.S. P terdefinisi */
+/* F.S. P dikembalikan ke sistem */
+/* Melakukan dealokasi/pengembalian address P */
 {
-    int i;
-    for (i = GetFirstIdx(*G);i<GetFirstIdx(*G)+n;++i)
+    addressL PL = FirstL(Info(*P));
+    addressL P2;
+    while (PL!=Nil)
     {
-        FirstList(*G,i) = Nil;
+        P2 = PL;
+        PL = Next(PL);
+        DealokasiList(&P2);
     }
-    NeffG(*G) = n;
+    free(*P);
 }
 
-int GoTo(Graph G, int now, int n)
-/* berpindah ke graph lain yang adjacent dengan dia */
-/* Jika n=1 pindah ke kiri
-        n=2 pindah ke atas
-        n=3 pindah ke kanan
-        n=4 pindah ke bawah
-*/
+/*** PENAMBAHAN ELEMEN ***/
+void InsVFirstGraph (Graph *G, infotypeG X)
+/* I.S. G mungkin kosong */
+/* F.S. Melakukan alokasi sebuah elemen dan */
+/* menambahkan elemen pertama dengan list X jika alokasi berhasil */
 {
-    address P = FirstList(G,now);
-    int cnt = n;
-    while (n>1)
+    addressG P = AlokasiGraph(X);
+    if (P!=Nil)
+    {
+        Next(P) = FirstG(*G);
+        FirstG(*G) = P;
+    }
+}
+void InsVLastGraph (Graph *G, infotypeG X)
+/* I.S. G mungkin kosong */
+/* F.S. Melakukan alokasi sebuah elemen dan */
+/* menambahkan elemen graph di akhir: elemen terakhir yang baru */
+/* merupakan list X jika alokasi berhasil. Jika alokasi gagal: I.S.= F.S. */
+{
+    addressG P = AlokasiGraph(X);
+    if (P!=Nil)
+    {
+        if (IsEmptyGraph(*G)) InsVFirstGraph(G,X);
+        else
+        {
+            addressG temp = FirstG(*G);
+            while (Next(temp)!=Nil) temp = Next(temp);
+            Next(P) = Nil;
+            Next(temp) = P;
+        }
+    }
+}
+void ResetGraph(Graph *G, int n)
+/* I.S. Graph G sembarang */
+/* F.S. Terbentuk Graph dengan jumlah elemen n dengan semua info merupakan list kosong */
+{
+    CreateEmptyGraph(G);
+    List L;
+    CreateEmptyList(&L);
+    int i;
+    for (i=0;i<n;++i) InsVLastGraph(G,L);
+}
+
+/*** JUMLAH ELEMEN ***/
+int NbElmtGraph(Graph G)
+/* mengeluarkan jumlah elemen dari graph G */
+{
+    addressG P = FirstG(G);
+    int count = 0;
+    while (P!=Nil)
+    {
+        ++count;
+        P = Next(P);
+    }
+    return count;
+}
+
+/*** PENCARIAN ELEMEN ***/
+infotypeG SearchGraph(Graph G, int n)
+/* NbElmtGraph(G) lebih besar dari n, mengeluarkan list yang merupakan info dari elemen ke n graph G */
+{
+    addressG P = FirstG(G);
+    int i = 1;
+    while (i<n)
     {
         P = Next(P);
-        --n;
+        ++i;
     }
+    return Info(P);
 }
