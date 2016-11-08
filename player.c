@@ -41,7 +41,7 @@ void InitiatePos(PLAYER *P,MATRIKS *M, int dir)
 }
 void Jalan(PLAYER *P, MATRIKS *M,int dir, char *C, POINT *po)
 //I.S: di matriks ada player, input dir 0(left),1(up),2(right),3(down).
-/*F.S: pos Player berubah, matriks jadi gaada playernya (diisi '-'), output 
+/*F.S: pos Player berubah, matriks jadi gaada playernya (diisi '-'), output
   char C apa yang diinjek: M,E,#,-, po menyimpan posisi sebelum jalan. */
 {
 	*po=(*P).POS;
@@ -60,15 +60,15 @@ void BacaCommand (PLAYER *P, MATRIKS *M, char *mode) //parameter lain menyusul
 	F.S: output char mode F: salah command,S: save, L: load, K: skill, E: exit, G*/
 {
 	Kata GL,GU,GR,GD,SKILL,SAVE,LOAD,EXIT;
-	GL.TabKata[0]='G'; GL.TabKata[1]='L'; GL.Length=2;
-	GU.TabKata[0]='G'; GU.TabKata[1]='U'; GU.Length=2;
-	GR.TabKata[0]='G'; GR.TabKata[1]='R'; GR.Length=2;
-	GD.TabKata[0]='G'; GD.TabKata[1]='D'; GD.Length=2;
-	SKILL.TabKata[0]='S'; SKILL.TabKata[1]='K';	SKILL.TabKata[2]='I'; SKILL.TabKata[3]='L';	SKILL.TabKata[4]='L'; SKILL.Length = 5;
-	SAVE.TabKata[0]='S'; SAVE.TabKata[1]='A'; SAVE.TabKata[2]='V'; SAVE.TabKata[3]='E'; SAVE.Length = 4;
-	LOAD.TabKata[0]='L'; LOAD.TabKata[1]='O'; LOAD.TabKata[2]='A'; LOAD.TabKata[3]='D'; LOAD.Length = 4;
-	EXIT.TabKata[0]='E'; EXIT.TabKata[1]='X'; EXIT.TabKata[2]='I'; EXIT.TabKata[3]='T'; EXIT.Length = 4;
-	
+	CreateKata("GL",&GL);
+	CreateKata("GU",&GU);
+	CreateKata("GD",&GD);
+	CreateKata("GR",&GR);
+	CreateKata("SKILL",&SKILL);
+	CreateKata("SAVE",&SAVE);
+	CreateKata("LOAD",&LOAD);
+	CreateKata("EXIT",&EXIT);
+
 	POINT PrecPos;
 	char C;
 	Kata command;
@@ -110,13 +110,13 @@ void BacaCommand (PLAYER *P, MATRIKS *M, char *mode) //parameter lain menyusul
 		*mode ='F';
 		printf("salah nih, case sensitive loh\n");
 	}
-	
+
 	if (*mode=='G')
 	{
 		switch (C){
 		case'-' : Elmt(*M,PosisiX(*P),PosisiY(*P)) = cplayer; break;
 		case'M' : Elmt(*M,PosisiX(*P),PosisiY(*P)) = cplayer; PHP(*P)+=cmedicine; break;
-		case'#' : 
+		case'#' :
 			(*P).POS = PrecPos;
 			Elmt(*M,PosisiX(*P),PosisiY(*P)) = '#';
 			Elmt(*M,Absis(PrecPos),Ordinat(PrecPos)) = cplayer;
@@ -132,7 +132,7 @@ void BacaCommand (PLAYER *P, MATRIKS *M, char *mode) //parameter lain menyusul
 				Elmt(*M,PosisiX(*P),PosisiY(*P)) = '-';
 				Elmt(*M,Absis(PrecPos),Ordinat(PrecPos)) = cplayer;
 			}
-			break;	
+			break;
 		}
 	}
 }
