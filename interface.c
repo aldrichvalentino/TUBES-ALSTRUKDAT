@@ -4,6 +4,7 @@
 #include "mesinkar.h"
 #include "matriks.h"
 #include "point.h"
+#include "jam.h"
 
 
 int main (){
@@ -11,6 +12,8 @@ int main (){
     Kata pilihan,Nama,NG,SG,LG,EXIT;
     MATRIKS M1,M2,M3,M4,M5,M6;
     boolean NamaDone;
+    FILE *FPlayer;
+    int i;
 
 
     //ALGORITMA
@@ -45,6 +48,17 @@ int main (){
             InputUser(&Nama);
         }
         NamaDone = true;
+        FPlayer = fopen("listplayer.txt", "a");
+        for (i = 0; i < Nama.Length; i++)
+        {
+            fprintf(FPlayer,"%c",Nama.TabKata[i]);
+        }
+        fprintf(FPlayer," | ");
+        JAM J = MakeJAM(0,0,0);
+        fprintf(FPlayer,"%02d:%02d:%02d",Hour(J),Minute(J),Second(J));
+        fprintf(FPlayer,"\n");
+        fclose(FPlayer);
+
         //BacaMATRIKS(&M1,&M2,&M3,&M4,&M5,20,20);
         //M6 = GenerateMAP(M1);
         //TulisMATRIKS(M6);
@@ -61,6 +75,17 @@ int main (){
                 printf("Nama harus dibawah 16 Huruf\n");
                 InputUser(&Nama);
             }
+            FPlayer = fopen("listplayer.txt", "a");
+            for (i = 0; i < Nama.Length; i++)
+            {
+                fprintf(FPlayer,"%c",Nama.TabKata[i]);
+            }
+            fprintf(FPlayer," | ");
+            JAM J = MakeJAM(0,0,0);
+            fprintf(FPlayer,"%02d:%02d:%02d",Hour(J),Minute(J),Second(J));
+            fprintf(FPlayer,"\n");
+            fclose(FPlayer);
+            NamaDone = true;
         }
         //BacaMATRIKS(&M1,&M2,&M3,&M4,&M5,20,20);
         //TulisMATRIKS(M1);
