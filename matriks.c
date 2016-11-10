@@ -6,11 +6,7 @@
 
 /* ********** Definisi TYPE MATRIKS dengan indeks dan elemen integer ********** */
 
-#include "boolean.h"
 #include "matriks.h"
-#include "point.h"
-#include "mesinkar.h"
-#include "listlinier.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -245,52 +241,36 @@ void GenerateRandomMatriks(MATRIKS *M, int NBrs, int NKol)
     indeks i,j;
     for (i=GetFirstIdxBrs(*M);i<=GetLastIdxBrs(*M);++i)
         for (j=GetFirstIdxKol(*M);j<=GetLastIdxKol(*M);++j)
-        {
-            if ((i==GetFirstIdxBrs(*M))||(i==GetLastIdxBrs(*M))||(j==GetFirstIdxKol(*M))||(j==GetLastIdxKol(*M)))
-                Elmt(*M,i,j) = '#';
-            else Elmt(*M,i,j) = '-';
-        }
-    int k,l;
-    for (k=0;k<5;++k)
-    {
-        i = rand()%(GetLastIdxBrs(*M)-GetFirstIdxBrs(*M)-1)+GetFirstIdxBrs(*M)+1;
-        j = rand()%(GetLastIdxKol(*M)-GetFirstIdxKol(*M)-1)+GetFirstIdxKol(*M)+1;
-        Elmt(*M,i,j) = '#';
-        Elmt(*M,i+1,j) = '#';
-        Elmt(*M,i,j+1) = '#';
-        Elmt(*M,i+1,j+1) = '#';
-        Elmt(*M,i+2,j) = '#';
-        Elmt(*M,i+2,j+1) = '#';
-        Elmt(*M,i+2,j+2) = '#';
-        Elmt(*M,i,j+2) = '#';
-        Elmt(*M,i+1,j+2) = '#';
-        for (l=0;l<10;++l)
-        {
-            int dir = rand()%4;
-            switch (dir)
-            {
-                case 0 : j = (j+GetLastIdxKol(*M)-1)%GetLastIdxKol(*M)+1; i = (i+GetLastIdxBrs(*M)-1)%GetLastIdxBrs(*M)+1; break;
-                case 1 : i = i%GetLastIdxBrs(*M)+1; j = j%GetLastIdxBrs(*M)+1;break;
-                case 2 : (j+GetLastIdxKol(*M)-1)%GetLastIdxKol(*M)+1; i = i%GetLastIdxBrs(*M)+1;break;
-                case 3 : i = i%GetLastIdxBrs(*M)+1; j = j%GetLastIdxBrs(*M)+1;break;
-            }
             Elmt(*M,i,j) = '#';
-            Elmt(*M,i+1,j) = '#';
-            Elmt(*M,i,j+1) = '#';
-            Elmt(*M,i+1,j+1) = '#';
-            Elmt(*M,i+2,j) = '#';
-            Elmt(*M,i+2,j+1) = '#';
-            Elmt(*M,i+2,j+2) = '#';
-            Elmt(*M,i,j+2) = '#';
-            Elmt(*M,i+1,j+2) = '#';
+    int k,l,m=(NBrs*NKol)*3/2;
+    i = rand()%(GetLastIdxBrs(*M)-GetFirstIdxBrs(*M)-1)+GetFirstIdxBrs(*M)+1;
+    j = rand()%(GetLastIdxKol(*M)-GetFirstIdxKol(*M)-1)+GetFirstIdxKol(*M)+1;
+    Elmt(*M,i,j) = '-';
+    for (l=0;l<m;++l)
+    {
+        int dir = rand()%4;
+        switch (dir)
+        {
+            case 0 : j = j-1;break;
+            case 1 : i = i-1;break;
+            case 2 : j = j+1;break;
+            case 3 : i = i+1;break;
         }
+        if (i==GetLastIdxBrs(*M)) --i;
+        if (i==GetFirstIdxBrs(*M)) ++i;
+        if (j==GetFirstIdxKol(*M)) ++j;
+        if (j==GetLastIdxKol(*M)) --j;
+        Elmt(*M,i,j) = '-';
     }
 }
 
 int main()
 {
     MATRIKS M;
-    GenerateRandomMatriks(&M,20,20);
+    int i,j;
+    scanf("%d %d",&i,&j);
+    GenerateRandomMatriks(&M,i,j);
     TulisMATRIKS(M);
+    printf("\n");
     return 0;
 }

@@ -102,8 +102,9 @@ boolean EQSize (MATRIKS M1, MATRIKS M2);
 int NBElmt (MATRIKS M);
 /* Mengirimkan banyaknya elemen M */
 
-void GenerateRandomMatriks(MATRIKS *M, int NBrs, int NKol)
+void GenerateRandomMatriks(MATRIKS *M, int NBrs, int NKol);
 /* I.S. M sembarang */
 /* F.S. M merupakan matriks dengan ukuran NBrsxNKol dan semua pinggiran adalah '#' dan sisanya antara '-' atau '#' */
 /* Matriks didapat dari hasil generate secara random */
+
 #endif

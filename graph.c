@@ -171,3 +171,4 @@ void GenerateRandomGraph(Graph *G,int n)
         }
         PG = Next(PG);
     }
+}
