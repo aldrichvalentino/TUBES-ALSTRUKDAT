@@ -104,10 +104,22 @@ POINT NextX (POINT P)
 	return(MakePOINT ((Absis(P)+1), Ordinat(P)));
 }
 
+POINT PrevX (POINT P)
+/* Mengirim salinan P dengan absis dikurang satu */
+{
+    return (MakePOINT((Absis(P)-1), Ordinat(P)));
+}
+
 POINT NextY (POINT P)
 /* Mengirim salinan P dengan ordinat ditambah satu */
 {
 	return(MakePOINT (Absis(P), (Ordinat(P)+1)));
+}
+
+POINT PrevY (POINT P)
+/* Mengirim salinan P dengan ordinat dikurang satu */
+{
+    return(MakePOINT (Absis(P), (Ordinat(P)-1)));
 }
 
 POINT PlusDelta (POINT P, int deltaX, int deltaY)

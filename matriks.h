@@ -102,11 +102,8 @@ boolean EQSize (MATRIKS M1, MATRIKS M2);
 int NBElmt (MATRIKS M);
 /* Mengirimkan banyaknya elemen M */
 
-void Transpose (MATRIKS * M);
-/* I.S. M terdefinisi dan IsBujursangkar(M) */
-/* F.S. M "di-transpose", yaitu setiap elemen M(i,j) ditukar nilainya dengan elemen M(j,i) */
-void Rotate180 (MATRIKS * M);
-//merotasi 180 derajat
-MATRIKS GenerateMAP (MATRIKS M);
-//membuat sebuah map baru dari map asal dengan cara merotasi 180 derajat atau transpose
+void GenerateRandomMatriks(MATRIKS *M, int NBrs, int NKol)
+/* I.S. M sembarang */
+/* F.S. M merupakan matriks dengan ukuran NBrsxNKol dan semua pinggiran adalah '#' dan sisanya antara '-' atau '#' */
+/* Matriks didapat dari hasil generate secara random */
 #endif

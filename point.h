@@ -60,8 +60,12 @@ int Kuadran (POINT P);
 /* *** KELOMPOK OPERASI LAIN TERHADAP TYPE *** */
 POINT NextX (POINT P);
 /* Mengirim salinan P dengan absis ditambah satu */
+POINT PrevX (POINT P);
+/* Mengirim salinan P dengan absis dikurang satu */
 POINT NextY (POINT P);
 /* Mengirim salinan P dengan ordinat ditambah satu */
+POINT PrevY (POINT P);
+/* Mengirim salinan P dengan ordinat dikurang satu */
 POINT PlusDelta (POINT P, int deltaX, int deltaY);
 /* Mengirim salinan P yang absisnya adalah Absis(P) + deltaX dan ordinatnya adalah Ordinat(P) + deltaY */
 POINT MirrorOf (POINT P, boolean SbX);

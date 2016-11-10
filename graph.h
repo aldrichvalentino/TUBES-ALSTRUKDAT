@@ -8,6 +8,8 @@
 #include "boolean.h"
 #include "listlinier.h"
 
+#define NodeUndef 0
+
 typedef List infotypeG; /* tipe info */
 typedef struct tElmtGraph *addressG;
 typedef struct tElmtGraph {
@@ -56,11 +58,20 @@ void InsVLastGraph(Graph *G, infotypeG X);
 
 void ResetGraph(Graph *G, int n);
 /* I.S. Graph G sembarang */
-/* F.S. Terbentuk Graph dengan semua info merupakan list kosong */
+/* F.S. Terbentuk Graph dengan n node dengan belum ada edge */
+
+/*** JUMLAH ELEMEN ***/
+int NbElmtGraph(Graph G);
+/* mengeluarkan jumlah node pada graph G */
 
 /*** PENCARIAN ELEMEN ***/
 infotypeG SearchGraph(Graph G, int n);
 /* NbElmtGraph(G) lebih besar dari n, mengeluarkan list yang merupakan info dari elemen ke n graph G */
+
+void GenerateRandomGraph(Graph *G,int n);
+/* I.S. G sembarang */
+/* F.S. G adalah connected graph dengan n node */
+/* G didapat melalui hasil generate secara random */
 
 #endif // GRAPH_H
 

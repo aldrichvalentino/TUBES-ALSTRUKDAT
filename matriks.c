@@ -10,8 +10,10 @@
 #include "matriks.h"
 #include "point.h"
 #include "mesinkar.h"
+#include "listlinier.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 /* ********** DEFINISI PROTOTIPE PRIMITIF ********** */
 /* *** Konstruktor membentuk MATRIKS *** */
@@ -121,7 +123,7 @@ void BacaMATRIKS (MATRIKS *M1, MATRIKS *M2, MATRIKS *M3, MATRIKS *M4, MATRIKS *M
     MakeMATRIKS(NB,NK,M4);
     MakeMATRIKS(NB,NK,M5);
 
-    fin = malloc(10 * sizeof(char));
+    fin = (char *) malloc(10 * sizeof(char));
     fin = "peta.txt";
     START(fin);
     while(!EOP){
@@ -233,59 +235,62 @@ int NBElmt (MATRIKS M){
     return (NBrsEff(M)*NKolEff(M));
 }
 
-void Transpose (MATRIKS * M){
-/* I.S. M terdefinisi dan IsBujursangkar(M) */
-/* F.S. M "di-transpose", yaitu setiap elemen M(i,j) ditukar nilainya dengan elemen M(j,i) */
-    //kamus
-    indeks i,j;
-    MATRIKS Mbaru;
-
-    //algoritma
-    MakeMATRIKS(NKolEff(*M),NBrsEff(*M),&Mbaru);
-    for (i=GetFirstIdxBrs(*M); i<=GetLastIdxBrs(*M); i++){
-        for (j=GetFirstIdxKol(*M); j<=GetLastIdxKol(*M); j++){
-            Elmt(Mbaru,j,i) = Elmt(*M,i,j);
-        }
-    }
-    CopyMATRIKS(Mbaru,M);
-}
-
-void Rotate180 (MATRIKS * M){
-//merotasi 180 derajat
-    //kamus
-    indeks i,j;
-    MATRIKS Mbaru;
-
-    //algoritma
-    MakeMATRIKS(NBrsEff(*M),NKolEff(*M),&Mbaru);
-    for (i=GetFirstIdxBrs(*M); i<=GetLastIdxBrs(*M); i++){
-        for (j=GetFirstIdxKol(*M); j<=GetLastIdxKol(*M); j++){
-            Elmt(Mbaru,GetLastIdxBrs(*M) - i + 1,GetLastIdxKol(*M) - j + 1) = Elmt(*M,i,j);
-        }
-    }
-    CopyMATRIKS(Mbaru,M);
-}
-
-MATRIKS GenerateMAP (MATRIKS M)
-//membuat sebuah map baru dari map asal dengan cara merotasi 180 derajat atau transpose
-//MUNGKIN BISA JADI LAG GARA-GARA DIGENERATE RANDOM NUMBER TRUS DIPASTIIN GA 0
+void GenerateRandomMatriks(MATRIKS *M, int NBrs, int NKol)
+/* I.S. M sembarang */
+/* F.S. M merupakan matriks dengan ukuran NBrsxNKol dan semua pinggiran adalah '#' dan sisanya antara '-' atau '#' */
+/* Matriks didapat dari hasil generate secara random */
 {
-    //kamus
-    MATRIKS New;
-    int i;
-
-    //algoritma
-    do {
-        srand((unsigned int)time(NULL));
-        i = rand() % 3;
-    } while (i == 0); //mencegah dapet 0
-
-    CopyMATRIKS(M,&New);
-    if (i == 1){ //transpose
-        Transpose(&New);
-    } else if (i == 2){
-        Rotate180(&New);
+    srand((unsigned)time(NULL));
+    MakeMATRIKS(NBrs,NKol,M);
+    indeks i,j;
+    for (i=GetFirstIdxBrs(*M);i<=GetLastIdxBrs(*M);++i)
+        for (j=GetFirstIdxKol(*M);j<=GetLastIdxKol(*M);++j)
+        {
+            if ((i==GetFirstIdxBrs(*M))||(i==GetLastIdxBrs(*M))||(j==GetFirstIdxKol(*M))||(j==GetLastIdxKol(*M)))
+                Elmt(*M,i,j) = '#';
+            else Elmt(*M,i,j) = '-';
+        }
+    int k,l;
+    for (k=0;k<5;++k)
+    {
+        i = rand()%(GetLastIdxBrs(*M)-GetFirstIdxBrs(*M)-1)+GetFirstIdxBrs(*M)+1;
+        j = rand()%(GetLastIdxKol(*M)-GetFirstIdxKol(*M)-1)+GetFirstIdxKol(*M)+1;
+        Elmt(*M,i,j) = '#';
+        Elmt(*M,i+1,j) = '#';
+        Elmt(*M,i,j+1) = '#';
+        Elmt(*M,i+1,j+1) = '#';
+        Elmt(*M,i+2,j) = '#';
+        Elmt(*M,i+2,j+1) = '#';
+        Elmt(*M,i+2,j+2) = '#';
+        Elmt(*M,i,j+2) = '#';
+        Elmt(*M,i+1,j+2) = '#';
+        for (l=0;l<10;++l)
+        {
+            int dir = rand()%4;
+            switch (dir)
+            {
+                case 0 : j = (j+GetLastIdxKol(*M)-1)%GetLastIdxKol(*M)+1; i = (i+GetLastIdxBrs(*M)-1)%GetLastIdxBrs(*M)+1; break;
+                case 1 : i = i%GetLastIdxBrs(*M)+1; j = j%GetLastIdxBrs(*M)+1;break;
+                case 2 : (j+GetLastIdxKol(*M)-1)%GetLastIdxKol(*M)+1; i = i%GetLastIdxBrs(*M)+1;break;
+                case 3 : i = i%GetLastIdxBrs(*M)+1; j = j%GetLastIdxBrs(*M)+1;break;
+            }
+            Elmt(*M,i,j) = '#';
+            Elmt(*M,i+1,j) = '#';
+            Elmt(*M,i,j+1) = '#';
+            Elmt(*M,i+1,j+1) = '#';
+            Elmt(*M,i+2,j) = '#';
+            Elmt(*M,i+2,j+1) = '#';
+            Elmt(*M,i+2,j+2) = '#';
+            Elmt(*M,i,j+2) = '#';
+            Elmt(*M,i+1,j+2) = '#';
+        }
     }
-    return New;
 }
 
+int main()
+{
+    MATRIKS M;
+    GenerateRandomMatriks(&M,20,20);
+    TulisMATRIKS(M);
+    return 0;
+}
