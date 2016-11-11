@@ -19,10 +19,6 @@ void MakeMATRIKS (int NB, int NK, MATRIKS * M){
 /* F.S. Matriks M sesuai dengan definisi di atas terbentuk */
     NBrsEff(*M) = NB;
     NKolEff(*M) = NK;
-    WayOut(*M,0) = MakePOINT(-1,-1);
-    WayOut(*M,1) = MakePOINT(-1,-1);
-    WayOut(*M,2) = MakePOINT(-1,-1);
-    WayOut(*M,3) = MakePOINT(-1,-1);
 }
 
 /* *** Selektor "DUNIA MATRIKS" *** */
@@ -57,113 +53,26 @@ ElType GetElmtDiagonal (MATRIKS M, indeks i){
     return Elmt(M,i,i);
 }
 
-/* ********** Mencari jalan keluar MATRIKS ********** */
-void SearchWayOut (MATRIKS *M)
-/* mencari jalan keluar matriks, yaitu di tepi matriks yg merupakan '-' */
-{
-    //kamus
-    int i,j;
-
-    //algoritma
-    for(i = BrsMin; i <= GetLastIdxBrs(*M); i++){ //sisi kiri
-        if(Elmt(*M,i,1) == '-'){
-            WayOut(*M,0) = MakePOINT(i,1);
-        }
-    }
-    for(i = BrsMin; i <= GetLastIdxBrs(*M); i++){ //sisi kanan
-        if(Elmt(*M,i,GetLastIdxKol(*M)) == '-'){
-            WayOut(*M,2) = MakePOINT(i,GetLastIdxKol(*M));
-        }
-    }
-    for(j = KolMin; j <= GetLastIdxKol(*M); j++){ //sisi atas
-        if(Elmt(*M,1,j) == '-'){
-            WayOut(*M,1) = MakePOINT(1,j);
-        }
-    }
-    for(j = KolMin; j <= GetLastIdxKol(*M); j++){ //sisi bawah
-        if(Elmt(*M,GetLastIdxBrs(*M),j) == '-'){
-            WayOut(*M,3) = MakePOINT(GetLastIdxBrs(*M),j);
-        }
-    }
-}
-
 /* ********** Assignment  MATRIKS ********** */
 void CopyMATRIKS (MATRIKS MIn, MATRIKS * MHsl){
 /* Melakukan assignment MHsl  MIn */
-    //Kamus
     indeks i,j;
-    //algoritma
-    MakeMATRIKS(GetLastIdxBrs(MIn),GetLastIdxKol(MIn),MHsl);
-    for (i=GetFirstIdxBrs(MIn); i<=GetLastIdxBrs(MIn); i++){
-        for (j=GetFirstIdxKol(MIn); j<=GetLastIdxKol(MIn); j++){
-            Elmt(*MHsl,i,j) = Elmt(MIn,i,j);
-        }
-    }
-    NBrsEff(*MHsl) = NBrsEff(MIn);
-    NKolEff(*MHsl) = NKolEff(MIn);
-    SearchWayOut(MHsl);
+    MakeMATRIKS(NBrsEff(MIn),NKolEff(MIn),MHsl);
+    for (i=GetFirstIdxBrs(MIn);i<=GetLastIdxBrs(MIn);++i)
+        for (j=GetFirstIdxKol(MIn);j<=GetLastIdxKol(MIn);++j)
+            Elmt(*MHsl,i,j)=Elmt(MIn,i,j);
 }
 
 /* ********** KELOMPOK BACA/TULIS ********** */
-void BacaMATRIKS (MATRIKS *M1, MATRIKS *M2, MATRIKS *M3, MATRIKS *M4, MATRIKS *M5, int NB, int NK){
+void BacaMATRIKS (MATRIKS *M, int NB, int NK)
 /* I.S. IsIdxValid(NB,NK) */
 /* F.S. M terdefinisi nilai elemen efektifnya, berukuran NB x NK */
-    //kamus
-    indeks i,j ;
-    char *fin;
-
-    //algoritma
-    MakeMATRIKS(NB,NK,M1);
-    MakeMATRIKS(NB,NK,M2);
-    MakeMATRIKS(NB,NK,M3);
-    MakeMATRIKS(NB,NK,M4);
-    MakeMATRIKS(NB,NK,M5);
-
-    fin = (char *) malloc(10 * sizeof(char));
-    fin = "peta.txt";
-    START(fin);
-    while(!EOP){
-        for(i = 1; i <= NB; i++){
-            for(j= 1; j <= NK; j++){
-                Elmt(*M1,i,j) = CC;
-                ADV();
-                ADV();
-            }
-        }
-        for(i = 1; i <= NB; i++){
-            for(j= 1; j <= NK; j++){
-                Elmt(*M2,i,j) = CC;
-                ADV();
-                ADV();
-            }
-        }
-        for(i = 1; i <= NB; i++){
-            for(j= 1; j <= NK; j++){
-                Elmt(*M3,i,j) = CC;
-                ADV();
-                ADV();
-            }
-        }
-        for(i = 1; i <= NB; i++){
-            for(j= 1; j <= NK; j++){
-                Elmt(*M4,i,j) = CC;
-                ADV();
-                ADV();
-            }
-        }
-        for(i = 1; i <= NB; i++){
-            for(j= 1; j <= NK; j++){
-                Elmt(*M5,i,j) = CC;
-                ADV();
-                ADV();
-            }
-        }
-    }
-    SearchWayOut(M1);
-    SearchWayOut(M2);
-    SearchWayOut(M3);
-    SearchWayOut(M4);
-    SearchWayOut(M5);
+{
+    indeks i,j;
+    MakeMATRIKS(NB,NK,M);
+    for (i=GetFirstIdxBrs(*M);i<=GetLastIdxBrs(*M);++i)
+        for (j=GetFirstIdxKol(*M);j<=GetLastIdxKol(*M);++j)
+            scanf("%d",&Elmt(*M,i,j));
 }
 void TulisMATRIKS (MATRIKS M){
 /* I.S. M terdefinisi */
@@ -229,48 +138,61 @@ boolean EQSize (MATRIKS M1, MATRIKS M2){
 int NBElmt (MATRIKS M){
 /* Mengirimkan banyaknya elemen M */
     return (NBrsEff(M)*NKolEff(M));
+
 }
 
-void GenerateRandomMatriks(MATRIKS *M, int NBrs, int NKol)
+/* ********** Matriks dan Point ********** */
+ElType Elmt2(MATRIKS M,POINT P)
+/* Mengakses matriks dengan point, mengeluarkan elemen di M pada posisi P */
+{
+    return (Elmt(M,Absis(P),Ordinat(P)));
+}
+void SetElmt(MATRIKS *M,POINT P,ElType X)
+/* I.S. M terdefinisi, P indeks yang valid, X sembarang */
+/* F.S. Elemen M pada posisi P adalah X */
+{
+    Elmt(*M,Absis(P),Ordinat(P)) = X;
+}
+void GenerateRandomPOINT(MATRIKS M,POINT *P)
+/* I.S. M terdefinisi, P sembarang */
+/* F.S. P merupakan indeks valid (bukan pinggiran) */
+{
+    int i,j;
+    i = rand()%(GetLastIdxBrs(M)-GetFirstIdxBrs(M)-1)+GetFirstIdxBrs(M)+1;
+    j = rand()%(GetLastIdxKol(M)-GetFirstIdxKol(M)-1)+GetFirstIdxKol(M)+1;
+    Absis(*P) = i;
+    Ordinat(*P) = j;
+}
+
+/* ********** Operasi random ********** */
+void GenerateRandomMatriks(MATRIKS *M)
 /* I.S. M sembarang */
 /* F.S. M merupakan matriks dengan ukuran NBrsxNKol dan semua pinggiran adalah '#' dan sisanya antara '-' atau '#' */
 /* Matriks didapat dari hasil generate secara random */
 {
-    srand((unsigned)time(NULL));
-    MakeMATRIKS(NBrs,NKol,M);
-    indeks i,j;
+    //srand((unsigned)time(NULL));
+    POINT P;
+    int i,j;
     for (i=GetFirstIdxBrs(*M);i<=GetLastIdxBrs(*M);++i)
         for (j=GetFirstIdxKol(*M);j<=GetLastIdxKol(*M);++j)
             Elmt(*M,i,j) = '#';
-    int k,l,m=(NBrs*NKol)*3/2;
-    i = rand()%(GetLastIdxBrs(*M)-GetFirstIdxBrs(*M)-1)+GetFirstIdxBrs(*M)+1;
-    j = rand()%(GetLastIdxKol(*M)-GetFirstIdxKol(*M)-1)+GetFirstIdxKol(*M)+1;
-    Elmt(*M,i,j) = '-';
+    int k,l,m=(NBrsEff(*M)*NKolEff(*M))*3/2;
+    GenerateRandomPOINT(*M,&P);
+    SetElmt(M,P,'-');
     for (l=0;l<m;++l)
     {
         int dir = rand()%4;
         switch (dir)
         {
-            case 0 : j = j-1;break;
-            case 1 : i = i-1;break;
-            case 2 : j = j+1;break;
-            case 3 : i = i+1;break;
+            case 0 : Ordinat(P) = Ordinat(P)-1;break;
+            case 1 : Absis(P) = Absis(P)-1;break;
+            case 2 : Ordinat(P) = Ordinat(P)+1;break;
+            case 3 : Absis(P) = Absis(P)+1;break;
         }
-        if (i==GetLastIdxBrs(*M)) --i;
-        if (i==GetFirstIdxBrs(*M)) ++i;
-        if (j==GetFirstIdxKol(*M)) ++j;
-        if (j==GetLastIdxKol(*M)) --j;
-        Elmt(*M,i,j) = '-';
+        if (Absis(P)==GetLastIdxBrs(*M)) --Absis(P);
+        if (Absis(P)==GetFirstIdxBrs(*M)) ++Absis(P);
+        if (Ordinat(P)==GetFirstIdxKol(*M)) ++Ordinat(P);
+        if (Ordinat(P)==GetLastIdxKol(*M)) --Ordinat(P);
+        SetElmt(M,P,'-');
     }
-}
-
-int main()
-{
-    MATRIKS M;
-    int i,j;
-    scanf("%d %d",&i,&j);
-    GenerateRandomMatriks(&M,i,j);
-    TulisMATRIKS(M);
-    printf("\n");
-    return 0;
 }

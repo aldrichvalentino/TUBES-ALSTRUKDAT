@@ -19,7 +19,6 @@ typedef struct {
 	ElType Mem[BrsMax+1][KolMax+1];
     int NBrsEff; /* banyaknya/ukuran baris yg terdefinisi */
 	int NKolEff; /* banyaknya/ukuran kolom yg terdefinisi */
-    POINT WayOut[4]; /* banyaknya jalan masuk/keluar ke dalam suatu peta matriks */
 } MATRIKS;
 /* NBrsEff <= 1 dan NKolEff <= 1 */
 /* Indeks matriks yang digunakan: [BrsMin..BrsMax][KolMin..KolMax] */
@@ -27,7 +26,7 @@ typedef struct {
 
 /* ********** DEFINISI PROTOTIPE PRIMITIF ********** */
 /* *** Konstruktor membentuk MATRIKS *** */
-void MakeMATRIKS (int NB, int NK, MATRIKS * M);
+void MakeMATRIKS (int NB,int NK,MATRIKS *M);
 /* Membentuk sebuah MATRIKS "kosong" yang siap diisi berukuran NB x NK di "ujung kiri" memori */
 /* I.S. NB dan NK adalah valid untuk memori matriks yang dibuat */
 /* F.S. Matriks M sesuai dengan definisi di atas terbentuk */
@@ -36,7 +35,6 @@ void MakeMATRIKS (int NB, int NK, MATRIKS * M);
 #define NBrsEff(M) (M).NBrsEff
 #define NKolEff(M) (M).NKolEff
 #define Elmt(M,i,j) (M).Mem[(i)][(j)]
-#define WayOut(M,i) (M).WayOut[(i)]
 
 /* *** Selektor "DUNIA MATRIKS" *** */
 boolean IsIdxValid (int i, int j);
@@ -56,16 +54,12 @@ boolean IsIdxEff (MATRIKS M, indeks i, indeks j);
 ElType GetElmtDiagonal (MATRIKS M, indeks i);
 /* Mengirimkan elemen M(i,i) */
 
-/* ********** Mencari jalan keluar MATRIKS ********** */
-void SearchWayOut (MATRIKS *M);
-/* mencari jalan keluar matriks, yaitu di tepi matriks yg merupakan '-' */
-
 /* ********** Assignment  MATRIKS ********** */
 void CopyMATRIKS (MATRIKS MIn, MATRIKS * MHsl);
 /* Melakukan assignment MHsl  MIn */
 
 /* ********** KELOMPOK BACA/TULIS ********** */
-void BacaMATRIKS (MATRIKS *M1, MATRIKS *M2, MATRIKS *M3, MATRIKS *M4, MATRIKS *M5, int NB, int NK);
+void BacaMATRIKS (MATRIKS *M, int NB, int NK);
 /* I.S. IsIdxValid(NB,NK) */
 /* F.S. M terdefinisi nilai elemen efektifnya, berukuran NB x NK */
 /* Proses: Melakukan MakeMATRIKS(M,NB,NK) dan mengisi nilai efektifnya */
@@ -102,7 +96,18 @@ boolean EQSize (MATRIKS M1, MATRIKS M2);
 int NBElmt (MATRIKS M);
 /* Mengirimkan banyaknya elemen M */
 
-void GenerateRandomMatriks(MATRIKS *M, int NBrs, int NKol);
+/* ********** Matriks dan Point ********** */
+ElType Elmt2(MATRIKS M,POINT P);
+/* Mengakses matriks dengan point, mengeluarkan elemen di M pada posisi P */
+void SetElmt(MATRIKS *M,POINT P,ElType X);
+/* I.S. M terdefinisi, P indeks yang valid, X sembarang */
+/* F.S. Elemen M pada posisi P adalah X */
+void GenerateRandomPOINT(MATRIKS M,POINT *P);
+/* I.S. M terdefinisi, P sembarang */
+/* F.S. P merupakan indeks valid (bukan pinggiran) */
+
+/* ********** Operasi random ********** */
+void GenerateRandomMatriks(MATRIKS *M);
 /* I.S. M sembarang */
 /* F.S. M merupakan matriks dengan ukuran NBrsxNKol dan semua pinggiran adalah '#' dan sisanya antara '-' atau '#' */
 /* Matriks didapat dari hasil generate secara random */

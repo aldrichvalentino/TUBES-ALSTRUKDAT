@@ -12,6 +12,7 @@
 #define IdxMinAksi 1
 #define IdxMaxAksi 10
 #define IdxUndefAksi -999
+#define Undef -1
 typedef struct {
 	Kata NAME;
 	int HP;
@@ -40,14 +41,27 @@ typedef struct {
 #define NeffT(E) (E).Neff
 #define InfoT(T,i) ((T).Tab)[(i)]
 
+/* ********** Pembuatan Enemy ********** */
+void CreateEnemUndef(ENEMY *E);
+/* I.S. E sembarang */
+/* F.S. E adalah musuh yang belum terdefinsi */
+void CreateEnemy(ENEMY *E,TE T,int i);
+/* I.S. T terdefinsi, E sembarang, i<IdxMaxTE */
+/* F.S. E berisi data musuh yang terdapat pada tabel T pada indeks i */
+ENEMY EnemUndef();
+/* Mengeluarkan enemy Undefined */
+
+/* ********** File Eksternal ********** */
 void LoadEnemy(TE *T);
 /* I.S. Sembarang, file eksternal berisi data enemy tersedia */
 /* F.S. Semua data sudah dipindahkan ke program */
 /* Membuka file eksternal dan menyimpan semua ke array of ENEMY */
 
-void CreateEnemy(ENEMY *E,TE T,int i);
-/* I.S. T terdefinsi, E sembarang, i<IdxMaxTE */
-/* F.S. E berisi data musuh yang terdapat pada tabel T pada indeks i */
+/* ********** Predikat ********** */
+boolean IsSameEnemy(ENEMY E1,ENEMY E2);
+/* Mengeluarkan true jika E1 adalah E2 adalah musuh yang sama */
+boolean IsEnemyUndefined(ENEMY E);
+/* Mengeluarkan true jika E undefined */
 
 void RandomStack(Stack *S,int n);
 /* I.S. S sembarang */

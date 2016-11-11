@@ -5,6 +5,38 @@
 #include <time.h>
 #include <stdlib.h>
 
+/* ********** Pembuatan Enemy ********** */
+void CreateEnemUndef(ENEMY *E)
+/* I.S. E sembarang */
+/* F.S. E adalah musuh yang belum terdefinsi */
+{
+    CreateKata("Undefined",&EName(*E));
+    EHP(*E) = Undef;
+    ESTR(*E) = Undef;
+    EEXP(*E) = Undef;
+    EDEF(*E) = Undef;
+    EDie(*E) = false;
+}
+void CreateEnemy(ENEMY *E,TE T,int i)
+/* I.S. T terdefinsi, E sembarang, i<IdxMaxTE */
+/* F.S. E berisi data musuh yang terdapat pada tabel T pada indeks i */
+{
+    CopyKata(EName(InfoT(T,i)),&EName(*E));
+    EHP(*E) = EHP(InfoT(T,i));
+    ESTR(*E) = ESTR(InfoT(T,i));
+    EDEF(*E) = EDEF(InfoT(T,i));
+    EEXP(*E) = EEXP(InfoT(T,i));
+    EDie(*E) = false;
+}
+ENEMY EnemUndef()
+/* Mengeluarkan enemy Undefined */
+{
+    ENEMY E;
+    CreateEnemUndef(&E);
+    return E;
+}
+
+/* ********** File Eksternal ********** */
 void LoadEnemy(TE *T)
 /* I.S. Sembarang, file eksternal berisi data enemy tersedia, jumlah musuh <= MaxEl dari TE */
 /* F.S. Semua data sudah dipindahkan ke program */
@@ -24,11 +56,11 @@ void LoadEnemy(TE *T)
         ADVKATA(); EEXP(E) = KataToInt(CKata);
         for (i=IdxMinAksi;i<=IdxMaxAksi;++i)
         {
-            CreateEmptyQ(&Q,4);
+            CreateEmptyQueue(&Q,4);
             for (j=0;j<4;++j)
             {
                 ADVKATA();
-                AddQ(&Q,KataToChar(CKata));
+                AddQueue(&Q,KataToChar(CKata));
             }
             EAksi(E)[i] = Q;
         }
@@ -39,16 +71,16 @@ void LoadEnemy(TE *T)
     NeffT(*T) = k;
 }
 
-void CreateEnemy(ENEMY *E,TE T,int i)
-/* I.S. T terdefinsi, E sembarang, i<IdxMaxTE */
-/* F.S. E berisi data musuh yang terdapat pada tabel T pada indeks i */
+/* ********** Predikat ********** */
+boolean IsSameEnemy(ENEMY E1,ENEMY E2)
+/* Mengeluarkan true jika E1 adalah E2 adalah musuh yang sama */
 {
-    CopyKata(EName(InfoT(T,i)),&EName(*E));
-    EHP(*E) = EHP(InfoT(T,i));
-    ESTR(*E) = ESTR(InfoT(T,i));
-    EDEF(*E) = EDEF(InfoT(T,i));
-    EEXP(*E) = EEXP(InfoT(T,i));
-    EDie(*E) = false;
+    return IsKataSama(EName(E1),EName(E2));
+}
+boolean IsEnemyUndefined(ENEMY E)
+/* Mengeluarkan true jika E undefined */
+{
+    return IsSameEnemy(E,EnemUndef());
 }
 
 void RandomStack(Stack *S,int n)

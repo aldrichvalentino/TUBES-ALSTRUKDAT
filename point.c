@@ -21,6 +21,14 @@ POINT MakePOINT (int X, int Y)
 
 	return(P);
 }
+POINT MakeUndefPOINT()
+/* Membentuk undefined point */
+{
+    POINT P;
+    Absis(P) = -1;
+    Ordinat(P) = -1;
+    return P;
+}
 
 /* *** KELOMPOK Interaksi dengan I/O device, BACA/TULIS  *** */
 void BacaPOINT (POINT * P)
@@ -61,6 +69,12 @@ boolean NEQPoint (POINT P1, POINT P2)
 /* Mengirimkan true jika P1 tidak sama dengan P2 */
 {
 	return((Absis(P1)!=Absis(P2)) || (Ordinat(P1)!=Ordinat(P2)));
+}
+
+boolean IsPointUndef(POINT P)
+/* Mengeluarkan true jika P undefined */
+{
+    return ((Absis(P)==-1)&&(Ordinat(P)==-1));
 }
 
 /* *** Kelompok menentukan di mana P berada *** */

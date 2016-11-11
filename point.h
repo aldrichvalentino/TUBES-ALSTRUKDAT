@@ -20,6 +20,8 @@ typedef struct {
 /* *** Konstruktor membentuk POINT *** */
 POINT MakePOINT (int X, int Y);
 /* Membentuk sebuah POINT dari komponen-komponennya */
+POINT MakeUndefPOINT();
+/* Membentuk undefined point */
 
 /* *** KELOMPOK Interaksi dengan I/O device, BACA/TULIS  *** */
 void BacaPOINT (POINT * P);
@@ -44,6 +46,8 @@ boolean EQPoint (POINT P1, POINT P2);
 /* Mengirimkan true jika P1 = P2 : absis dan ordinatnya sama */
 boolean NEQPoint (POINT P1, POINT P2);
 /* Mengirimkan true jika P1 tidak sama dengan P2 */
+boolean IsPointUndef(POINT P);
+/* Mengeluarkan true jika P undefined */
 
 /* *** Kelompok menentukan di mana P berada *** */
 boolean IsOrigin (POINT P);

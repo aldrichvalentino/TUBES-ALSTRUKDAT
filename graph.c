@@ -136,7 +136,6 @@ void GenerateRandomGraph(Graph *G,int n)
     ResetGraph(G,n);
     POINT p[n+1];
     p[1] = MakePOINT(0,0);
-    srand((unsigned)time(NULL));
     int k,m;
     for(k=2;k<=n;++k)
     {
@@ -153,11 +152,6 @@ void GenerateRandomGraph(Graph *G,int n)
     addressG PG = FirstG(*G);
     addressL PL;
     List L;
-    for (k=1;k<=n;++k)
-    {
-        TulisPOINT(p[k]);
-        printf("\n");
-    }
     for (k=1;k<=n;++k)
     {
         L = Info(PG);
