@@ -9,7 +9,7 @@ void CreateEmptyStack (Stack *S)
 /* jadi indeksnya antara 1.. MaxEl+1 karena 0 tidak dipakai */
 /* Ciri stack kosong : TOP bernilai Nil */
 {
-	Top(*S) = Nil;
+	Top(*S) = NilS;
 }
 
 
@@ -17,7 +17,7 @@ void CreateEmptyStack (Stack *S)
 boolean IsEmptyStack (Stack S)
 /* Mengirim true jika Stack kosong: lihat definisi di atas */
 {
-	return(Top(S) == Nil);
+	return(Top(S) == NilS);
 }
 
 boolean IsFullStack (Stack S)

@@ -8,8 +8,8 @@
 #include "boolean.h"
 #include "queue.h"
 
-#define Nil 0
 #define MaxElS 20
+#define NilS 0
 /* Nil adalah stack dengan elemen kosong . */
 /* Karena indeks dalam bhs C dimulai 0 maka tabel dg indeks 0 tidak dipakai */
 

@@ -7,11 +7,11 @@
 #include <stdio.h>
 
 /* ********* Prototype ********* */
-int NBElmtQ (Queue Q)
+int NBElmtQueue (Queue Q)
 /* Mengirimkan banyaknya elemen queue. Mengirimkan 0 jika Q kosong */
 {
     int ret;
-    if ((Head(Q)==Nil)&&(Tail(Q)==Nil))
+    if ((Head(Q)==NilQ)&&(Tail(Q)==NilQ))
     {
         ret = 0;
     }
@@ -29,7 +29,7 @@ int NBElmtQ (Queue Q)
 boolean IsEmptyQueue (Queue Q)
 /* Mengirim true jika Q kosong: lihat definisi di atas */
 {
-    return ((Head(Q) == Nil) && (Tail(Q) == Nil));
+    return ((Head(Q) == NilQ) && (Tail(Q) == NilQ));
 }
 boolean IsFullQueue (Queue Q)
 /* Mengirim true jika tabel penampung elemen Q sudah penuh */
@@ -49,13 +49,13 @@ void CreateEmptyQueue (Queue * Q, int Max)
     (*Q).T = (infotypeQ *) malloc ((Max + 1) * sizeof(infotypeQ));
     if ((*Q).T == NULL)
     {
-        MaxElQ(*Q) = Nil;
+        MaxElQ(*Q) = NilQ;
     }
     else
     {
         MaxElQ(*Q) = Max;
-        Head(*Q) = Nil;
-        Tail(*Q) = Nil;
+        Head(*Q) = NilQ;
+        Tail(*Q) = NilQ;
     }
 }
 /* *** Destruktor *** */
@@ -64,7 +64,7 @@ void DealokasiQueue (Queue * Q)
 /* I.S. Q pernah dialokasi */
 /* F.S. Q menjadi tidak terdefinisi lagi, MaxEl(Q) diset 0 */
 {
-    MaxElQ(*Q) = Nil;
+    MaxElQ(*Q) = NilQ;
     free((*Q).T);
 }
 /* *** Primitif Add/Delete *** */
@@ -107,8 +107,8 @@ void DelQueue (Queue * Q, infotypeQ * X)
     *X = y;
     if (NBElmtQueue(Qt) == 1)
     {
-        Head(Qt) = Nil;
-        Tail(Qt) = Nil;
+        Head(Qt) = NilQ;
+        Tail(Qt) = NilQ;
     }
     else
     {
@@ -136,4 +136,3 @@ void PrintQueue(Queue Q)
         printf("%c",c);
     }
 }
-
