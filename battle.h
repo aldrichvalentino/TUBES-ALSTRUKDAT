@@ -33,7 +33,7 @@ void InitBattle (PLAYER *P, TE T, boolean *result);
    F.S. : player menang atau kalah, enemy kalah atau kabur,
 */
 
-void InputUserMoves (ENEMY E, Kata *PlayerMoves);
+void InputUserMoves (ENEMY E, Queue *PlayerMoves);
 /* Prosedur untuk menampilkan battle */
 /* I.S. : Seluruh peta, player, enemy terdefinisi */
 /* F.S. : enemy dikalahkan atau tidak, HP berkurang, exp bertambah atau berkurang */

@@ -84,8 +84,8 @@ void InitBattle (PLAYER *P, TE T, boolean *result)
     ENEMY E;
     Stack S;
     int i, round;
-    char move1,move2,move3,move4;
-    Kata PlayerMoves;
+    char move1,move2,move3,move4,c;
+    Queue PlayerMoves;
 
     /* inisiasi enemy */
     CreateEmptyStack(&S); //untuk set move nya
@@ -104,16 +104,20 @@ void InitBattle (PLAYER *P, TE T, boolean *result)
 
         /* Panggil Battle UI */
         if(PHP(*P) != 0){        //player masih punya HP
-            BattleUI(*P,E,'#','#','#','#',round);
+            BattleUI(*P,E,'#','#','#','#',round);       //Nanti yang disamarkan 2 aja
             InputUserMoves(E, &PlayerMoves);
             PrintBorder();
 
             /* pertarungan dimulai */
             BattleUI(*P,E,move1,move2,move3,move4,round);
-            BattleProccess(P,PlayerMoves.TabKata[0],&E,move1);
-            BattleProccess(P,PlayerMoves.TabKata[1],&E,move2);
-            BattleProccess(P,PlayerMoves.TabKata[2],&E,move3);
-            BattleProccess(P,PlayerMoves.TabKata[3],&E,move4);
+            DelQueue(&PlayerMoves,&c);
+            BattleProccess(P,c,&E,move1);
+            DelQueue(&PlayerMoves,&c);
+            BattleProccess(P,c,&E,move2);
+            DelQueue(&PlayerMoves,&c);
+            BattleProccess(P,c,&E,move3);
+            DelQueue(&PlayerMoves,&c);
+            BattleProccess(P,c,&E,move4);
             ++round;
         }
     }
@@ -131,13 +135,16 @@ void InitBattle (PLAYER *P, TE T, boolean *result)
     PrintBorder();
 }
 
-void InputUserMoves (ENEMY E, Kata *PlayerMoves)
+void InputUserMoves (ENEMY E, Queue *PlayerMoves)
 /* Prosedur untuk menampilkan battle */
 /* I.S. : Seluruh peta, player, enemy terdefinisi */
 /* F.S. : enemy dikalahkan atau tidak, HP berkurang, exp bertambah atau berkurang */
 /*        result akan terisi true apabila menang, false bila kalah */
 /* setelah selesai dan exp bertambah, program caller harus mengecek exp, lalu menambahkan level jika sudah cukup */
 {
+    /* Kamus */
+    char c;
+
     /* dialog box */
     PrintKata(EName(E)); printf(" has appeared!\n");
     printf("What will you do?\n");
@@ -145,7 +152,16 @@ void InputUserMoves (ENEMY E, Kata *PlayerMoves)
 
     /*Insert Command*/
     printf("Please insert 4 commands : ");
-    InputUser(PlayerMoves);
+    CreateEmptyQueue(PlayerMoves,4);
+    while(!IsFullQueue(*PlayerMoves)){
+        scanf("%c",&c);
+        if(c == 'A' || c == 'F' || c == 'B'){   //Memasukan input A F B
+            AddQueue(PlayerMoves,c);
+        } else
+        if(c == 'E'){                           //Mendelete E
+            DelQueue(PlayerMoves,&c);
+        }
+    }
 }
 
 void BattleProccess (PLAYER *P, char MP, ENEMY *E, infotypeQ ME)
