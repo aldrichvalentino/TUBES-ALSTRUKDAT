@@ -67,6 +67,8 @@ int NbElmtGraph(Graph G);
 /*** PENCARIAN ELEMEN ***/
 infotypeG SearchGraph(Graph G, int n);
 /* NbElmtGraph(G) lebih besar dari n, mengeluarkan list yang merupakan info dari elemen ke n graph G */
+int SearchInfoGraph(infotypeG L, infotypeL i);
+/* mengeluarkan posisi dimana list L bernilai i, mengeluarkan 0 jika tidak ada */
 
 void GenerateRandomGraph(Graph *G,int n);
 /* I.S. G sembarang */

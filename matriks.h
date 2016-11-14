@@ -107,6 +107,9 @@ void GenerateRandomPOINT(MATRIKS M,POINT *P);
 /* F.S. P merupakan indeks valid (bukan pinggiran) */
 
 /* ********** Operasi random ********** */
+indeks RandomIndeks(indeks i,indeks j);
+/* mengeluarkan indeks random dari i sampai j inklusif */
+/* Asumsi : i dan j sama jenisnya (baris atau kolom) i<=j */
 void GenerateRandomMatriks(MATRIKS *M);
 /* I.S. M sembarang */
 /* F.S. M merupakan matriks dengan ukuran NBrsxNKol dan semua pinggiran adalah '#' dan sisanya antara '-' atau '#' */

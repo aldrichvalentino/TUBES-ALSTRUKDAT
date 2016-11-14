@@ -157,28 +157,33 @@ void GenerateRandomPOINT(MATRIKS M,POINT *P)
 /* I.S. M terdefinisi, P sembarang */
 /* F.S. P merupakan indeks valid (bukan pinggiran) */
 {
-    int i,j;
-    i = rand()%(GetLastIdxBrs(M)-GetFirstIdxBrs(M)-1)+GetFirstIdxBrs(M)+1;
-    j = rand()%(GetLastIdxKol(M)-GetFirstIdxKol(M)-1)+GetFirstIdxKol(M)+1;
+    indeks i,j;
+    i = RandomIndeks(GetFirstIdxBrs(M)+1,GetLastIdxBrs(M)-1);
+    j = RandomIndeks(GetFirstIdxKol(M)+1,GetLastIdxKol(M)-1);
     Absis(*P) = i;
     Ordinat(*P) = j;
 }
 
 /* ********** Operasi random ********** */
+indeks RandomIndeks(indeks i,indeks j)
+/* mengeluarkan indeks random dari i sampai j inklusif */
+/* Asumsi : i dan j sama jenisnya (baris atau kolom) i<=j */
+{
+    return (rand(j-i+1)%+i);
+}
 void GenerateRandomMatriks(MATRIKS *M)
 /* I.S. M sembarang */
 /* F.S. M merupakan matriks dengan ukuran NBrsxNKol dan semua pinggiran adalah '#' dan sisanya antara '-' atau '#' */
 /* Matriks didapat dari hasil generate secara random */
 {
-    //srand((unsigned)time(NULL));
     POINT P;
-    int i,j;
+    indeks i,j;
     for (i=GetFirstIdxBrs(*M);i<=GetLastIdxBrs(*M);++i)
         for (j=GetFirstIdxKol(*M);j<=GetLastIdxKol(*M);++j)
             Elmt(*M,i,j) = '#';
     int k,l,m=(NBrsEff(*M)*NKolEff(*M))*3/2;
     GenerateRandomPOINT(*M,&P);
-    SetElmt(M,P,'-');
+    SetAvail(M,P);
     for (l=0;l<m;++l)
     {
         int dir = rand()%4;

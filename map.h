@@ -30,6 +30,9 @@ typedef struct {
     int node; /* Jumlah node */
 } Map;
 
+extern int CMiniMap; /* menyimpan nomor minimap yang sedang aktif (ada playernya) */
+extern Map CMap; /* variabel penyimpan data graph yang dipakai saat ini */
+
 /* Graph dengan infotypeG adalah int menyatakan minimap apa saja yang terhubung */
 
 /* Daftar Selektor */
@@ -60,30 +63,44 @@ int SearchPos1(TEMap T,POINT P);
 /* Mengeluarkan indeks di tabel T dimana P tersimpan, mengeluarkan 0 jika tidak ada di map */
 ENEMY SearchPos2(TEMap T,POINT P);
 /* mengeluarkan enemy yang terletak pada posisi P, mengeluarkan Undefined jika tidak ada enemy */
+POINT SearchWayIn(int M);
+/* Mencari point jalan masuk jika player sebelumnya berada di CMap dan akan pergi ke MiniMap M */
+/* Asumsi : CMap dan M adalah dua map yang saling adjacent pada CMap */
 
 /* ********** Predikat ********** */
 boolean IsEmptyTEMap(TEMap T);
 /* Mengeluarkan true jika T kosong */
 boolean IsFullTEMap(TEMap T);
 /* Mengeluarkan true jika T penuh */
-boolean IsOccupied(MiniMap M, POINT P);
+boolean IsOccupied(MATRIKS M, POINT P);
 /* Mengeluarkan true jika terdapat musuh di P */
+boolean IsAvail(MATRIKS M, POINT P);
+/* Mengeluarkan true jika P dapat diisi dengan musuh atau medicine */
+
+/* ********** Akses Elemen ********** */
+void SetAvail(MiniMap *M, POINT P);
+/* I.S. Point P bukan '-' */
+/* F.S. POINT P berisi nilai '-' (available) */
 
 /* ********** Operasi random ********** */
 void GenerateRandomWayOut(MATRIKS *M,List L);
 /* I.S. M merupakan bentuk minimap yang belum terdapat jalan keluar, L terdefinsi merupakan list
     minimap yang adjacent dengan matriks M */
 /* F.S. M sudah terdapat jalur keluar masuk */
+void RandomMed();
+/* Player pindah ke minimap lain, merandom kemunculan medicine dan letaknya */
+/* mungkin ada medicine mungkin tidak ada */
+/* CMiniMap sudah diupdate ke tempat player berpindah*/
 
 /* ********** Insialisasi Map ********** */
 void InitMap(MiniMap *M,int NB ,int NK,List L);
 /* I.S. M sembarang, NB dan NK valid */
 /* F.S. M terbentuk merupakan map berukuran NBxNK */
 /* Terbentuk dengan generate secara random */
-void InitAllMap(Map *M,int NB,int NK,int n);
+void InitAllMap(int NB,int NK,int n);
 /* I.S. M sembarang */
 /* F.S. Seluruh bagian map sudah terdefinisi dengan n node dan masing-masing
-    matriks berukuran NBxNK */
+    matriks berukuran NBxNK, CMiniMap berisi n */
 /* Proses dengan genrate random */
 
 #endif // MAP_H

@@ -126,6 +126,23 @@ infotypeG SearchGraph(Graph G, int n)
     }
     return Info(P);
 }
+int SearchInfoGraph(infotypeG L, infotypeL i)
+/* mengeluarkan posisi dimana list L bernilai i, mengeluarkan 0 jika tidak ada */
+{
+    if (!IsEmptyList(L))
+    {
+        int count = 1;
+        addressL P = First(L);
+        while ((P!=Nil)&&(Info(P)!=i))
+        {
+            ++count;
+            P = Next(P);
+        }
+        if (P==Nil) return 0;
+        else return count;
+    }
+    else return 0;
+}
 
 void GenerateRandomGraph(Graph *G,int n)
 /* I.S. G sembarang */

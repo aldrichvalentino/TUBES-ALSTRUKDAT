@@ -42,6 +42,22 @@ ENEMY SearchPos2(TEMap T,POINT P)
     if (i==0) return EnemUndef();
     else return EMap(T,i);
 }
+POINT SearchWayIn(int M)
+/* Mencari point jalan masuk jika player sebelumnya berada di CMap dan akan pergi ke MiniMap M */
+/* Asumsi : CMap dan M adalah dua map yang saling adjacent pada CMap */
+{
+    int i = SearchInfoGraph(SearchGraph(Gr(CMap),CMiniMap),M);
+    POINT P;
+    MATRIKS Mat = Mat(ElMini(CMap,M));
+    switch (i)
+    {
+        case 1 : P = MakePOINT(GetFirstIdxKol(Mat)+1,GetFirstIdxBrs(Mat)); while (!IsAvail(Mat,P)) P = NextX(P); break;
+        case 2 : P = MakePOINT(GetFirstIdxKol(Mat),GetFirstIdxBrs(Mat)+1); while (!IsAvail(Mat,P)) P = NextY(P); break;
+        case 3 : P = MakePOINT(GetFirstIdxBrs(Mat)+1,GetLastIdxKol(Mat)); while (!IsAvail(Mat,P)) P = NextX(P); break;
+        case 4 : P = MakePOINT(GetLastIdxBrs(Mat),GetFirstIdxKol(Mat)+1); while (!IsAvail(Mat,P)) P = NextY(P); break;
+    }
+    return P;
+}
 
 /* ********** Predikat ********** */
 boolean IsEmptyTEMap(TEMap T)
@@ -55,9 +71,22 @@ boolean IsFullTEMap(TEMap T)
     return (NeffM(T)==MaxEnemy);
 }
 boolean IsOccupied(MiniMap M, POINT P)
-/* Mengeluarkan true jika terdapat musuh di P */
+/* Mengeluarkan true jika terdapat musuh atau medicine di P */
 {
-    return (SearchPos1(LEn(M),P));
+    return ((SearchPos1(LEn(M),P))||(Elmt2(M,P)=='M');
+}
+boolean IsAvail(MATRIKS M, POINT P)
+/* Mengeluarkan true jika P dapat diisi dengan musuh atau medicine */
+{
+    return (Elmt2(M,P)=='-');
+}
+
+/* ********** Akses Elemen ********** */
+void SetAvail(MATRIKS *M, POINT P)
+/* I.S. Point P bukan '-' */
+/* F.S. POINT P berisi nilai '-' (available) */
+{
+    SetElmt(M,P,'-');
 }
 
 /* ********** Operasi random ********** */
@@ -72,11 +101,11 @@ void GenerateRandomWayOut(MATRIKS *M,List L)
     {
         do
             GenerateRandomPOINT(*M,&temp);
-        while (Elmt2(*M,temp)!='-');
+        while (!IsAvail(*M,temp));
         while (Ordinat(temp)>GetFirstIdxKol(*M))
         {
             temp = PrevY(temp);
-            SetElmt(M,temp,'-');
+            SetAvail(M,temp);
         }
     }
     P = Next(P);
@@ -84,11 +113,11 @@ void GenerateRandomWayOut(MATRIKS *M,List L)
     {
         do
             GenerateRandomPOINT(*M,&temp);
-        while (Elmt2(*M,temp)!='-');
+        while (!IsAvail(*M,temp));
         while (Absis(temp)>GetFirstIdxBrs(*M))
         {
             temp = PrevX(temp);
-            SetElmt(M,temp,'-');
+            SetAvail(M,temp);
         }
     }
     P = Next(P);
@@ -96,11 +125,11 @@ void GenerateRandomWayOut(MATRIKS *M,List L)
     {
         do
             GenerateRandomPOINT(*M,&temp);
-        while (Elmt2(*M,temp)!='-');
+        while (!IsAvail(*M,temp));
         while (Ordinat(temp)<GetLastIdxKol(*M))
         {
             temp = NextY(temp);
-            SetElmt(M,temp,'-');
+            SetAvail(M,temp);
         }
     }
     P = Next(P);
@@ -108,12 +137,28 @@ void GenerateRandomWayOut(MATRIKS *M,List L)
     {
         do
             GenerateRandomPOINT(*M,&temp);
-        while (Elmt2(*M,temp)!='-');
+        while (!IsAvail(*M,temp));
         while (Absis(temp)<GetLastIdxBrs(*M))
         {
             temp = NextX(temp);
-            SetElmt(M,temp,'-');
+            SetAvail(M,temp);
         }
+    }
+}
+void RandomMed()
+/* Player pindah ke minimap lain, merandom kemunculan medicine dan letaknya */
+/* mungkin ada medicine mungkin tidak ada */
+/* CMiniMap sudah diupdate ke tempat player berpindah*/
+{
+    int i = rand()%10;
+    if (!i)
+    {
+        MATRIKS M = Mat(ElMini(CMap,CMiniMap));
+        POINT P;
+        do
+            GenerateRandomPOINT(M,&P);
+        while (!IsAvail(M,P));
+        SetElmt(&(Mat(ElMini(CMap,CMiniMap))),P,'M');
     }
 }
 
@@ -128,33 +173,20 @@ void InitMap(MiniMap *M,int NB ,int NK,List L)
     GenerateRandomMatriks(&Mat(*M));
     GenerateRandomWayOut(&Mat(*M),L);
 }
-void InitAllMap(Map *M,int NB,int NK,int n)
-/* I.S. M sembarang */
+void InitAllMap(int NB,int NK,int n)
+/* I.S. CMap sembarang */
 /* F.S. Seluruh bagian map sudah terdefinisi dengan n node dan masing-masing
-    matriks berukuran NBxNK */
+    matriks berukuran NBxNK, CMiniMap berisi n */
 /* Proses dengan genrate random */
 {
-    GenerateRandomGraph(&Gr(*M),n);
+    GenerateRandomGraph(&Gr(CMap)),n);
     int i;
-    addressG P = FirstG(Gr(*M));
+    addressG P = FirstG(Gr(CMap));
     for (i=1;i<=n;++i)
     {
-        InitMap(&ElMini(*M,i),NB,NK,Info(P));
+        InitMap(&ElMini(CMap,i),NB,NK,Info(P));
         P = Next(P);
     }
-    Node(*M) = n;
-}
-
-int main()
-{
-    srand((unsigned)time(NULL));
-    MATRIKS M;
-    MakeMATRIKS(20,20,&M);
-    for (int i=1;i<=10;++i)
-    {
-        GenerateRandomMatriks(&M);
-        TulisMATRIKS(M);
-        printf("\n%d\n",i);
-    }
-    return 0;
+    Node(CMap) = n;
+    CMiniMap = n;
 }
