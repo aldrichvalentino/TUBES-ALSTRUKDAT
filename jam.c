@@ -146,8 +146,3 @@ JAM Record(JAM J,time_t sec)
     temp -= sec;
     return DetikToJAM(temp);
 }
-
-int main()
-{
-    return 0;
-}

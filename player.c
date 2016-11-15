@@ -39,6 +39,15 @@ void InitiatePos(PLAYER *P,MATRIKS *M, int dir)
 	(*P).POS = Pos;
 	Elmt(*M,Absis(Pos),Ordinat(Pos)) = cplayer;
 }
+
+void SwitchPos(PLAYER *P,MATRIKS *M, POINT Po)
+/* I.S. Pemain akan pindah map, M matriks setelah pindah dan Po adalah titiknya */
+/* F.S. Pemain sudah berada di Po dan matriks sudah ada cplayer */
+{
+    Posisi(*P) = Po;
+    SetElmt(M,Po,cplayer);
+}
+
 void Jalan(PLAYER *P, MATRIKS *M,int dir, char *C, POINT *po)
 //I.S: di matriks ada player, input dir 0(left),1(up),2(right),3(down).
 /*F.S: pos Player berubah, matriks jadi gaada playernya (diisi '-'), output

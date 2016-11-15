@@ -1,6 +1,7 @@
 /* File : map.c */
 
 #include "map.h"
+#include "player.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -59,6 +60,32 @@ POINT SearchWayIn(int M)
     return P;
 }
 
+/* ********** Penambahan/Pengurangan Elemen ********** */
+void InsertLast(TEMap *T,ENEMY E,POINT P)
+/* I.S. T tidak penuh, E terdefinisi */
+/* F.S. E dimasukkan sebagai elemen terakhir dari T */
+{
+    if (!IsFullTEMap(*T))
+    {
+        ++NeffM(*T);
+        EMap(*T,NeffM(*T)) = E;
+        Pos(*T,NeffM(*T)) = P;
+    }
+}
+void DeleteTEMap(TEMap *T,POINT P)
+/* I.S. T terdefinisi, terdapat musuh di point P */
+/* F.S. elemen musuh di poin p dihapus, sisanya digeser */
+{
+    --NeffM(*T);
+    int i = SearchPos1(*T,P);
+    int j,k=NeffM(*T);
+    for (j=i;j<=k;++j)
+    {
+        EMap(*T,j) = EMap(*T,j+1);
+        Pos(*T,j) = Pos(*T,j+1);
+    }
+}
+
 /* ********** Predikat ********** */
 boolean IsEmptyTEMap(TEMap T)
 /* Mengeluarkan true jika T kosong */
@@ -69,11 +96,6 @@ boolean IsFullTEMap(TEMap T)
 /* Mengeluarkan true jika T penuh */
 {
     return (NeffM(T)==MaxEnemy);
-}
-boolean IsOccupied(MiniMap M, POINT P)
-/* Mengeluarkan true jika terdapat musuh atau medicine di P */
-{
-    return ((SearchPos1(LEn(M),P))||(Elmt2(M,P)=='M');
 }
 boolean IsAvail(MATRIKS M, POINT P)
 /* Mengeluarkan true jika P dapat diisi dengan musuh atau medicine */
@@ -146,19 +168,50 @@ void GenerateRandomWayOut(MATRIKS *M,List L)
     }
 }
 void RandomMed()
-/* Player pindah ke minimap lain, merandom kemunculan medicine dan letaknya */
-/* mungkin ada medicine mungkin tidak ada */
+/* I.S. Player pindah ke minimap lain */
+/* F.S. Merandom kemunculan medicine dan letaknya, mungkin ada medicine mungkin tidak ada */
 /* CMiniMap sudah diupdate ke tempat player berpindah*/
 {
     int i = rand()%10;
-    if (!i)
+    if (i==0)
     {
         MATRIKS M = Mat(ElMini(CMap,CMiniMap));
         POINT P;
         do
             GenerateRandomPOINT(M,&P);
         while (!IsAvail(M,P));
-        SetElmt(&(Mat(ElMini(CMap,CMiniMap))),P,'M');
+        SetElmt(&M,P,'M');
+    }
+}
+void RandomEnemy()
+/* I.S. Player pindah ke minimap lain */
+/* F.S. Merandom kemunculan enemy dan letaknya, mungkin ada enemy atau tidak */
+/* CMiniMap sudah diupdate ke tempat player berpindah */
+{
+    int i = rand()%20;
+    POINT P;
+    MATRIKS M = Mat(ElMini(CMap,CMiniMap));;
+    TEMap T = LEn(ElMini(CMap,CMiniMap));
+    if (i==0)
+    {
+        do
+            GenerateRandomPOINT(M,&P);
+        while (!IsAvail(Mat(ElMini(CMap,CMiniMap)),P));
+        SetElmt(&M,P,'E');
+        InsertLast(&T,EnemUndef(),P);
+        do
+            GenerateRandomPOINT(M,&P);
+        while (!IsAvail(Mat(ElMini(CMap,CMiniMap)),P));
+        SetElmt(&M,P,'E');
+        InsertLast(&T,EnemUndef(),P);
+    }
+    else if (i<10-NeffM(T))
+    {
+        do
+            GenerateRandomPOINT(M,&P);
+        while (!IsAvail(Mat(ElMini(CMap,CMiniMap)),P));
+        SetElmt(&M,P,'E');
+        InsertLast(&T,EnemUndef(),P);
     }
 }
 
@@ -179,7 +232,7 @@ void InitAllMap(int NB,int NK,int n)
     matriks berukuran NBxNK, CMiniMap berisi n */
 /* Proses dengan genrate random */
 {
-    GenerateRandomGraph(&Gr(CMap)),n);
+    GenerateRandomGraph(&Gr(CMap),n);
     int i;
     addressG P = FirstG(Gr(CMap));
     for (i=1;i<=n;++i)
@@ -189,4 +242,18 @@ void InitAllMap(int NB,int NK,int n)
     }
     Node(CMap) = n;
     CMiniMap = n;
+}
+void SwitchMap(PLAYER *P, int i)
+/* I.S. i angka antara 0 sampai 3 inklusif */
+/* Player berpindah map, kiri jika 0, atas jika 1, kanan jika 2, bawah jika 3 */
+{
+    infotypeG L = SearchGraph(Gr(CMap),CMiniMap);
+    int j;
+    addressL Padr = FirstL(L);
+    for (j=0;j<i;++j) Padr = Next(Padr);
+    CMiniMap = Info(Padr);
+    POINT Po = SearchWayIn(CMiniMap);
+    RandomMed();
+    RandomEnemy();
+    SwitchPos(P,&Mat(ElMini(CMap,CMiniMap)),Po);
 }

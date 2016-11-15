@@ -28,6 +28,7 @@ typedef struct {
 #define PSTR(P) (P).STR
 #define PDEF(P) (P).DEF
 #define PEXP(P) (P).EXP
+#define Posisi(P) (P).POS
 #define PosisiX(P) (P).POS.X
 #define PosisiY(P) (P).POS.Y
 // #define PSkill(P) (P).SKILL
@@ -40,9 +41,17 @@ void InitiatePos(PLAYER *P,MATRIKS *M, int dir);
  I.S: Posisi player tdk terdefinisi (-1,-1) atau di WayOut map awal tergantung dir,
  matriks tidak ada player, dir 0: mau player muncul di kiri map baru, 1(up), 2(right), 3(down)
  F.S: Posisi player di salah satu WayOut map baru, matriks jadi ada playernya.
- */
 
  void Jalan(PLAYER *P, MATRIKS *M,int dir, char *C, POINT *po);
+//I.S: di matriks ada player, input dir 0(left),1(up),2(right),3(down).
+/*F.S: pos Player berubah, matriks jadi gaada playernya (diisi '-'), output
+  char C apa yang diinjek: M,E,#,-, po menyimpan posisi sebelum jalan. */
+
+void SwitchPos(PLAYER *P,MATRIKS *M, POINT Po);
+/* I.S. Pemain akan pindah map, M matriks setelah pindah dan Po adalah titiknya */
+/* F.S. Pemain sudah berada di Po dan matriks sudah ada cplayer */
+
+void Jalan(PLAYER *P, MATRIKS *M,int dir, char *C, POINT *po);
 //I.S: di matriks ada player, input dir 0(left),1(up),2(right),3(down).
 /*F.S: pos Player berubah, matriks jadi gaada playernya (diisi '-'), output
   char C apa yang diinjek: M,E,#,-, po menyimpan posisi sebelum jalan. */

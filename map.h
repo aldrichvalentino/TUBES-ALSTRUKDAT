@@ -67,18 +67,24 @@ POINT SearchWayIn(int M);
 /* Mencari point jalan masuk jika player sebelumnya berada di CMap dan akan pergi ke MiniMap M */
 /* Asumsi : CMap dan M adalah dua map yang saling adjacent pada CMap */
 
+/* ********** Penambahan/Pengurangan Elemen ********** */
+void InsertLast(TEMap *T,ENEMY E,POINT P);
+/* I.S. T tidak penuh, E terdefinisi */
+/* F.S. E dimasukkan sebagai elemen terakhir dari T */
+void DeleteTEMap(TEMap *T,POINT P);
+/* I.S. T terdefinisi, terdapat musuh di point P */
+/* F.S. elemen musuh di poin p dihapus, sisanya digeser */
+
 /* ********** Predikat ********** */
 boolean IsEmptyTEMap(TEMap T);
 /* Mengeluarkan true jika T kosong */
 boolean IsFullTEMap(TEMap T);
 /* Mengeluarkan true jika T penuh */
-boolean IsOccupied(MATRIKS M, POINT P);
-/* Mengeluarkan true jika terdapat musuh di P */
 boolean IsAvail(MATRIKS M, POINT P);
 /* Mengeluarkan true jika P dapat diisi dengan musuh atau medicine */
 
 /* ********** Akses Elemen ********** */
-void SetAvail(MiniMap *M, POINT P);
+void SetAvail(MATRIKS *M, POINT P);
 /* I.S. Point P bukan '-' */
 /* F.S. POINT P berisi nilai '-' (available) */
 
@@ -91,6 +97,10 @@ void RandomMed();
 /* Player pindah ke minimap lain, merandom kemunculan medicine dan letaknya */
 /* mungkin ada medicine mungkin tidak ada */
 /* CMiniMap sudah diupdate ke tempat player berpindah*/
+void RandomEnemy();
+/* I.S. Player pindah ke minimap lain */
+/* F.S. Merandom kemunculan enemy dan letaknya, mungkin ada enemy atau tidak */
+/* CMiniMap sudah diupdate ke tempat player berpindah */
 
 /* ********** Insialisasi Map ********** */
 void InitMap(MiniMap *M,int NB ,int NK,List L);
