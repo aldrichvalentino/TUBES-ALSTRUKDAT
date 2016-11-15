@@ -203,7 +203,7 @@ indeks RandomIndeks(indeks i,indeks j)
 /* mengeluarkan indeks random dari i sampai j inklusif */
 /* Asumsi : i dan j sama jenisnya (baris atau kolom) i<=j */
 {
-    return (rand(j-i+1)%+i);
+    return (rand()%(j-i+1)+i);
 }
 void GenerateRandomMatriks(MATRIKS *M)
 /* I.S. M sembarang */
@@ -217,7 +217,7 @@ void GenerateRandomMatriks(MATRIKS *M)
             Elmt(*M,i,j) = '#';
     int k,l,m=(NBrsEff(*M)*NKolEff(*M))*3/2;
     GenerateRandomPOINT(*M,&P);
-    SetAvail(M,P);
+    SetElmt(M,P,'-');
     for (l=0;l<m;++l)
     {
         int dir = rand()%4;

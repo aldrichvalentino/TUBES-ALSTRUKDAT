@@ -112,5 +112,8 @@ void InitAllMap(int NB,int NK,int n);
 /* F.S. Seluruh bagian map sudah terdefinisi dengan n node dan masing-masing
     matriks berukuran NBxNK, CMiniMap berisi n */
 /* Proses dengan genrate random */
+void SwitchMap(PLAYER *P, int i)
+/* I.S. i angka antara 0 sampai 3 inklusif */
+/* Player berpindah map, kiri jika 0, atas jika 1, kanan jika 2, bawah jika 3 */
 
 #endif // MAP_H
