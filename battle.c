@@ -9,6 +9,7 @@
 #include "enemy.h"
 #include "battle.h"
 #include "mesinkata.h"
+#include "map.h"
 #include <stdio.h>
 
 /* kamus global */
@@ -91,7 +92,9 @@ void InitBattle (PLAYER *P, TE T, boolean *result)
     CreateEmptyStack(&S); //untuk set move nya
     RandomStack(&S,10);   //dirandom 1 - 10
     round = 1;           //inisiasi ronde
-    CreateEnemy(&E,T,5); //BLOM DIRANDOM!! MUSUHNYA UDH SIAP
+
+    //if( IsEnemyUndefined(EMap(T,i)) ) { di create enemy yang baru, else bikin enemy lamanya full lagi }
+    CreateEnemy(&E,T,3); //BLOM DIRANDOM!!
 
     /* dialog box */
     BattleUI(*P,E,'#','#','#','#',round);
@@ -128,17 +131,19 @@ void InitBattle (PLAYER *P, TE T, boolean *result)
             BattleUI(*P,E,'#','#','#','#',round);       //Nanti yang disamarkan 2 aja
             InputUserMoves(&PlayerMoves);
             PrintBorder();
+        } else {
+            break;
         }
     }
 
     /* akhiran */
     PrintBorder();
-    if ((EHP(E) <= 0) || (round > 10)){
+    if ((PHP(*P) > 0) || (round > 10)){
         *result = true;
         EDie(E) = true;
         printf("Congratulations! %s has been defeated!\n",EName(E));
     } else
-    if (PHP(*P) == 0){
+    if (PHP(*P) <= 0){
         *result = false;
         printf("You have lost!\n");
     }
@@ -164,7 +169,7 @@ void InputUserMoves (Queue *PlayerMoves)
             AddQueue(PlayerMoves,c);
         } else
         if(c == 'E'){                           //Mendelete E
-            DelQueue(PlayerMoves,&c);
+            CreateEmptyQueue(PlayerMoves,4);
         }
     }
 }
@@ -180,20 +185,20 @@ void BattleProccess (PLAYER *P, char MP, ENEMY *E, infotypeQ ME)
     } else
     if(MP == 'B' && ME == 'F'){
         PrintKata(PName(*P));
-        printf(" received damage from the flank!\n");
-        PHP(*P) -= 10; //nanti harus diatur sesuai level
+        printf(" received damage from the flank! -%d HP\n",Damage(ESTR(*E),PDEF(*P)));
+        PHP(*P) -= Damage(ESTR(*E),PDEF(*P)); //nanti harus diatur sesuai level
     } else
     if(MP == 'F' && ME == 'A'){
         PrintKata(EName(*E));
-        printf(" attacked! You received damage!\n");
-        PHP(*P) -= 10; //nanti harus diatur sesuai level
+        printf(" attacked! You received damage! -%d HP\n",Damage(ESTR(*E),PDEF(*P)));
+        PHP(*P) -= Damage(ESTR(*E),PDEF(*P)); //nanti harus diatur sesuai level
     } else
     if(MP == 'A' && ME == 'F'){
         PrintKata(PName(*P));
         printf(" attacked! ");
         PrintKata(EName(*E));
-        printf(" received damage!\n");
-        EHP(*E) -= 25; //nanti harus diatur sesuai level
+        printf(" received damage! -%d HP\n",Damage(PSTR(*P),EDEF(*E)));
+        EHP(*E) -= Damage(PSTR(*P),EDEF(*E)); //nanti harus diatur sesuai level
     } else
     if(MP == 'B' && ME == 'A'){
         PrintKata(PName(*P));
@@ -203,19 +208,19 @@ void BattleProccess (PLAYER *P, char MP, ENEMY *E, infotypeQ ME)
         PrintKata(PName(*P));
         printf(" flanked! ");
         PrintKata(EName(*E));
-        printf(" received damage!\n");
-        EHP(*E) -= 25; //nanti harus diatur sesuai level
+        printf(" received damage! -%d HP\n",Damage(PSTR(*P),EDEF(*E)));
+        EHP(*E) -= Damage(PSTR(*P),EDEF(*E)); //nanti harus diatur sesuai level
     } else
     if(MP == 'A' && ME == 'A'){
         PrintKata(PName(*P));
         printf(" attacked! ");
         PrintKata(EName(*E));
-        printf(" received damage!\n");
-        EHP(*E) -= 25; //nanti harus diatur sesuai level
+        printf(" received damage! -%d HP\n",Damage(PSTR(*P),EDEF(*E)));
+        EHP(*E) -= Damage(PSTR(*P),EDEF(*E)); //nanti harus diatur sesuai level
 
         PrintKata(EName(*E));
-        printf(" attacked! You received damage!\n");
-        PHP(*P) -= 10; //nanti harus diatur sesuai level
+        printf(" attacked! You received damage! -%d HP\n",Damage(ESTR(*E),PDEF(*P)));
+        PHP(*P) -= Damage(ESTR(*E),PDEF(*P)); //nanti harus diatur sesuai level
     }
     else
     {
@@ -240,4 +245,23 @@ void BattleUI (PLAYER P, ENEMY E, infotypeQ M1, infotypeQ M2, infotypeQ M3, info
 
     /* print enemy */
     PrintEnemy(E,M1,M2,M3,M4);
+}
+
+int Damage (int Attack, int Defense)
+/* menghitung damage yang dihasilkan */
+/* Attack adalah str dari penyerang */
+/* Defense adalah def dari yang diserang */
+{
+    /* kamus */
+    int selisih = Attack - Defense;
+
+    /* algoritma */
+    if (selisih >= 0){   //Jika attack > defense
+        return (int)(20 + 0.1*selisih);
+    } else
+    if (selisih < -100){  //Jika defense >>> attack
+        return (5);
+    } else {             //Jika defense > attack, -100 < selisih < -1
+        return (int)(20 + 0.15*selisih);
+    }
 }

@@ -22,5 +22,9 @@ int main (){
 
     InitBattle(&P,T,&menang);
 
+    if(menang){
+        PrintPlayer(P);
+    }
+
     return 0;
 }
