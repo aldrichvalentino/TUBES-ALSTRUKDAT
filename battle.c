@@ -84,45 +84,55 @@ void InitBattle (PLAYER *P, TE T, boolean *result)
     ENEMY E;
     Stack S;
     int i, round;
-    char move1,move2,move3,move4,c;
+    char me1,me2,me3,me4,mp1,mp2,mp3,mp4;
     Queue PlayerMoves;
 
     /* inisiasi enemy */
     CreateEmptyStack(&S); //untuk set move nya
     RandomStack(&S,10);   //dirandom 1 - 10
     round = 1;           //inisiasi ronde
-    CreateEnemy(&E,T,1); //atau 2, nanti dibikin random
+    CreateEnemy(&E,T,5); //BLOM DIRANDOM!! MUSUHNYA UDH SIAP
+
+    /* dialog box */
+    BattleUI(*P,E,'#','#','#','#',round);
+    PrintKata(EName(E)); printf(" has appeared!\n");
+    printf("What will you do?\n");
+    InputUserMoves(&PlayerMoves);
+    PrintBorder();
 
     /* akan diulan 10 ronde */
     while ((round <= 10) && (EHP(E) > 0)){
         PopStack(&S,&i);      //ambil 1
         //mengambil move dari queue
-            DelQueue(&EAksi(E)[i],&move1);
-            DelQueue(&EAksi(E)[i],&move2);
-            DelQueue(&EAksi(E)[i],&move3);
-            DelQueue(&EAksi(E)[i],&move4);
+            DelQueue(&EAksi(E)[i],&me1);
+            DelQueue(&EAksi(E)[i],&me2);
+            DelQueue(&EAksi(E)[i],&me3);
+            DelQueue(&EAksi(E)[i],&me4);
 
-        /* Panggil Battle UI */
-        if(PHP(*P) != 0){        //player masih punya HP
+        /* pertarungan dimulai */
+        BattleUI(*P,E,me1,me2,me3,me4,round);
+        DelQueue(&PlayerMoves,&mp1);
+        DelQueue(&PlayerMoves,&mp2);
+        DelQueue(&PlayerMoves,&mp3);
+        DelQueue(&PlayerMoves,&mp4);
+        printf("Inserted Commands : %c %c %c %c \n",mp1,mp2,mp3,mp4);
+
+        BattleProccess(P,mp1,&E,me1);
+        BattleProccess(P,mp2,&E,me2);
+        BattleProccess(P,mp3,&E,me3);
+        BattleProccess(P,mp4,&E,me4);
+
+        ++round;
+
+        if(PHP(*P) > 0 && EHP(E) > 0 && round <= 10){        //player masih punya HP
             BattleUI(*P,E,'#','#','#','#',round);       //Nanti yang disamarkan 2 aja
-            InputUserMoves(E, &PlayerMoves);
+            InputUserMoves(&PlayerMoves);
             PrintBorder();
-
-            /* pertarungan dimulai */
-            BattleUI(*P,E,move1,move2,move3,move4,round);
-            DelQueue(&PlayerMoves,&c);
-            BattleProccess(P,c,&E,move1);
-            DelQueue(&PlayerMoves,&c);
-            BattleProccess(P,c,&E,move2);
-            DelQueue(&PlayerMoves,&c);
-            BattleProccess(P,c,&E,move3);
-            DelQueue(&PlayerMoves,&c);
-            BattleProccess(P,c,&E,move4);
-            ++round;
         }
     }
 
     /* akhiran */
+    PrintBorder();
     if ((EHP(E) <= 0) || (round > 10)){
         *result = true;
         EDie(E) = true;
@@ -135,7 +145,7 @@ void InitBattle (PLAYER *P, TE T, boolean *result)
     PrintBorder();
 }
 
-void InputUserMoves (ENEMY E, Queue *PlayerMoves)
+void InputUserMoves (Queue *PlayerMoves)
 /* Prosedur untuk menampilkan battle */
 /* I.S. : Seluruh peta, player, enemy terdefinisi */
 /* F.S. : enemy dikalahkan atau tidak, HP berkurang, exp bertambah atau berkurang */
@@ -144,11 +154,6 @@ void InputUserMoves (ENEMY E, Queue *PlayerMoves)
 {
     /* Kamus */
     char c;
-
-    /* dialog box */
-    PrintKata(EName(E)); printf(" has appeared!\n");
-    printf("What will you do?\n");
-    PrintBorder();
 
     /*Insert Command*/
     printf("Please insert 4 commands : ");
@@ -175,11 +180,12 @@ void BattleProccess (PLAYER *P, char MP, ENEMY *E, infotypeQ ME)
     } else
     if(MP == 'B' && ME == 'F'){
         PrintKata(PName(*P));
-        printf(" is blocking the flank!\n");
+        printf(" received damage from the flank!\n");
+        PHP(*P) -= 10; //nanti harus diatur sesuai level
     } else
     if(MP == 'F' && ME == 'A'){
         PrintKata(EName(*E));
-        printf(" attacked! Flank failed! You received damage!\n");
+        printf(" attacked! You received damage!\n");
         PHP(*P) -= 10; //nanti harus diatur sesuai level
     } else
     if(MP == 'A' && ME == 'F'){
@@ -197,8 +203,21 @@ void BattleProccess (PLAYER *P, char MP, ENEMY *E, infotypeQ ME)
         PrintKata(PName(*P));
         printf(" flanked! ");
         PrintKata(EName(*E));
-        printf(" received no damage!\n");
+        printf(" received damage!\n");
+        EHP(*E) -= 25; //nanti harus diatur sesuai level
     } else
+    if(MP == 'A' && ME == 'A'){
+        PrintKata(PName(*P));
+        printf(" attacked! ");
+        PrintKata(EName(*E));
+        printf(" received damage!\n");
+        EHP(*E) -= 25; //nanti harus diatur sesuai level
+
+        PrintKata(EName(*E));
+        printf(" attacked! You received damage!\n");
+        PHP(*P) -= 10; //nanti harus diatur sesuai level
+    }
+    else
     {
         printf("Nothing happened!\n");
     }
