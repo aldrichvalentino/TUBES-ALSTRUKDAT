@@ -16,17 +16,24 @@ void CreateEnemUndef(ENEMY *E)
     EEXP(*E) = Undef;
     EDEF(*E) = Undef;
     EDie(*E) = false;
+    //CreateEmptyQueue(EAksi(*E));
 }
 void CreateEnemy(ENEMY *E,TE T,int i)
 /* I.S. T terdefinsi, E sembarang, i<IdxMaxTE */
 /* F.S. E berisi data musuh yang terdapat pada tabel T pada indeks i */
 {
+    //kamus
+    int j;
+
     CopyKata(EName(InfoT(T,i)),&EName(*E));
     EHP(*E) = EHP(InfoT(T,i));
     ESTR(*E) = ESTR(InfoT(T,i));
     EDEF(*E) = EDEF(InfoT(T,i));
     EEXP(*E) = EEXP(InfoT(T,i));
     EDie(*E) = false;
+    for(j = 1; j <= IdxMaxAksi; ++j){
+        EAksi(*E)[j] = EAksi(InfoT(T,i))[j];
+    }
 }
 ENEMY EnemUndef()
 /* Mengeluarkan enemy Undefined */

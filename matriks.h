@@ -19,6 +19,7 @@ typedef struct {
 	ElType Mem[BrsMax+1][KolMax+1];
     int NBrsEff; /* banyaknya/ukuran baris yg terdefinisi */
 	int NKolEff; /* banyaknya/ukuran kolom yg terdefinisi */
+    POINT WayOut[4]; /* banyaknya jalan masuk/keluar ke dalam suatu peta matriks */
 } MATRIKS;
 /* NBrsEff <= 1 dan NKolEff <= 1 */
 /* Indeks matriks yang digunakan: [BrsMin..BrsMax][KolMin..KolMax] */
@@ -35,6 +36,7 @@ void MakeMATRIKS (int NB,int NK,MATRIKS *M);
 #define NBrsEff(M) (M).NBrsEff
 #define NKolEff(M) (M).NKolEff
 #define Elmt(M,i,j) (M).Mem[(i)][(j)]
+#define WayOut(M,i) (M).WayOut[(i)]
 
 /* *** Selektor "DUNIA MATRIKS" *** */
 boolean IsIdxValid (int i, int j);
@@ -105,6 +107,9 @@ void SetElmt(MATRIKS *M,POINT P,ElType X);
 void GenerateRandomPOINT(MATRIKS M,POINT *P);
 /* I.S. M terdefinisi, P sembarang */
 /* F.S. P merupakan indeks valid (bukan pinggiran) */
+
+void SearchWayOut (MATRIKS *M);
+/* mencari jalan keluar matriks, yaitu di tepi matriks yg merupakan '-' */
 
 /* ********** Operasi random ********** */
 indeks RandomIndeks(indeks i,indeks j);

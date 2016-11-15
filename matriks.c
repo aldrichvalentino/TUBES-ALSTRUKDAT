@@ -19,6 +19,10 @@ void MakeMATRIKS (int NB, int NK, MATRIKS * M){
 /* F.S. Matriks M sesuai dengan definisi di atas terbentuk */
     NBrsEff(*M) = NB;
     NKolEff(*M) = NK;
+    WayOut(*M,0) = MakePOINT(-1,-1);
+    WayOut(*M,1) = MakePOINT(-1,-1);
+    WayOut(*M,2) = MakePOINT(-1,-1);
+    WayOut(*M,3) = MakePOINT(-1,-1);
 }
 
 /* *** Selektor "DUNIA MATRIKS" *** */
@@ -61,6 +65,7 @@ void CopyMATRIKS (MATRIKS MIn, MATRIKS * MHsl){
     for (i=GetFirstIdxBrs(MIn);i<=GetLastIdxBrs(MIn);++i)
         for (j=GetFirstIdxKol(MIn);j<=GetLastIdxKol(MIn);++j)
             Elmt(*MHsl,i,j)=Elmt(MIn,i,j);
+    SearchWayOut(MHsl);
 }
 
 /* ********** KELOMPOK BACA/TULIS ********** */
@@ -162,6 +167,35 @@ void GenerateRandomPOINT(MATRIKS M,POINT *P)
     j = RandomIndeks(GetFirstIdxKol(M)+1,GetLastIdxKol(M)-1);
     Absis(*P) = i;
     Ordinat(*P) = j;
+}
+
+void SearchWayOut (MATRIKS *M)
+/* mencari jalan keluar matriks, yaitu di tepi matriks yg merupakan '-' */
+{
+    //kamus
+    int i,j;
+
+    //algoritma
+    for(i = BrsMin; i <= GetLastIdxBrs(*M); i++){ //sisi kiri
+        if(Elmt(*M,i,1) == '-'){
+            WayOut(*M,0) = MakePOINT(i,1);
+        }
+    }
+    for(i = BrsMin; i <= GetLastIdxBrs(*M); i++){ //sisi kanan
+        if(Elmt(*M,i,GetLastIdxKol(*M)) == '-'){
+            WayOut(*M,2) = MakePOINT(i,GetLastIdxKol(*M));
+        }
+    }
+    for(j = KolMin; j <= GetLastIdxKol(*M); j++){ //sisi atas
+        if(Elmt(*M,1,j) == '-'){
+            WayOut(*M,1) = MakePOINT(1,j);
+        }
+    }
+    for(j = KolMin; j <= GetLastIdxKol(*M); j++){ //sisi bawah
+        if(Elmt(*M,GetLastIdxBrs(*M),j) == '-'){
+            WayOut(*M,3) = MakePOINT(GetLastIdxBrs(*M),j);
+        }
+    }
 }
 
 /* ********** Operasi random ********** */
