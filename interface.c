@@ -5,7 +5,7 @@
 #include "matriks.h"
 #include "point.h"
 #include "jam.h"
-
+#include <string.h>
 
 int main (){
     //KAMUS
@@ -40,25 +40,7 @@ int main (){
     }
     if (IsKataSama(pilihan,NG))
     {
-        printf("Masukkan Nama User :\n");
-        InputUser(&Nama);
-        while (Nama.Length > 16)
-        {
-            printf("Nama harus dibawah 16 Huruf\n");
-            InputUser(&Nama);
-        }
-        NamaDone = true;
-        FPlayer = fopen("listplayer.txt", "a");
-        for (i = 0; i < Nama.Length; i++)
-        {
-            fprintf(FPlayer,"%c",Nama.TabKata[i]);
-        }
-        fprintf(FPlayer," | ");
-        JAM J = MakeJAM(0,0,0);
-        fprintf(FPlayer,"%02d:%02d:%02d",Hour(J),Minute(J),Second(J));
-        fprintf(FPlayer,"\n");
-        fclose(FPlayer);
-
+        CreateUser(FPlayer);
         //BacaMATRIKS(&M1,&M2,&M3,&M4,&M5,20,20);
         //M6 = GenerateMAP(M1);
         //TulisMATRIKS(M6);
@@ -101,4 +83,56 @@ int main (){
 
     }
     return 0;
+}
+
+void CreateUser(FILE *F)
+/* prosedur untuk membuat user baru, PENGECEKANNYA MASIH SALAH GATAU HRS GIMANA */
+{
+    boolean sama;
+    char c[256];
+    char line[256];
+    int i;
+    printf("Masukkan Nama User :\n");
+    scanf("%s",c);
+    sama = true;
+    if (F != NULL)
+    {
+        F = fopen("listplayer.txt", "r");
+        while (sama)
+        {
+            while (fgets(line,sizeof(line),F))
+            {
+                if (!strcmp(line,c))
+                {
+                    printf("Nama User telah digunakan, silahkan pilih nama lain\n");
+                    sama = true;
+                }
+                else
+                {
+                    sama = false;
+                }
+            }
+            scanf("%s",c);
+        }
+    }
+    while (strlen(c) > 16)
+    {
+        if (strlen(c) > 16)
+        {
+            printf("Nama User harus dibawah 16 Huruf\n");
+        }
+        scanf("%s",c);
+    }
+    fclose(F);
+    if (F == NULL)
+    {
+        F = fopen("listplayer.txt", "w");
+    }
+    else
+    {
+        F = fopen("listplayer.txt", "a");
+    }
+    fprintf(F,"%s",c);
+    fprintf(F,"\n");
+    fclose(F);
 }
