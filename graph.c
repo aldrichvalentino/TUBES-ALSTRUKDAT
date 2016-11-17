@@ -132,7 +132,7 @@ int SearchInfoGraph(infotypeG L, infotypeL i)
     if (!IsEmptyList(L))
     {
         int count = 1;
-        addressL P = First(L);
+        addressL P = FirstL(L);
         while ((P!=Nil)&&(Info(P)!=i))
         {
             ++count;

@@ -26,7 +26,7 @@ void PrintPlayer ( PLAYER P );
 void PrintEnemy ( ENEMY E , infotypeQ M1, infotypeQ M2, infotypeQ M3, infotypeQ M4 );
 /* menampilkan status enemy */
 
-void InitBattle (PLAYER *P, TE T, boolean *result);
+void InitBattle (PLAYER *P, boolean *result,TE T);
 /* I.S. : player dan tabel enemy terdefinisi
           akan mencatat seluruh keadaan sebelum battle dimulai
           akan memanggil fungsi battle UI dan dialog box sebanyak 10 kali atau hingga musuh kalah
@@ -51,5 +51,10 @@ void BattleUI (PLAYER P, ENEMY E, infotypeQ M1, infotypeQ M2, infotypeQ M3, info
 /* F.S. : enemy dikalahkan atau tidak, HP berkurang, exp bertambah atau berkurang */
 /*        result akan terisi true apabila menang, false bila kalah */
 /* setelah selesai dan exp bertambah, program caller harus mengecek exp, lalu menambahkan level jika sudah cukup */
+
+int Damage (int Attack, int Defense);
+/* menghitung damage yang dihasilkan */
+/* Attack adalah str dari penyerang */
+/* Defense adalah def dari yang diserang */
 
 #endif

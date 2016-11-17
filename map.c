@@ -6,6 +6,9 @@
 #include <stdlib.h>
 #include <time.h>
 
+int CMiniMap;
+Map CMap;
+
 void CreateEmptyTEMap(TEMap *T)
 /* I.S. T sembarang */
 /* F.S. neff(T) = 0, T tidak berisi informasi apapun */
@@ -43,19 +46,18 @@ ENEMY SearchPos2(TEMap T,POINT P)
     if (i==0) return EnemUndef();
     else return EMap(T,i);
 }
-POINT SearchWayIn(int M)
+POINT SearchWayIn(int M,int dir)
 /* Mencari point jalan masuk jika player sebelumnya berada di CMap dan akan pergi ke MiniMap M */
 /* Asumsi : CMap dan M adalah dua map yang saling adjacent pada CMap */
 {
-    int i = SearchInfoGraph(SearchGraph(Gr(CMap),CMiniMap),M);
     POINT P;
     MATRIKS Mat = Mat(ElMini(CMap,M));
-    switch (i)
+    switch (dir)
     {
-        case 1 : P = MakePOINT(GetFirstIdxKol(Mat)+1,GetFirstIdxBrs(Mat)); while (!IsAvail(Mat,P)) P = NextX(P); break;
-        case 2 : P = MakePOINT(GetFirstIdxKol(Mat),GetFirstIdxBrs(Mat)+1); while (!IsAvail(Mat,P)) P = NextY(P); break;
-        case 3 : P = MakePOINT(GetFirstIdxBrs(Mat)+1,GetLastIdxKol(Mat)); while (!IsAvail(Mat,P)) P = NextX(P); break;
-        case 4 : P = MakePOINT(GetLastIdxBrs(Mat),GetFirstIdxKol(Mat)+1); while (!IsAvail(Mat,P)) P = NextY(P); break;
+        case 0 : P = MakePOINT(GetFirstIdxBrs(Mat)+1,GetLastIdxKol(Mat)); while (!IsAvail(Mat,P)) P = NextX(P); break;
+        case 1 : P = MakePOINT(GetLastIdxBrs(Mat),GetFirstIdxKol(Mat)+1); while (!IsAvail(Mat,P)) P = NextY(P); break;
+        case 2 : P = MakePOINT(GetFirstIdxBrs(Mat)+1,GetFirstIdxKol(Mat)); while (!IsAvail(Mat,P)) P = NextX(P); break;
+        case 3 : P = MakePOINT(GetFirstIdxBrs(Mat),GetFirstIdxKol(Mat)+1); while (!IsAvail(Mat,P)) P = NextY(P); break;
     }
     return P;
 }
@@ -172,15 +174,16 @@ void RandomMed()
 /* F.S. Merandom kemunculan medicine dan letaknya, mungkin ada medicine mungkin tidak ada */
 /* CMiniMap sudah diupdate ke tempat player berpindah*/
 {
-    int i = rand()%10;
-    if (i==0)
+    int i = rand()%5;
+    if (i==1)
     {
         MATRIKS M = Mat(ElMini(CMap,CMiniMap));
         POINT P;
         do
             GenerateRandomPOINT(M,&P);
         while (!IsAvail(M,P));
-        SetElmt(&M,P,'M');
+        SetElmt(&Mat(ElMini(CMap,CMiniMap)),P,'M');
+        TulisPOINT(P);
     }
 }
 void RandomEnemy()
@@ -188,30 +191,29 @@ void RandomEnemy()
 /* F.S. Merandom kemunculan enemy dan letaknya, mungkin ada enemy atau tidak */
 /* CMiniMap sudah diupdate ke tempat player berpindah */
 {
-    int i = rand()%20;
+    int i = rand()%10;
     POINT P;
-    MATRIKS M = Mat(ElMini(CMap,CMiniMap));;
-    TEMap T = LEn(ElMini(CMap,CMiniMap));
-    if (i==0)
+    MATRIKS M = Mat(ElMini(CMap,CMiniMap));
+    if (i==1)
     {
         do
             GenerateRandomPOINT(M,&P);
-        while (!IsAvail(Mat(ElMini(CMap,CMiniMap)),P));
-        SetElmt(&M,P,'E');
-        InsertLast(&T,EnemUndef(),P);
+        while (!IsAvail(M,P));
+        SetElmt(&Mat(ElMini(CMap,CMiniMap)),P,'E');
+        InsertLast(&LEn(ElMini(CMap,CMiniMap)),EnemUndef(),P);
         do
             GenerateRandomPOINT(M,&P);
         while (!IsAvail(Mat(ElMini(CMap,CMiniMap)),P));
-        SetElmt(&M,P,'E');
-        InsertLast(&T,EnemUndef(),P);
+        SetElmt(&Mat(ElMini(CMap,CMiniMap)),P,'E');
+        InsertLast(&LEn(ElMini(CMap,CMiniMap)),EnemUndef(),P);
     }
-    else if (i<10-NeffM(T))
+    else if (2*i<10-NeffM(LEn(ElMini(CMap,CMiniMap))))
     {
         do
             GenerateRandomPOINT(M,&P);
-        while (!IsAvail(Mat(ElMini(CMap,CMiniMap)),P));
-        SetElmt(&M,P,'E');
-        InsertLast(&T,EnemUndef(),P);
+        while (!IsAvail(M,P));
+        SetElmt(&Mat(ElMini(CMap,CMiniMap)),P,'E');
+        InsertLast(&LEn(ElMini(CMap,CMiniMap)),EnemUndef(),P);
     }
 }
 
@@ -251,9 +253,17 @@ void SwitchMap(PLAYER *P, int i)
     int j;
     addressL Padr = FirstL(L);
     for (j=0;j<i;++j) Padr = Next(Padr);
+    POINT Po = SearchWayIn(Info(Padr),i);
+    SwitchPos(P,&Mat(ElMini(CMap,Info(Padr))),Po);
     CMiniMap = Info(Padr);
-    POINT Po = SearchWayIn(CMiniMap);
     RandomMed();
     RandomEnemy();
-    SwitchPos(P,&Mat(ElMini(CMap,CMiniMap)),Po);
+}
+
+/* ********** Penulisan Map ********** */
+void PrintMap()
+/* Menampilkan map yang sedang aktif di layar */
+{
+    TulisMATRIKS(Mat(ElMini(CMap,CMiniMap)));
+    printf("\n");
 }

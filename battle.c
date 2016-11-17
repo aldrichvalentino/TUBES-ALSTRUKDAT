@@ -11,6 +11,7 @@
 #include "mesinkata.h"
 #include "map.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 /* kamus global */
 int ronde = 1;
@@ -73,7 +74,7 @@ void PrintEnemy ( ENEMY E , infotypeQ M1, infotypeQ M2, infotypeQ M3, infotypeQ 
     printf("\n");
 }
 
-void InitBattle (PLAYER *P, TE T, boolean *result)
+void InitBattle (PLAYER *P, boolean *result,TE T)
 /* I.S. : player dan tabel enemy terdefinisi
           akan mencatat seluruh keadaan sebelum battle dimulai
           akan memanggil fungsi battle UI dan dialog box sebanyak 10 kali atau hingga musuh kalah
@@ -94,7 +95,8 @@ void InitBattle (PLAYER *P, TE T, boolean *result)
     round = 1;           //inisiasi ronde
 
     //if( IsEnemyUndefined(EMap(T,i)) ) { di create enemy yang baru, else bikin enemy lamanya full lagi }
-    CreateEnemy(&E,T,3); //BLOM DIRANDOM!!
+    int j = rand()%NeffM(T);
+    CreateEnemy(&E,T,i+1); //BLOM DIRANDOM!!
 
     /* dialog box */
     BattleUI(*P,E,'#','#','#','#',round);

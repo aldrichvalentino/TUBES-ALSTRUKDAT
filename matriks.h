@@ -101,6 +101,8 @@ int NBElmt (MATRIKS M);
 /* ********** Matriks dan Point ********** */
 ElType Elmt2(MATRIKS M,POINT P);
 /* Mengakses matriks dengan point, mengeluarkan elemen di M pada posisi P */
+boolean IsIdxEff2(MATRIKS M,POINT P);
+/* Mengeluarkan true jika indeks yang ditunjuk P efektif */
 void SetElmt(MATRIKS *M,POINT P,ElType X);
 /* I.S. M terdefinisi, P indeks yang valid, X sembarang */
 /* F.S. Elemen M pada posisi P adalah X */

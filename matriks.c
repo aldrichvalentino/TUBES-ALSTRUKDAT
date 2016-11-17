@@ -152,6 +152,13 @@ ElType Elmt2(MATRIKS M,POINT P)
 {
     return (Elmt(M,Absis(P),Ordinat(P)));
 }
+boolean IsIdxEff2(MATRIKS M,POINT P)
+/* Mengeluarkan true jika indeks yang ditunjuk P efektif */
+{
+    int i = Absis(P);
+    int j = Ordinat(P);
+    return (IsIdxEff(M,i,j));
+}
 void SetElmt(MATRIKS *M,POINT P,ElType X)
 /* I.S. M terdefinisi, P indeks yang valid, X sembarang */
 /* F.S. Elemen M pada posisi P adalah X */
