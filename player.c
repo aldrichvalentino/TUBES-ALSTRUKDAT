@@ -84,3 +84,73 @@ void InitPosPlayer(PLAYER *P,MATRIKS *M)
     Posisi(*P) = Po;
     SetElmt(M,Po,cplayer);
 }
+
+void PrintGame(PLAYER P)
+{
+	//clrscr();
+	int i;
+	PrintBorder();
+	PrintKata(PName(P));
+	i = 15 - PName(P).Length;
+	PrintCLoop('*', i);
+	PrintGuard();
+	
+	printf("LVL : %d", PLevel(P));
+	i = 4 - digit(PLevel(P));
+	PrintCLoop('*', i);
+	PrintGuard();
+	
+	printf("HP : %d", PHP(P));
+	i = 4 - digit(PHP(P));
+	PrintCLoop('*', i);
+	printf(" "); //karena "H""P" hanya 2 huruf jadi ditambah 1 spasi biar sama panjang
+	PrintGuard();
+	
+	printf("STR : %d", PSTR(P));
+	i = 4 - digit(PSTR(P));
+	PrintCLoop('*', i);
+	PrintGuard();
+	
+	printf("DEF : %d", PDEF(P));
+	i = 4 - digit(PDEF(P));
+	PrintCLoop('*', i);
+	PrintGuard();
+	
+	printf("EXP : %d", PEXP(P));
+	i = 4 - digit(PEXP(P));
+	PrintCLoop('*', i);
+	printf("\n");
+	PrintBorder();
+	
+	PrintMap();
+	PrintBorder();
+
+	printf("<narasi baris 1>\n");
+	printf("<narasi baris 2>\n");
+	PrintBorder();
+
+	printf("Command : ");
+}
+
+void PrintCLoop(char c, int x)
+{
+	int i = 1;
+	while (i<=x)
+	{
+		printf("%c",c);
+		i++;
+	}
+}
+
+int digit(int X)
+{
+	if (X>=0 && X<=9)
+	{
+		return 1;
+	}
+	else
+	{
+		return 1+digit(X/10);
+	}
+}
+
