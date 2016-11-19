@@ -1,5 +1,7 @@
 /* File : mprogram.c */
-
+/* 
+gcc -o mprogram mprogram.c matriks.c battle.c stack.c queue.c enemy.c player.c point.c map.c graph.c listlinier.c mesinkata.c mesinkar.c -lm
+*/
 #include "map.h"
 #include "player.h"
 #include "enemy.h"
@@ -160,7 +162,7 @@ int main()
     CreateKata("Aku",&Aku);
     CreateEmptyPlayer(&P,Aku);
     InitAll(&P,&T);
-    PrintMap();
+    PrintGame(P);
 	CreateKata("GL",&GL);
 	CreateKata("GU",&GU);
 	CreateKata("GD",&GD);
@@ -175,7 +177,7 @@ int main()
         else if (IsKataSama(input,GU)) Jalan(&P,&Mat(ElMini(CMap,CMiniMap)),1,T);
         else if (IsKataSama(input,GR)) Jalan(&P,&Mat(ElMini(CMap,CMiniMap)),2,T);
         else if (IsKataSama(input,GD)) Jalan(&P,&Mat(ElMini(CMap,CMiniMap)),3,T);
-        PrintMap();
+        PrintGame(P);
     } while (!IsKataSama(input,EXIT));
     /*
     boolean done = false;
