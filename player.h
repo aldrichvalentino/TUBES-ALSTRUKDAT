@@ -41,6 +41,8 @@ void clrscr();
 void CreateEmptyPlayer(PLAYER *P, Kata X);
 /* Membuat Player dengan nama X, exp = 0 */
 
+void DarahNaik(PLAYER *P);
+
 void SwitchPos(PLAYER *P,MATRIKS *M, POINT Po);
 /* I.S. Pemain akan pindah map, M matriks setelah pindah dan Po adalah titiknya */
 /* F.S. Pemain sudah berada di Po dan matriks sudah ada cplayer */
@@ -53,6 +55,8 @@ void InitPosPlayer(PLAYER *P,MATRIKS *M);
 /* I.S. game dimulai */
 /* F.S. Posisi player sudah ditentukan */
 
-
+void PrintGame(PLAYER P);
+void PrintCLoop(char c, int x);
+int digit(int X);
 #endif
 

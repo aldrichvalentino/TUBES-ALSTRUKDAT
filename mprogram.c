@@ -1,5 +1,7 @@
 /* File : mprogram.c */
-
+/*
+gcc -o mprogram mprogram.c matriks.c battle.c stack.c queue.c enemy.c player.c point.c map.c graph.c listlinier.c mesinkata.c mesinkar.c -lm
+*/
 #include "map.h"
 #include "player.h"
 #include "enemy.h"
@@ -106,22 +108,22 @@ void ProcessCommand(Kata pilihan)
     else if (IsKataSama(pilihan,GL))
     {
         Jalan(&P,&Mat(ElMini(CMap,CMiniMap)),0,T);
-        PrintMap();
+        PrintGame(P);
     }
     else if (IsKataSama(pilihan,GU))
     {
         Jalan(&P,&Mat(ElMini(CMap,CMiniMap)),1,T);
-        PrintMap();
+        PrintGame(P);
     }
     else if (IsKataSama(pilihan,GR))
     {
         Jalan(&P,&Mat(ElMini(CMap,CMiniMap)),2,T);
-        PrintMap();
+        PrintGame(P);
     }
     else if (IsKataSama(pilihan,GD))
     {
         Jalan(&P,&Mat(ElMini(CMap,CMiniMap)),3,T);
-        PrintMap();
+        PrintGame(P);
     }
     else if (IsKataSama(pilihan,SAVE))
     {
@@ -150,6 +152,7 @@ int main()
     {
         do
         {
+            //PrintBrightsouls();
             Interface();
             BacaCommandAwal(&input);
             ProcessCommand(input);
@@ -157,7 +160,7 @@ int main()
         if (IsKataSama(input,SG))
         {
             InitAll();
-            PrintMap();
+            PrintGame(P);
             do
             {
                 BacaCommandGame(&input);

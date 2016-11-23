@@ -5,7 +5,8 @@
 #include "matriks.h"
 #include "point.h"
 #include "jam.h"
-#include <string.h>
+#include "gambar.h"
+
 
 int apa (){
     //KAMUS
@@ -40,7 +41,29 @@ int apa (){
     }
     if (IsKataSama(pilihan,NG))
     {
+<<<<<<< HEAD
         //CreateUser(FPlayer);
+=======
+        printf("Masukkan Nama User :\n");
+        InputUser(&Nama);
+        while (Nama.Length > 16)
+        {
+            printf("Nama harus dibawah 16 Huruf\n");
+            InputUser(&Nama);
+        }
+        NamaDone = true;
+        FPlayer = fopen("listplayer.txt", "a");
+        for (i = 0; i < Nama.Length; i++)
+        {
+            fprintf(FPlayer,"%c",Nama.TabKata[i]);
+        }
+        fprintf(FPlayer," | ");
+        JAM J = MakeJAM(0,0,0);
+        fprintf(FPlayer,"%02d:%02d:%02d",Hour(J),Minute(J),Second(J));
+        fprintf(FPlayer,"\n");
+        fclose(FPlayer);
+
+>>>>>>> 10720492717e790e57601d99feb83b6eeea83d59
         //BacaMATRIKS(&M1,&M2,&M3,&M4,&M5,20,20);
         //M6 = GenerateMAP(M1);
         //TulisMATRIKS(M6);
@@ -84,6 +107,7 @@ int apa (){
     }
     return 0;
 }
+<<<<<<< HEAD
 
 void CreateUser(boolean *succeed)
 /* prosedur untuk membuat user baru */
@@ -127,3 +151,5 @@ void CreateUser(boolean *succeed)
     }
     *succeed = !sama;
 }
+=======
+>>>>>>> 10720492717e790e57601d99feb83b6eeea83d59
