@@ -183,7 +183,6 @@ void RandomMed()
             GenerateRandomPOINT(M,&P);
         while (!IsAvail(M,P));
         SetElmt(&Mat(ElMini(CMap,CMiniMap)),P,'M');
-        TulisPOINT(P);
     }
 }
 void RandomEnemy()
@@ -264,6 +263,7 @@ void SwitchMap(PLAYER *P, int i)
 void PrintMap()
 /* Menampilkan map yang sedang aktif di layar */
 {
+    clrscr();
     TulisMATRIKS(Mat(ElMini(CMap,CMiniMap)));
     printf("\n");
 }

@@ -36,6 +36,8 @@ typedef struct {
 #define PosisiY(P) (P).POS.Y
 // #define PSkill(P) (P).SKILL
 
+void clrscr();
+
 void CreateEmptyPlayer(PLAYER *P, Kata X);
 /* Membuat Player dengan nama X, exp = 0 */
 

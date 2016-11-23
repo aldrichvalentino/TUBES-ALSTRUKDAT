@@ -7,7 +7,7 @@
 #include "jam.h"
 #include <string.h>
 
-int main (){
+int apa (){
     //KAMUS
     Kata pilihan,Nama,NG,SG,LG,EXIT;
     MATRIKS M1,M2,M3,M4,M5,M6;
@@ -40,7 +40,7 @@ int main (){
     }
     if (IsKataSama(pilihan,NG))
     {
-        CreateUser(FPlayer);
+        //CreateUser(FPlayer);
         //BacaMATRIKS(&M1,&M2,&M3,&M4,&M5,20,20);
         //M6 = GenerateMAP(M1);
         //TulisMATRIKS(M6);
@@ -63,8 +63,8 @@ int main (){
                 fprintf(FPlayer,"%c",Nama.TabKata[i]);
             }
             fprintf(FPlayer," | ");
-            JAM J = MakeJAM(0,0,0);
-            fprintf(FPlayer,"%02d:%02d:%02d",Hour(J),Minute(J),Second(J));
+            //JAM J = MakeJAM(0,0,0);
+            //fprintf(FPlayer,"%02d:%02d:%02d",Hour(J),Minute(J),Second(J));
             fprintf(FPlayer,"\n");
             fclose(FPlayer);
             NamaDone = true;
@@ -85,54 +85,45 @@ int main (){
     return 0;
 }
 
-void CreateUser(FILE *F)
-/* prosedur untuk membuat user baru, PENGECEKANNYA MASIH SALAH GATAU HRS GIMANA */
+void CreateUser(boolean *succeed)
+/* prosedur untuk membuat user baru */
+/* succeed bernilai true jika user baru berhasil dibuat */
 {
     boolean sama;
     char c[256];
     char line[256];
     int i;
+    FILE *F = fopen("listplayer.txt", "r");
     printf("Masukkan Nama User :\n");
-    scanf("%s",c);
-    sama = true;
-    if (F != NULL)
-    {
-        F = fopen("listplayer.txt", "r");
-        while (sama)
-        {
-            while (fgets(line,sizeof(line),F))
-            {
-                if (!strcmp(line,c))
-                {
-                    printf("Nama User telah digunakan, silahkan pilih nama lain\n");
-                    sama = true;
-                }
-                else
-                {
-                    sama = false;
-                }
-            }
-            scanf("%s",c);
-        }
-    }
+    fgets(c,sizeof(c),stdin);
     while (strlen(c) > 16)
     {
         if (strlen(c) > 16)
         {
             printf("Nama User harus dibawah 16 Huruf\n");
+            printf("Masukkan Nama User :\n");
         }
-        scanf("%s",c);
+        fgets(c,sizeof(c),stdin);
+    }
+    sama = false;
+    while ((fgets(line,sizeof(line),F)!=NULL)&&(!sama))
+    {
+        if (!strcmp(line,c))
+        {
+            printf("Nama User telah digunakan, silahkan pilih nama lain\n");
+            sama = true;
+        }
+        else
+        {
+            sama = false;
+        }
     }
     fclose(F);
-    if (F == NULL)
-    {
-        F = fopen("listplayer.txt", "w");
-    }
-    else
+    if (!sama)
     {
         F = fopen("listplayer.txt", "a");
+        fputs(c,F);
+        fclose(F);
     }
-    fprintf(F,"%s",c);
-    fprintf(F,"\n");
-    fclose(F);
+    *succeed = !sama;
 }

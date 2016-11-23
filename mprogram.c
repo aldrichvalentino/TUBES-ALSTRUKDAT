@@ -4,47 +4,56 @@
 #include "player.h"
 #include "enemy.h"
 #include "battle.h"
+#include "jam.h"
+#include "fileeksternal.h"
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
 
 boolean NamaDone = false;
+JAM JamGame;
+time_t sec;
+Kata NG,SG,LG,EXIT,GU,GL,GD,GR,SAVE,LOAD,SKILL;
+PLAYER P;
+TE T;
+
+void SetAllKata()
+/* Mempersiapkan semua kata */
+{
+    CreateKata("NEW GAME",&NG);
+    CreateKata("START GAME",&SG);
+    CreateKata("LOAD GAME",&LG);
+    CreateKata("EXIT",&EXIT);
+    CreateKata("GU",&GU);
+    CreateKata("GL",&GL);
+    CreateKata("GD",&GD);
+    CreateKata("GR",&GR);
+    CreateKata("SAVE",&SAVE);
+    CreateKata("SKILL",&SKILL);
+}
 
 void Interface()
 /* Nampilin interface awal */
 {
+    clrscr();
     printf("Welcome to brightsouls guyz\n");
     printf("Pilih satu plz jgn banyak2\n");
     printf("NEW GAME\n");
     printf("START GAME\n");
     printf("LOAD GAME\n");
     printf("EXIT\n");
-    printf("masukkan salah satu perintah diatas : \n");
+    printf("Masukkan salah satu perintah diatas : \n");
 }
 
 boolean IsCommandValidAwal(Kata K)
 /* Mengelurkan true jika K adalah command valid sebelum mulai game */
 {
-    Kata NG,SG,LG,EXIT;
-    CreateKata("NEW GAME",&NG);
-    CreateKata("START GAME",&SG);
-    CreateKata("LOAD GAME",&LG);
-    CreateKata("EXIT",&EXIT);
     return ((IsKataSama(K,NG))||(IsKataSama(K,SG))||(IsKataSama(K,LG))||(IsKataSama(K,EXIT)));
 }
 
 boolean IsCommandValidGame(Kata K)
 /* Mengeluarkan true jika K adalah command valid sesudah mulai game */
 {
-    Kata GL,GU,GR,GD,SKILL,SAVE,LOAD,EXIT;
-	CreateKata("GL",&GL);
-	CreateKata("GU",&GU);
-	CreateKata("GD",&GD);
-	CreateKata("GR",&GR);
-	CreateKata("SKILL",&SKILL);
-	CreateKata("SAVE",&SAVE);
-	CreateKata("LOAD",&LOAD);
-	CreateKata("EXIT",&EXIT);
 	return ((IsKataSama(K,GL))||(IsKataSama(K,GU))||(IsKataSama(K,GD))||(IsKataSama(K,GR))||(IsKataSama(K,SKILL))||(IsKataSama(K,SAVE))
             ||(IsKataSama(K,LOAD))||(IsKataSama(K,EXIT)));
 }
@@ -67,130 +76,95 @@ void BacaCommandGame(Kata *command)
     do
     {
         InputUser(command);
-        if (!IsCommandValidGame(*command)) printf("Input tidak terdefinisi\n");
+        if ((!IsCommandValidGame(*command))&&((*command).Length!=0)) printf("Input tidak terdefinisi\n");
     } while (!IsCommandValidGame(*command));
 }
 
-void ProcessCommand(Kata pilihan,boolean *done)
+void ProcessCommand(Kata pilihan)
 /* I.S. command merupakan instruksi yang valid */
 /* Proses sudah dilakukan, done bernilai true jika start game atau exit */
 {
-    Kata Nama,NG,SG,LG;
-    CreateKata("NEW GAME",&NG);
-    CreateKata("START GAME",&SG);
-    CreateKata("LOAD GAME",&LG);
     if (IsKataSama(pilihan,NG))
     {
-        /*
-        printf("Masukkan Nama User :\n");
-        InputUser(&Nama);
-        while (Nama.Length > 16)
-        {
-            printf("Nama harus dibawah 16 Huruf\n");
-            InputUser(&Nama);
-        }
+        Kata player;
+        CreateUser(&player);
+        CreateEmptyPlayer(&P,player);
         NamaDone = true;
-        FPlayer = fopen("listplayer.txt", "a");
-        for (i = 0; i < Nama.Length; i++)
-        {
-            fprintf(FPlayer,"%c",Nama.TabKata[i]);
-        }
-        fprintf(FPlayer," | ");
-        JAM J = MakeJAM(0,0,0);
-        fprintf(FPlayer,"%02d:%02d:%02d",Hour(J),Minute(J),Second(J));
-        fprintf(FPlayer,"\n");
-        fclose(FPlayer);
-
-        //BacaMATRIKS(&M1,&M2,&M3,&M4,&M5,20,20);
-        //M6 = GenerateMAP(M1);
-        //TulisMATRIKS(M6);
-        printf("\n");
-        */
     }
     else if (IsKataSama(pilihan,SG))
     {
         if (!NamaDone)
         {
-            /*
-            printf("Masukkan Nama User terlebih dahulu :\n");
-            InputUser(&Nama);
-            while (Nama.Length > 16)
-            {
-                printf("Nama harus dibawah 16 Huruf\n");
-                InputUser(&Nama);
-            }
-            FPlayer = fopen("listplayer.txt", "a");
-            for (i = 0; i < Nama.Length; i++)
-            {
-                fprintf(FPlayer,"%c",Nama.TabKata[i]);
-            }
-            fprintf(FPlayer," | ");
-            JAM J = MakeJAM(0,0,0);
-            fprintf(FPlayer,"%02d:%02d:%02d",Hour(J),Minute(J),Second(J));
-            fprintf(FPlayer,"\n");
-            fclose(FPlayer);
-            NamaDone = true;
-            */
+            printf("Anda belum memasukkan username anda\n");
+            ProcessCommand(NG);
         }
-        //BacaMATRIKS(&M1,&M2,&M3,&M4,&M5,20,20);
-        //TulisMATRIKS(M1);
-        //TulisMATRIKS(M1);
-        printf("\n");
     }
     else if (IsKataSama(pilihan,LG))
     {
 
     }
+    else if (IsKataSama(pilihan,GL))
+    {
+        Jalan(&P,&Mat(ElMini(CMap,CMiniMap)),0,T);
+        PrintMap();
+    }
+    else if (IsKataSama(pilihan,GU))
+    {
+        Jalan(&P,&Mat(ElMini(CMap,CMiniMap)),1,T);
+        PrintMap();
+    }
+    else if (IsKataSama(pilihan,GR))
+    {
+        Jalan(&P,&Mat(ElMini(CMap,CMiniMap)),2,T);
+        PrintMap();
+    }
+    else if (IsKataSama(pilihan,GD))
+    {
+        Jalan(&P,&Mat(ElMini(CMap,CMiniMap)),3,T);
+        PrintMap();
+    }
+    else if (IsKataSama(pilihan,SAVE))
+    {
+
+    }
+    else if (IsKataSama(pilihan,SKILL))
+    {
+
+    }
 }
 
-void InitAll(PLAYER *P,TE *T)
+void InitAll()
 {
     InitAllMap(20,20,10);
-    InitPosPlayer(P,&Mat(ElMini(CMap,CMiniMap)));
-    LoadEnemy(T);
+    InitPosPlayer(&P,&Mat(ElMini(CMap,CMiniMap)));
+    LoadEnemy(&T);
+    StartRecord(&JamGame,&sec);
 }
 
 int main()
 {
     srand((unsigned)time(NULL));
-    Kata input,SG,EXIT,Aku;
-    Kata GL,GU,GR,GD,SKILL,SAVE,LOAD;
-    TE T;
-    PLAYER P;
-    CreateKata("Aku",&Aku);
-    CreateEmptyPlayer(&P,Aku);
-    InitAll(&P,&T);
-    PrintMap();
-	CreateKata("GL",&GL);
-	CreateKata("GU",&GU);
-	CreateKata("GD",&GD);
-	CreateKata("GR",&GR);
-	CreateKata("SKILL",&SKILL);
-    CreateKata("Start Game",&SG);
-    CreateKata("EXIT",&EXIT);
-    do
-    {
-        BacaCommandGame(&input);
-        if (IsKataSama(input,GL)) Jalan(&P,&Mat(ElMini(CMap,CMiniMap)),0,T);
-        else if (IsKataSama(input,GU)) Jalan(&P,&Mat(ElMini(CMap,CMiniMap)),1,T);
-        else if (IsKataSama(input,GR)) Jalan(&P,&Mat(ElMini(CMap,CMiniMap)),2,T);
-        else if (IsKataSama(input,GD)) Jalan(&P,&Mat(ElMini(CMap,CMiniMap)),3,T);
-        PrintMap();
-    } while (!IsKataSama(input,EXIT));
-    /*
-    boolean done = false;
+    Kata input;
+    SetAllKata();
     do
     {
         do
         {
             Interface();
             BacaCommandAwal(&input);
-        } while (!done);
+            ProcessCommand(input);
+        } while ((!IsKataSama(input,SG))&&(!IsKataSama(input,EXIT)));
         if (IsKataSama(input,SG))
         {
-            InitAll(&P,&T);
+            InitAll();
+            PrintMap();
+            do
+            {
+                BacaCommandGame(&input);
+                ProcessCommand(input);
+            } while (!IsKataSama(input,EXIT));
+            CreateKata("",&input);
         }
-    } while (!done);
-    */
+    } while (!IsKataSama(input,EXIT));
     return 0;
 }
