@@ -34,18 +34,33 @@ void PrintPlayer ( PLAYER P )
 /* I.S. : Player terdefinisi */
 /* F.S. : menampilkan status player di layar */
 {
+    //kamus
+    int i;
+
     PrintKata(P.NAME); //nama
+    i = 15 - PName(P).Length;
+	PrintCLoop(' ', i);
     PrintGuard();
 
-    //blum print level pemain
+    printf("LVL : %d",P.LEVEL); //level
+    i = 4 - digit(PLevel(P));
+	PrintCLoop(' ', i);
+    PrintGuard();
 
     printf("HP : %d",P.HP); //HP
+    i = 4 - digit(PHP(P));
+	PrintCLoop(' ', i);
+	printf(" "); //karena "H""P" hanya 2 huruf jadi ditambah 1 spasi biar sama panjang
     PrintGuard();
 
     printf("STR : %d",P.STR); //Strength
+    i = 4 - digit(PSTR(P));
+	PrintCLoop(' ', i);
     PrintGuard();
 
     printf("DEF : %d",P.DEF); //Defense
+    i = 4 - digit(PDEF(P));
+	PrintCLoop(' ', i);
     PrintGuard();
 }
 
@@ -61,9 +76,14 @@ void PrintEnemy ( ENEMY E , infotypeQ M1, infotypeQ M2, infotypeQ M3, infotypeQ 
 
     /* algoritma */
     PrintKata(E.NAME);
+    i = 15 - EName(E).Length;
+	PrintCLoop(' ', i);
     PrintGuard();
 
     printf("HP : %d",E.HP);
+    i = 4 - digit(EHP(E));
+	PrintCLoop(' ', i);
+	printf(" ");
     PrintGuard();
 
     printf("%c ",M1);
@@ -71,6 +91,7 @@ void PrintEnemy ( ENEMY E , infotypeQ M1, infotypeQ M2, infotypeQ M3, infotypeQ 
     printf("%c ",M3);
     printf("%c ",M4);
 
+    printf("  ");
     PrintGuard();
     printf("\n");
 }
@@ -146,6 +167,7 @@ void InitBattle (PLAYER *P, TE T, boolean *result)
             BattleUI(*P,E,'#','#','#','#',round);       //Nanti yang disamarkan 2 aja
             InputUserMoves(&PlayerMoves);
             PrintBorder();
+            clrscr();
         } else {
             break;
         }
@@ -165,6 +187,10 @@ void InitBattle (PLAYER *P, TE T, boolean *result)
         printf("You have lost!\n");
     }
     PrintBorder();
+    printf("Enter R to return!\n");
+    do{
+        scanf(" %c",&me1);
+    }while (me1 != 'R');
 }
 
 void InputUserMoves (Queue *PlayerMoves)
@@ -203,19 +229,19 @@ void BattleProccess (PLAYER *P, char MP, ENEMY *E, infotypeQ ME)
     if(MP == 'B' && ME == 'F'){
         PrintKata(PName(*P));
         printf(" received damage from the flank! -%d HP\n",Damage(ESTR(*E),PDEF(*P)));
-        PHP(*P) -= Damage(ESTR(*E),PDEF(*P)); //nanti harus diatur sesuai level
+        PHP(*P) -= Damage(ESTR(*E),PDEF(*P));
     } else
     if(MP == 'F' && ME == 'A'){
         PrintKata(EName(*E));
         printf(" attacked! You received damage! -%d HP\n",Damage(ESTR(*E),PDEF(*P)));
-        PHP(*P) -= Damage(ESTR(*E),PDEF(*P)); //nanti harus diatur sesuai level
+        PHP(*P) -= Damage(ESTR(*E),PDEF(*P));
     } else
     if(MP == 'A' && ME == 'F'){
         PrintKata(PName(*P));
         printf(" attacked! ");
         PrintKata(EName(*E));
         printf(" received damage! -%d HP\n",Damage(PSTR(*P),EDEF(*E)));
-        EHP(*E) -= Damage(PSTR(*P),EDEF(*E)); //nanti harus diatur sesuai level
+        EHP(*E) -= Damage(PSTR(*P),EDEF(*E));
     } else
     if(MP == 'B' && ME == 'A'){
         PrintKata(PName(*P));
@@ -226,18 +252,18 @@ void BattleProccess (PLAYER *P, char MP, ENEMY *E, infotypeQ ME)
         printf(" flanked! ");
         PrintKata(EName(*E));
         printf(" received damage! -%d HP\n",Damage(PSTR(*P),EDEF(*E)));
-        EHP(*E) -= Damage(PSTR(*P),EDEF(*E)); //nanti harus diatur sesuai level
+        EHP(*E) -= Damage(PSTR(*P),EDEF(*E));
     } else
     if(MP == 'A' && ME == 'A'){
         PrintKata(PName(*P));
         printf(" attacked! ");
         PrintKata(EName(*E));
         printf(" received damage! -%d HP\n",Damage(PSTR(*P),EDEF(*E)));
-        EHP(*E) -= Damage(PSTR(*P),EDEF(*E)); //nanti harus diatur sesuai level
+        EHP(*E) -= Damage(PSTR(*P),EDEF(*E));
 
         PrintKata(EName(*E));
         printf(" attacked! You received damage! -%d HP\n",Damage(ESTR(*E),PDEF(*P)));
-        PHP(*P) -= Damage(ESTR(*E),PDEF(*P)); //nanti harus diatur sesuai level
+        PHP(*P) -= Damage(ESTR(*E),PDEF(*P));
     }
     else
     {
