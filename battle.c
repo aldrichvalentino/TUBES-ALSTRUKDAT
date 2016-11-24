@@ -2,7 +2,7 @@
 //Jadi isinya semua interface buat battle
 //Tanggal 5 November 2016
 
-/****** compile : gcc mbattle.c player.c enemy.c battle.c mesinkata.c stack.c queue.c mesinkar.c -o battle *****/
+/****** compile : gcc mbattle.c player.c enemy.c battle.c mesinkata.c stack.c queue.c mesinkar.c point.c matriks.c map.c listlinier.c graph.c -o battle *****/
 
 #include "boolean.h"
 #include "player.h"
@@ -12,6 +12,7 @@
 #include "map.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 /* kamus global */
 int ronde = 1;
@@ -74,7 +75,7 @@ void PrintEnemy ( ENEMY E , infotypeQ M1, infotypeQ M2, infotypeQ M3, infotypeQ 
     printf("\n");
 }
 
-void InitBattle (PLAYER *P, boolean *result,TE T)
+void InitBattle (PLAYER *P, TE T, boolean *result)
 /* I.S. : player dan tabel enemy terdefinisi
           akan mencatat seluruh keadaan sebelum battle dimulai
           akan memanggil fungsi battle UI dan dialog box sebanyak 10 kali atau hingga musuh kalah
@@ -94,9 +95,21 @@ void InitBattle (PLAYER *P, boolean *result,TE T)
     RandomStack(&S,10);   //dirandom 1 - 10
     round = 1;           //inisiasi ronde
 
-    //if( IsEnemyUndefined(EMap(T,i)) ) { di create enemy yang baru, else bikin enemy lamanya full lagi }
-    int j = rand()%NeffM(T);
-    CreateEnemy(&E,T,i+1); //BLOM DIRANDOM!!
+    srand((unsigned int)time(NULL));
+    int rnd;
+    if(PLevel(*P) < 2){
+        rnd = rand() % 3;
+    } else if(PLevel(*P) < 4){
+        rnd = rand() % 5;
+    } else if(PLevel(*P) < 6){
+        rnd = rand() % 7;
+    } else if(PLevel(*P) < 8){
+        rnd = rand() % 9;
+    } else{
+        rnd = rand() % 11;
+    }
+    if (rnd == 0) rnd += 1 ;
+    CreateEnemy(&E,T,rnd);
 
     /* dialog box */
     BattleUI(*P,E,'#','#','#','#',round);
@@ -144,6 +157,8 @@ void InitBattle (PLAYER *P, boolean *result,TE T)
         *result = true;
         EDie(E) = true;
         printf("Congratulations! %s has been defeated!\n",EName(E));
+        printf("You received %d experience!\n",EEXP(E));
+        PEXP(*P) += EEXP(E);
     } else
     if (PHP(*P) <= 0){
         *result = false;
