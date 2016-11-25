@@ -1,6 +1,6 @@
 /* File : mprogram.c */
 /*
-gcc -o mprogram mprogram.c matriks.c battle.c stack.c queue.c enemy.c player.c point.c map.c graph.c listlinier.c mesinkata.c mesinkar.c -lm
+gcc -o mprogram mprogram.c jam.c fileeksternal.c matriks.c battle.c stack.c queue.c enemy.c player.c point.c map.c graph.c listlinier.c mesinkata.c mesinkar.c -lm
 */
 #include "map.h"
 #include "player.h"
@@ -34,17 +34,57 @@ void SetAllKata()
     CreateKata("SKILL",&SKILL);
 }
 
+void PrintLogoGede()
+{
+printf("\n");
+printf("                      ;\n");
+printf("                      @\n");
+printf("                      @.\n");
+printf("                      @,\n");
+printf("                      @'\n");
+printf("                      @#\n");
+printf("                      @@\n");
+printf("                      @@\n");
+printf("                      @@\n");
+printf("                      @@\n");
+printf("     @@@@@@@@`        @@                                                           :\n");
+printf("    @@@@@#@@@         @@    `                                                  @@@@@\n");
+printf("   @,,@@  @@          @@     @            .;       ;                    +`     @@`:@`\n");
+printf("     ,@@ @@'  ##@@@@  @@  `#@@#  @@@ @@@ @@##@;  @@@@   #@@@   ,@'  @@ @@@     @@#  `\n");
+printf("     `@@@@@   +@# @@+ @@ #@@@@@  :@+ ;@#@@@@@@@,#@  @   @@@@'  #@   @:  @@     @@@@.\n");
+printf("     `@@@@@@  #@# @@  @@ @@@     .@   @`#,@@+   +@@;   @@` @@  @@   @@  @#      @@@@@\n");
+printf("     ,@@##@@@ @@'@@   @@`@@  +#` :@@@@@`  @@     @@@@ `@#  #@+ @@   @@  @;     ; @@@@:\n");
+printf("     #@@   @@ @@@@@+  @@ @@   @@ #@@ ;@,  @@    ` #@@@@@,  ,@@ @@. :@@  @;  @ @@  +@@#\n");
+printf("     @@@  ;@@ @@@@@@  @@ @@@  `@;@@# @@#  @@   .@+ .@@'@@@@@@; #@@+@@' `@++@@+@@@++@@.\n");
+printf("     @@@@@@@: @@@ @@  :@  @@@@@@ @@@ @@@  @@   @@@@@@+ +@@@@;   @@@@#  @@@@@@# ;@@@@#\n");
+printf("    +@@@@@@+       @@ #@   `,  @                  ##                             .`\n");
+printf("                    ,@@@\n");
+printf("                     `@@`     +\n");
+printf("                      +@\n");
+printf("  @@@@      @@@@      @@@     @@@      @@@@      #@@@      +@@@;     ;@@@@     ,@@@@    ,\n");
+printf(" @@@@`   '@@@@@'  .;;,;;;;;' @@@    #@@@@@;   ,@@@@@@   `@@@@@@    @@@@@@    @@@@@@    @@\n");
+printf(" @@     @@@@@         @:   , @     @@@@@     @@@@@  `  +@@@@     ;@@@@,     @@@@@     @@@\n");
+printf(" @@    @@@@@@         +:     @   `@@@@@@    @@@@@@    @@@@@@    @@@@@@:   ;@@@@@@   `@@@@\n");
+printf(" @@@#@@@@@@@@@#@      @;     @@#@@@@@@@@@#@@@@@@@@@#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#@@@@@@\n");
+printf(" @@@@@@@@@@@@@@@      '+     @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
+printf("                      @+\n");
+printf("                      ;;\n");
+printf("                     ;@+;\n");
+printf("                     .@:+\n");
+printf("                     `::\n");
+printf("\n");
+}
 void Interface()
 /* Nampilin interface awal */
 {
     clrscr();
-    printf("Welcome to brightsouls guyz\n");
-    printf("Pilih satu plz jgn banyak2\n");
-    printf("NEW GAME\n");
-    printf("START GAME\n");
-    printf("LOAD GAME\n");
-    printf("EXIT\n");
-    printf("Masukkan salah satu perintah diatas : \n");
+    PrintLogoGede();
+    PrintBorder();
+    PrintCLoop(' ',20); printf("NEW GAME\n");
+    PrintCLoop(' ',20); printf("START GAME\n");
+    PrintCLoop(' ',20); printf("LOAD GAME\n");
+    PrintCLoop(' ',20); printf("EXIT\n");
+    PrintBorder();
 }
 
 boolean IsCommandValidAwal(Kata K)
@@ -66,8 +106,13 @@ void BacaCommandAwal(Kata *command)
 {
     do
     {
+        PrintCLoop(' ',20); printf("Masukkan salah satu perintah diatas : "); 
         InputUser(command);
-        if (!IsCommandValidAwal(*command)) printf("Input tidak terdefinisi\n");
+        if (!IsCommandValidAwal(*command))
+        {	
+			PrintCLoop(' ',20); 
+			printf("Input tidak terdefinisi\n");
+		}
     } while (!IsCommandValidAwal(*command));
 }
 
@@ -78,7 +123,10 @@ void BacaCommandGame(Kata *command)
     do
     {
         InputUser(command);
-        if ((!IsCommandValidGame(*command))&&((*command).Length!=0)) printf("Input tidak terdefinisi\n");
+        if ((!IsCommandValidGame(*command))&&((*command).Length!=0)) 
+        {	
+			printf("Input tidak terdefinisi\n");
+		}	
     } while (!IsCommandValidGame(*command));
 }
 
@@ -97,6 +145,7 @@ void ProcessCommand(Kata pilihan)
     {
         if (!NamaDone)
         {
+			PrintCLoop(' ',20); 	
             printf("Anda belum memasukkan username anda\n");
             ProcessCommand(NG);
         }
@@ -145,11 +194,21 @@ void InitAll()
 
 int main()
 {
+	char c;
     srand((unsigned)time(NULL));
     Kata input;
     SetAllKata();
     do
     {
+		/*ala-ala*/
+		clrscr();
+		printf("Make sure your window is on full-screen mode.\n");
+		printf("Press enter to continue.");
+		do
+		{
+			scanf("%c",&c);
+		}
+		while (c!='\n');
         do
         {
             //PrintBrightsouls();
@@ -166,8 +225,9 @@ int main()
                 BacaCommandGame(&input);
                 ProcessCommand(input);
             } while (!IsKataSama(input,EXIT));
-            CreateKata("",&input);
+           // CreateKata("",&input);
         }
     } while (!IsKataSama(input,EXIT));
+    clrscr();
     return 0;
 }
