@@ -207,12 +207,12 @@ void InitBattle (PLAYER *P, TE T, boolean *result)
     if ((PHP(*P) > 0) || (round > 10)){
         *result = true;
         EDie(E) = true;
-        printf("Congratulations! %s has been defeated!\n",EName(E));
+        printf("Congratulations! ");PrintKata(EName(E));printf(" has been defeated!\n");
         if(EHP(E) <= 0){
             printf("You received %d experience!\n",EEXP(E));
             PEXP(*P) += EEXP(E);
         } else {
-            printf("%s fled!\n",EName(E));
+            PrintKata(EName(E));printf(" fled!\n");
         }
     } else
     if (PHP(*P) <= 0){
@@ -261,8 +261,8 @@ void BattleProccess (PLAYER *P, char MP, ENEMY *E, infotypeQ ME)
     } else
     if(MP == 'B' && ME == 'F'){
         PrintKata(PName(*P));
-        printf(" received damage from the flank! -%d HP\n",Damage(ESTR(*E),PDEF(*P)));
-        PHP(*P) -= Damage(ESTR(*E),PDEF(*P));
+        printf(" received damage from the flank! -%d HP\n",Damage(ESTR(*E),PDEF(*P))*1.5);
+        PHP(*P) -= Damage(ESTR(*E),PDEF(*P))*1.5;
     } else
     if(MP == 'F' && ME == 'A'){
         PrintKata(EName(*E));
@@ -284,7 +284,7 @@ void BattleProccess (PLAYER *P, char MP, ENEMY *E, infotypeQ ME)
         PrintKata(PName(*P));
         printf(" flanked! ");
         PrintKata(EName(*E));
-        printf(" received damage! -%d HP\n",Damage(PSTR(*P),EDEF(*E)));
+        printf(" received damage! -%d HP\n",Damage(PSTR(*P),EDEF(*E))*1.5);
         EHP(*E) -= Damage(PSTR(*P),EDEF(*E)) * 1.5; //flank memberi lebih banyak damage
     } else
     if(MP == 'A' && ME == 'A'){
