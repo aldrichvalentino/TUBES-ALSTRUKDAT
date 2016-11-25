@@ -93,6 +93,9 @@ void PrintEnemy ( ENEMY E , infotypeQ M1, infotypeQ M2, infotypeQ M3, infotypeQ 
 
     printf("  ");
     PrintGuard();
+    
+    printf("ini exp lawan : %d",EEXP(E));
+    
     printf("\n");
 }
 
@@ -358,46 +361,73 @@ void LevelUp (PLAYER *P)
 	{
 		PLevel(*P) += 1;
 		PEXP(*P) -= 100;
+		MaxHP(*P) += 50;
+		PSTR(*P) += 50;
+		PDEF(*P) += 50;
 	} else 
 	if(PLevel(*P) == 2 && PEXP(*P) >= 150)
 	{
 		PLevel(*P) += 1;
 		PEXP(*P) -= 150;
+		MaxHP(*P) += 50;
+		PSTR(*P) += 50;
+		PDEF(*P) += 50;
 	} else 
 	if(PLevel(*P) == 3 && PEXP(*P) >= 200)
 	{
 		PLevel(*P) += 1;
 		PEXP(*P) -= 200;
+		MaxHP(*P) += 50;
+		PSTR(*P) += 50;
+		PDEF(*P) += 50;
 	} else 
 	if(PLevel(*P) == 4 && PEXP(*P) >= 250)
 	{
 		PLevel(*P) += 1;
 		PEXP(*P) -= 250;
+		MaxHP(*P) += 50;
+		PSTR(*P) += 50;
+		PDEF(*P) += 50;
 	} else 
 	if(PLevel(*P) == 5 && PEXP(*P) >= 300)
 	{
 		PLevel(*P) += 1;
 		PEXP(*P) -= 300;
+		MaxHP(*P) += 50;
+		PSTR(*P) += 50;
+		PDEF(*P) += 50;
 	} else 
 	if(PLevel(*P) == 6 && PEXP(*P) >= 350)
 	{
 		PLevel(*P) += 1;
 		PEXP(*P) -= 350;
+		MaxHP(*P) += 50;
+		PSTR(*P) += 50;
+		PDEF(*P) += 50;
 	} else 
 	if(PLevel(*P) == 7 && PEXP(*P) >= 400)
 	{
 		PLevel(*P) += 1;
 		PEXP(*P) -= 400;
+		MaxHP(*P) += 100;
+		PSTR(*P) += 100;
+		PDEF(*P) += 100;
 	} else 
 	if(PLevel(*P) == 8 && PEXP(*P) >= 450)
 	{
 		PLevel(*P) += 1;
 		PEXP(*P) -= 450;
+		MaxHP(*P) += 100;
+		PSTR(*P) += 100;
+		PDEF(*P) += 100;
 	} else 
 	if(PLevel(*P) == 9 && PEXP(*P) >= 500)
 	{
 		PLevel(*P) += 1;
 		PEXP(*P) -= 500;
+		MaxHP(*P) += 100;
+		PSTR(*P) += 50;
+		PDEF(*P) += 50;
 	}
 	
 	if(PLevel(*P) > lvlawal) printf("Congratulations! You are now level %d!\n",PLevel(*P));
