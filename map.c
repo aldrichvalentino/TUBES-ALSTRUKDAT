@@ -1,5 +1,6 @@
 /* File : map.c */
 
+#include "color.h"
 #include "map.h"
 #include "player.h"
 #include "battle.h"
@@ -274,11 +275,11 @@ void PrintMap()
         for (j=GetFirstIdxKol(M); j<=GetLastIdxKol(M); j++){
             //1m=bold,black 30, red 31, green 32, brown 33, blue 34, magenta 35, cyan 36, lgrey 37
             switch (Elmt(M,i,j)){
-				case 'P' : printf("\33[36;1m%c \033[0m", Elmt(M,i,j));break;
-				case 'M' : printf("\33[34;1m%c \033[0m", Elmt(M,i,j));break;
-				case 'E' : printf("\33[31;1m%c \033[0m", Elmt(M,i,j));break;
-				case '#' : printf("\33[32m%c \033[0m", Elmt(M,i,j));break;
-				case '-' : printf("\33[33m%c \033[0m", Elmt(M,i,j));break;
+				case 'P' : printf(COLOR_LGREEN "%c " COLOR_RESET, Elmt(M,i,j));break;
+				case 'M' : printf(COLOR_WHITE "%c " COLOR_RESET, Elmt(M,i,j));break;
+				case 'E' : printf(COLOR_LRED "%c " COLOR_RESET, Elmt(M,i,j));break;
+				case '#' : printf(COLOR_CYAN "%c " COLOR_RESET, Elmt(M,i,j));break;
+				case '-' : printf(COLOR_GREY "%c " COLOR_RESET, Elmt(M,i,j));break;
 				default : printf("%c ",Elmt(M,i,j));break;
 			}
         }

@@ -9,6 +9,7 @@
 #include "mesinkata.h"
 #include "player.h"
 #include "enemy.h"
+#include "map.h"
 
 extern int ronde;
 
@@ -26,7 +27,10 @@ void PrintPlayer ( PLAYER P );
 void PrintEnemy ( ENEMY E , infotypeQ M1, infotypeQ M2, infotypeQ M3, infotypeQ M4 );
 /* menampilkan status enemy */
 
-void InitBattle (PLAYER *P, boolean *result,TE T);
+void HideTwoMoves (char i1, char i2, char i3, char i4, char *o1, char *o2, char *o3, char *o4);
+/* merandom move yang dihide */
+
+void InitBattle (PLAYER *P, TE T, boolean *result);
 /* I.S. : player dan tabel enemy terdefinisi
           akan mencatat seluruh keadaan sebelum battle dimulai
           akan memanggil fungsi battle UI dan dialog box sebanyak 10 kali atau hingga musuh kalah
@@ -52,9 +56,7 @@ void BattleUI (PLAYER P, ENEMY E, infotypeQ M1, infotypeQ M2, infotypeQ M3, info
 /*        result akan terisi true apabila menang, false bila kalah */
 /* setelah selesai dan exp bertambah, program caller harus mengecek exp, lalu menambahkan level jika sudah cukup */
 
-int Damage (int Attack, int Defense);
-/* menghitung damage yang dihasilkan */
-/* Attack adalah str dari penyerang */
-/* Defense adalah def dari yang diserang */
+int Damage(int Attack, int Defense);
+/* fungsi menghitung damage yang dihasilkan */
 
 #endif
