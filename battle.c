@@ -96,6 +96,26 @@ void PrintEnemy ( ENEMY E , infotypeQ M1, infotypeQ M2, infotypeQ M3, infotypeQ 
     printf("\n");
 }
 
+void HideTwoMoves (char i1, char i2, char i3, char i4, char *o1, char *o2, char *o3, char *o4)
+/* menrandom apa yg dihide */
+{
+    //kamus
+    int seed;
+
+    //algoritma
+    srand((unsigned int)time(NULL));
+    seed = rand() % 6;
+    switch (seed)
+    {
+        case 0 : *o1 = '#'; *o2 = '#'; *o3 = i3; *o4 = i4; break;
+        case 1 : *o1 = '#'; *o2 = i2; *o3 = '#'; *o4 = i4; break;
+        case 2 : *o1 = '#'; *o2 = i2; *o3 = i3; *o4 = '#'; break;
+        case 3 : *o1 = i1; *o2 = '#'; *o3 = '#'; *o4 = i4; break;
+        case 4 : *o1 = i1; *o2 = '#'; *o3 = i3; *o4 = '#'; break;
+        case 5 : *o1 = i1; *o2 = i2; *o3 = '#'; *o4 = '#'; break;
+    }
+}
+
 void InitBattle (PLAYER *P, TE T, boolean *result)
 /* I.S. : player dan tabel enemy terdefinisi
           akan mencatat seluruh keadaan sebelum battle dimulai
@@ -108,7 +128,7 @@ void InitBattle (PLAYER *P, TE T, boolean *result)
     ENEMY E;
     Stack S;
     int i, round;
-    char me1,me2,me3,me4,mp1,mp2,mp3,mp4;
+    char me1,me2,me3,me4,mp1,mp2,mp3,mp4,o1,o2,o3,o4;
     Queue PlayerMoves;
 
     /* inisiasi enemy */
@@ -139,8 +159,9 @@ void InitBattle (PLAYER *P, TE T, boolean *result)
     DelQueue(&EAksi(E)[i],&me2);
     DelQueue(&EAksi(E)[i],&me3);
     DelQueue(&EAksi(E)[i],&me4);
+    HideTwoMoves(me1,me2,me3,me4,&o1,&o2,&o3,&o4);
     clrscr();
-    BattleUI(*P,E,me1,me2,me3,me4,round); //ditutup 2
+    BattleUI(*P,E,o1,o2,o3,o4,round); //ditutup 2
     PrintKata(EName(E)); printf(" has appeared!\n");
     printf("What will you do?\n");
     InputUserMoves(&PlayerMoves);
@@ -171,7 +192,8 @@ void InitBattle (PLAYER *P, TE T, boolean *result)
             DelQueue(&EAksi(E)[i],&me2);
             DelQueue(&EAksi(E)[i],&me3);
             DelQueue(&EAksi(E)[i],&me4);
-            BattleUI(*P,E,me1,me2,me3,me4,round); // belum ditutup 2
+            HideTwoMoves(me1,me2,me3,me4,&o1,&o2,&o3,&o4);
+            BattleUI(*P,E,o1,o2,o3,o4,round);
             InputUserMoves(&PlayerMoves);
             PrintBorder();
             clrscr();

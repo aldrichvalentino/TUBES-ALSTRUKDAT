@@ -27,6 +27,9 @@ void PrintPlayer ( PLAYER P );
 void PrintEnemy ( ENEMY E , infotypeQ M1, infotypeQ M2, infotypeQ M3, infotypeQ M4 );
 /* menampilkan status enemy */
 
+void HideTwoMoves (char i1, char i2, char i3, char i4, char *o1, char *o2, char *o3, char *o4);
+/* merandom move yang dihide */
+
 void InitBattle (PLAYER *P, TE T, boolean *result);
 /* I.S. : player dan tabel enemy terdefinisi
           akan mencatat seluruh keadaan sebelum battle dimulai
