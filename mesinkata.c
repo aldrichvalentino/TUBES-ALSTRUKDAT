@@ -153,18 +153,18 @@ boolean IsKataSama (Kata K1, Kata K2)
 /* Mengeluarkan true jika K1 sama dengan K2 */
 {
 	int i;
-	boolean found;
-	found = false;
+	boolean sama;
+	sama = true;
 
 	if (K1.Length != K2.Length){
 		return false;
 	} else {
 		i = 0;
-		while ((!found)&&(i < K1.Length)){
-			found = (K1.TabKata[i] == K2.TabKata[i]);
+		while ((sama)&&(i < K1.Length)){
+			sama = (K1.TabKata[i] == K2.TabKata[i]);
 			i++;
 		}
-		return (K1.TabKata[i] == K2.TabKata[i]);
+		return (sama);
 	}
 }
 
