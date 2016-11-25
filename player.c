@@ -23,6 +23,7 @@ void CreateEmptyPlayer(PLAYER *P, Kata X)
 {
 	PName(*P) = X;
 	PHP(*P) = 100;
+	MaxHP(*P) =100;
 	PSTR(*P) = 100;
 	PDEF(*P) = 100;
 	PEXP(*P) = 0;
@@ -35,7 +36,16 @@ void DarahNaik(PLAYER *P)
 /* I.S. Player terdefinisi */
 /* F.S. HP player ditambah cmedicine */
 {
-	PHP(*P)+=cmedicine;
+	int temp;
+	temp = PHP(*P)+cmedicine;
+	if (temp>=MaxHP(*P))
+	{
+		PHP(*P)= MaxHP(*P);
+	}
+	else
+	{
+		PHP(*P)=temp;
+	}
 }
 
 void SwitchPos(PLAYER *P,MATRIKS *M, POINT Po)

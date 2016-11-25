@@ -16,6 +16,7 @@
 typedef struct {
 	Kata NAME;
 	int HP;
+	int MaxHP;
 	int STR;
 	int DEF;
 	int EXP;
@@ -27,6 +28,7 @@ typedef struct {
 /* *** Notasi Akses: selektor PLAYER *** */
 #define PName(P) (P).NAME
 #define PHP(P) (P).HP
+#define MaxHP(P) (P).MaxHP
 #define PSTR(P) (P).STR
 #define PDEF(P) (P).DEF
 #define PEXP(P) (P).EXP
