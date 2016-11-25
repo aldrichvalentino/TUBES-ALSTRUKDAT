@@ -15,14 +15,14 @@ void CreateUser(Kata *K)
     char line[256];
     int i;
     FILE *F = fopen("listplayer.txt", "r");
-    printf("Masukkan Nama User :\n");
+    PrintCLoop(' ',20); printf("Masukkan Nama User : ");
     fgets(c,sizeof(c),stdin);
     while (strlen(c) > 16)
     {
         if (strlen(c) > 16)
         {
-            printf("Nama User harus dibawah 16 Huruf\n");
-            printf("Masukkan Nama User :\n");
+            PrintCLoop(' ',20); printf("Nama User harus dibawah 16 Huruf\n");
+            PrintCLoop(' ',20); printf("Masukkan Nama User : ");
         }
         fgets(c,sizeof(c),stdin);
     }
@@ -74,7 +74,7 @@ void SaveGame(PLAYER P,JAM J)
     {
         while (c!='y')
         {
-            printf("Anda sudah pernah menyimpan game. Apakah anda ingin melanjutkan?(y/n)\n");
+            PrintCLoop(' ',20); printf("Anda sudah pernah menyimpan game. Apakah anda ingin melanjutkan?(y/n)\n");
             scanf("%c",&c);
             if (c=='n') return;
         }
@@ -90,7 +90,11 @@ void LoadGame(PLAYER *P,JAM *J)
 {
     Kata K = PName(*P);
     Kata T = ConvertToTxt(K);
-    if (!IsFileExist(T.TabKata)) printf("Anda belum pernah menyimpan permainan\n");
+    if (!IsFileExist(T.TabKata)) 
+    {
+		PrintCLoop(' ',20); 
+		printf("Anda belum pernah menyimpan permainan\n");
+    }
     else
     {
         FILE *F = fopen(T.TabKata,"r");
