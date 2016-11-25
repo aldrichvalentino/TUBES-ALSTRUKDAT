@@ -84,8 +84,16 @@ long Durasi (JAM JAw, JAM JAkh);
 void StartRecord(JAM *J,time_t *sec);
 /* I.S. Sembarang
     F.S. Jam diset menjadi 00:00:00, sec mwnyimpan waktu yang akan menjadi acuan waktu*/
-JAM Record(JAM J,time_t sec);
+void Record(JAM *J,time_t sec);
 /* I.S. J dan sec terdefinisi, sec merupakan waktu acuan awal
     F.S. J diupdate sesuai dengan lama waktu yang telah terjadi sejak StartRecord*/
+
+/* KELOMPOK OPERASI JAM DAN STRING                                    */
+void ConvertJamToString(JAM J,char c[10]);
+/* I.S. J terdefinisi */
+/* F.S. c berisi jam J dalam bentuk string dengan format jj:hh:mm */
+void ConvertStringToJam(JAM *J,char c[10]);
+/* I.S. c terdefinisi merupakan string dengan format jj:mm:hh */
+/* F.S. J berisi string c */
 
 #endif

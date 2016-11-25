@@ -12,7 +12,7 @@ gcc -o mprogram mprogram.c matriks.c battle.c stack.c queue.c enemy.c player.c p
 #include <time.h>
 #include <stdlib.h>
 
-boolean NamaDone = false;
+boolean NamaDone = false,ready=false;
 JAM JamGame;
 time_t sec;
 Kata NG,SG,LG,EXIT,GU,GL,GD,GR,SAVE,LOAD,SKILL;
@@ -82,6 +82,14 @@ void BacaCommandGame(Kata *command)
     } while (!IsCommandValidGame(*command));
 }
 
+void InitAll()
+{
+    InitAllMap(20,20,MaxNode);
+    InitPosPlayer(&P,&Mat(ElMini(CMap,CMiniMap)));
+    LoadEnemy(&T);
+    StartRecord(&JamGame,&sec);
+}
+
 void ProcessCommand(Kata pilihan)
 /* I.S. command merupakan instruksi yang valid */
 /* Proses sudah dilakukan, done bernilai true jika start game atau exit */
@@ -100,10 +108,17 @@ void ProcessCommand(Kata pilihan)
             printf("Anda belum memasukkan username anda\n");
             ProcessCommand(NG);
         }
+        if (!ready) InitAll();
     }
     else if (IsKataSama(pilihan,LG))
     {
-
+        if (!NamaDone)
+        {
+            printf("Anda belum memasukkan username anda\n");
+            ProcessCommand(NG);
+        }
+        ready = LoadGame(&P,&JamGame);
+        LoadEnemy(&T);
     }
     else if (IsKataSama(pilihan,GL))
     {
@@ -127,20 +142,20 @@ void ProcessCommand(Kata pilihan)
     }
     else if (IsKataSama(pilihan,SAVE))
     {
-
+        Record(&JamGame,sec);
+        SaveGame(P,JamGame);
+        PrintGame(P);
     }
     else if (IsKataSama(pilihan,SKILL))
     {
 
     }
-}
-
-void InitAll()
-{
-    InitAllMap(20,20,10);
-    InitPosPlayer(&P,&Mat(ElMini(CMap,CMiniMap)));
-    LoadEnemy(&T);
-    StartRecord(&JamGame,&sec);
+    else if (IsKataSama(pilihan,EXIT))
+    {
+        CreateEmptyGraph(&Gr(CMap));
+        Node(CMap) = 0;
+        ready = false;
+    }
 }
 
 int main()
@@ -159,7 +174,6 @@ int main()
         } while ((!IsKataSama(input,SG))&&(!IsKataSama(input,EXIT)));
         if (IsKataSama(input,SG))
         {
-            InitAll();
             PrintGame(P);
             do
             {

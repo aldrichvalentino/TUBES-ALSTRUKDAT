@@ -138,11 +138,59 @@ void StartRecord(JAM *J,time_t *sec)
     *J = MakeJAM(0,0,0);
     *sec = time(NULL);
 }
-JAM Record(JAM J,time_t sec)
+void Record(JAM *J,time_t sec)
 /* I.S. J dan sec terdefinisi, sec merupakan waktu acuan awal
     F.S. J diupdate sesuai dengan lama waktu yang telah terjadi sejak StartRecord*/
 {
     time_t temp = time(NULL);
     temp -= sec;
-    return DetikToJAM(temp);
+    *J = DetikToJAM(temp);
+}
+
+/* KELOMPOK OPERASI JAM DAN STRING                                    */
+void ConvertJamToString(JAM J,char c[10])
+/* I.S. J terdefinisi */
+/* F.S. c berisi jam J dalam bentuk string dengan format jj:hh:mm */
+{
+    if (Hour(J)<10)
+    {
+        c[0] = '0';
+        c[1] = Hour(J)+'0';
+    }
+    else
+    {
+        c[0] = Hour(J)/10 + '0';
+        c[1] = Hour(J)%10 + '0';
+    }
+    c[2] = ' ';
+    if (Minute(J)<10)
+    {
+        c[3] = '0';
+        c[4] = Minute(J) + '0';
+    }
+    else
+    {
+        c[3] = Minute(J)/10 + '0';
+        c[4] = Minute(J)%10 + '0';
+    }
+    c[5] = ' ';
+    if (Second(J)<10)
+    {
+        c[6] = '0';
+        c[7] = Second(J) + '0';
+    }
+    else
+    {
+        c[6] = Second(J)/10 + '0';
+        c[7] = Second(J)%10 + '0';
+    }
+    c[8] = 0;
+}
+void ConvertStringToJam(JAM *J,char c[10])
+/* I.S. c terdefinisi merupakan string dengan format jj:mm:hh */
+/* F.S. J berisi string c */
+{
+    Hour(*J) = 10*(c[0]-'0') + (c[1]-'0');
+    Minute(*J) = 10*(c[3]-'0') + (c[4]-'0');
+    Second(*J) = 10*(c[6]-'0') + (c[7]-'0');
 }

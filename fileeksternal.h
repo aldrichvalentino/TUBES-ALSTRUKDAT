@@ -23,7 +23,7 @@ void SaveGame(PLAYER P,JAM J);
 /* I.S. Permainan sudah dimainkan */
 /* F.S. Data permainan sudah disimpan di (namaplayer).txt */
 
-void LoadGame(PLAYER *P,JAM *J);
+boolean LoadGame(PLAYER *P,JAM *J);
 /* I.S. Nama player terdefinisi */
 /* F.S. Data permainan sudah dipindah ke program */
 
