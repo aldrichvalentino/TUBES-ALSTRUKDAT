@@ -43,12 +43,12 @@ boolean IsFileExist(char *c)
 /* Mengeluarkan true jika file bernama c ada */
 {
     FILE *F = fopen(c,"r");
-    boolean temp = (F!=NULL)
+    boolean temp = (F!=NULL);
     fclose(F);
     return temp;
 }
 
-KATA ConvertToTxt(Kata K)
+Kata ConvertToTxt(Kata K)
 /* Menambah .txt dibelakang K */
 {
     Kata T;

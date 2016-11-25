@@ -16,7 +16,7 @@ void CreateUser(Kata *K);
 boolean IsFileExist(char *c);
 /* Mengeluarkan true jika file bernama c ada */
 
-KATA ConvertToTxt(Kata K);
+Kata ConvertToTxt(Kata K);
 /* Menambah .txt dibelakang K */
 
 void SaveGame(PLAYER P,JAM J);
