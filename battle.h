@@ -59,4 +59,8 @@ void BattleUI (PLAYER P, ENEMY E, infotypeQ M1, infotypeQ M2, infotypeQ M3, info
 int Damage(int Attack, int Defense);
 /* fungsi menghitung damage yang dihasilkan */
 
+void LevelUp (PLAYER *P);
+/* menghitung skema naik level */
+/* I.S. : sudah selesai battle, exp sudah bertambah */
+/* F.S. : level naik */
 #endif

@@ -220,6 +220,9 @@ void InitBattle (PLAYER *P, TE T, boolean *result)
         printf("You have lost!\n");
     }
     PrintBorder();
+    LevelUp (P);
+    PrintBorder();
+
     printf("Enter R to return!\n");
     do{
         scanf(" %c",&me1);
@@ -261,8 +264,8 @@ void BattleProccess (PLAYER *P, char MP, ENEMY *E, infotypeQ ME)
     } else
     if(MP == 'B' && ME == 'F'){
         PrintKata(PName(*P));
-        printf(" received damage from the flank! -%d HP\n",Damage(ESTR(*E),PDEF(*P))*1.5);
-        PHP(*P) -= Damage(ESTR(*E),PDEF(*P))*1.5;
+        printf(" received damage from the flank! -%d HP\n",Damage(ESTR(*E),PDEF(*P))*3/2);
+        PHP(*P) -= Damage(ESTR(*E),PDEF(*P))*3/2;
     } else
     if(MP == 'F' && ME == 'A'){
         PrintKata(EName(*E));
@@ -284,8 +287,8 @@ void BattleProccess (PLAYER *P, char MP, ENEMY *E, infotypeQ ME)
         PrintKata(PName(*P));
         printf(" flanked! ");
         PrintKata(EName(*E));
-        printf(" received damage! -%d HP\n",Damage(PSTR(*P),EDEF(*E))*1.5);
-        EHP(*E) -= Damage(PSTR(*P),EDEF(*E)) * 1.5; //flank memberi lebih banyak damage
+        printf(" received damage! -%d HP\n",Damage(PSTR(*P),EDEF(*E))*3/2);
+        EHP(*E) -= Damage(PSTR(*P),EDEF(*E)) * 3/2; //flank memberi lebih banyak damage
     } else
     if(MP == 'A' && ME == 'A'){
         PrintKata(PName(*P));
@@ -340,4 +343,62 @@ int Damage (int Attack, int Defense)
     } else {             //Jika defense > attack, -100 < selisih < -1
         return (int)(20 + 0.15*selisih);
     }
+}
+
+void LevelUp (PLAYER *P)
+/* menghitung skema naik level */
+/* I.S. : sudah selesai battle, exp sudah bertambah */
+/* F.S. : level naik */
+{
+	//KAMUS
+	int lvlawal = PLevel(*P);
+	
+	//algoritma
+	if(PLevel(*P) == 1 && PEXP(*P) >= 100)
+	{
+		PLevel(*P) += 1;
+		PEXP(*P) -= 100;
+	} else 
+	if(PLevel(*P) == 2 && PEXP(*P) >= 150)
+	{
+		PLevel(*P) += 1;
+		PEXP(*P) -= 150;
+	} else 
+	if(PLevel(*P) == 3 && PEXP(*P) >= 200)
+	{
+		PLevel(*P) += 1;
+		PEXP(*P) -= 200;
+	} else 
+	if(PLevel(*P) == 4 && PEXP(*P) >= 250)
+	{
+		PLevel(*P) += 1;
+		PEXP(*P) -= 250;
+	} else 
+	if(PLevel(*P) == 5 && PEXP(*P) >= 300)
+	{
+		PLevel(*P) += 1;
+		PEXP(*P) -= 300;
+	} else 
+	if(PLevel(*P) == 6 && PEXP(*P) >= 350)
+	{
+		PLevel(*P) += 1;
+		PEXP(*P) -= 350;
+	} else 
+	if(PLevel(*P) == 7 && PEXP(*P) >= 400)
+	{
+		PLevel(*P) += 1;
+		PEXP(*P) -= 400;
+	} else 
+	if(PLevel(*P) == 8 && PEXP(*P) >= 450)
+	{
+		PLevel(*P) += 1;
+		PEXP(*P) -= 450;
+	} else 
+	if(PLevel(*P) == 9 && PEXP(*P) >= 500)
+	{
+		PLevel(*P) += 1;
+		PEXP(*P) -= 500;
+	}
+	
+	if(PLevel(*P) > lvlawal) printf("Congratulations! You are now level %d!\n",PLevel(*P));
 }
