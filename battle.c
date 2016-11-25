@@ -5,7 +5,6 @@
 /****** compile : gcc mbattle.c player.c enemy.c battle.c mesinkata.c stack.c queue.c mesinkar.c point.c matriks.c map.c listlinier.c graph.c -o battle *****/
 
 #include "boolean.h"
-#include "color.h"
 #include "player.h"
 #include "enemy.h"
 #include "battle.h"
@@ -22,13 +21,13 @@ int ronde = 1;
 void PrintBorder ()
 /* buat ngeprint border panjang */
 {
-    printf(COLOR_MAGENTA "-----------------------------------------------------------------------------------------\n" COLOR_RESET);
+    printf("-----------------------------------------------------------------------------------------\n");
 }
 
 void PrintGuard ()
 /* buat pring guard */
 {
-    printf(COLOR_RED " | " COLOR_RESET );
+    printf(" | ");
 }
 
 void PrintPlayer ( PLAYER P )
@@ -131,24 +130,25 @@ void InitBattle (PLAYER *P, TE T, boolean *result)
         rnd = rand() % 11;
     }
     if (rnd == 0) rnd += 1 ;
-    CreateEnemy(&E,T,rnd);
+    CreateEnemy(&E,T,rnd); //rnd
 
     /* dialog box */
-    BattleUI(*P,E,'#','#','#','#',round);
+    PopStack(&S,&i);      //ambil 1
+    //mengambil move dari queue
+    DelQueue(&EAksi(E)[i],&me1);
+    DelQueue(&EAksi(E)[i],&me2);
+    DelQueue(&EAksi(E)[i],&me3);
+    DelQueue(&EAksi(E)[i],&me4);
+    clrscr();
+    BattleUI(*P,E,me1,me2,me3,me4,round); //ditutup 2
     PrintKata(EName(E)); printf(" has appeared!\n");
     printf("What will you do?\n");
     InputUserMoves(&PlayerMoves);
     PrintBorder();
 
     /* akan diulan 10 ronde */
-    while ((round <= 10) && (EHP(E) > 0)){
-        PopStack(&S,&i);      //ambil 1
-        //mengambil move dari queue
-            DelQueue(&EAksi(E)[i],&me1);
-            DelQueue(&EAksi(E)[i],&me2);
-            DelQueue(&EAksi(E)[i],&me3);
-            DelQueue(&EAksi(E)[i],&me4);
-
+    do {
+        clrscr();
         /* pertarungan dimulai */
         BattleUI(*P,E,me1,me2,me3,me4,round);
         DelQueue(&PlayerMoves,&mp1);
@@ -165,14 +165,20 @@ void InitBattle (PLAYER *P, TE T, boolean *result)
         ++round;
 
         if(PHP(*P) > 0 && EHP(E) > 0 && round <= 10){        //player masih punya HP
-            BattleUI(*P,E,'#','#','#','#',round);       //Nanti yang disamarkan 2 aja
+            PopStack(&S,&i);      //ambil 1
+            //mengambil move dari queue
+            DelQueue(&EAksi(E)[i],&me1);
+            DelQueue(&EAksi(E)[i],&me2);
+            DelQueue(&EAksi(E)[i],&me3);
+            DelQueue(&EAksi(E)[i],&me4);
+            BattleUI(*P,E,me1,me2,me3,me4,round); // belum ditutup 2
             InputUserMoves(&PlayerMoves);
             PrintBorder();
             clrscr();
         } else {
             break;
         }
-    }
+    } while ((round <= 10) && (EHP(E) > 0));
 
     /* akhiran */
     PrintBorder();
@@ -180,8 +186,12 @@ void InitBattle (PLAYER *P, TE T, boolean *result)
         *result = true;
         EDie(E) = true;
         printf("Congratulations! %s has been defeated!\n",EName(E));
-        printf("You received %d experience!\n",EEXP(E));
-        PEXP(*P) += EEXP(E);
+        if(EHP(E) <= 0){
+            printf("You received %d experience!\n",EEXP(E));
+            PEXP(*P) += EEXP(E);
+        } else {
+            printf("%s fled!\n",EName(E));
+        }
     } else
     if (PHP(*P) <= 0){
         *result = false;
@@ -253,7 +263,7 @@ void BattleProccess (PLAYER *P, char MP, ENEMY *E, infotypeQ ME)
         printf(" flanked! ");
         PrintKata(EName(*E));
         printf(" received damage! -%d HP\n",Damage(PSTR(*P),EDEF(*E)));
-        EHP(*E) -= Damage(PSTR(*P),EDEF(*E));
+        EHP(*E) -= Damage(PSTR(*P),EDEF(*E)) * 1.5; //flank memberi lebih banyak damage
     } else
     if(MP == 'A' && ME == 'A'){
         PrintKata(PName(*P));
