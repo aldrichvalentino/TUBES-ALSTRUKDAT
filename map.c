@@ -185,7 +185,6 @@ void RandomMed()
             GenerateRandomPOINT(M,&P);
         while (!IsAvail(M,P));
         SetElmt(&Mat(ElMini(CMap,CMiniMap)),P,'M');
-        TulisPOINT(P);
     }
 }
 void RandomEnemy()
