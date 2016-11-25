@@ -69,7 +69,7 @@ void BacaCommandGame(Kata *command)
     do
     {
         InputUser(command);
-        if (!IsCommandValidGame(*command)) printf("Input tidak terdefinisi\n");
+        if (!IsCommandValidGame(*command) && (*command).Length!=0) printf("Input tidak terdefinisi\n");
     } while (!IsCommandValidGame(*command));
 }
 

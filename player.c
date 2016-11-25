@@ -1,5 +1,6 @@
 /* File: player.c */
 #include <stdio.h>
+#include "color.h"
 #include "player.h"
 #include "matriks.h"
 #include "boolean.h"
@@ -66,7 +67,7 @@ void Jalan(PLAYER *P, MATRIKS *M, int dir,TE T)
         switch (C)
         {
             case 'M' : SwitchPos(P,M,po); DarahNaik(P); break;
-            case 'E' : InitBattle(P,&win,T); if (win) SwitchPos(P,M,po); break;
+            case 'E' : InitBattle(P,T,&win); if (win) SwitchPos(P,M,po); break;
             case '-' : SwitchPos(P,M,po); break;
             case '#' : break;
         }
@@ -87,38 +88,38 @@ void InitPosPlayer(PLAYER *P,MATRIKS *M)
 
 void PrintGame(PLAYER P)
 {
-	//clrscr();
+	clrscr();
 	int i;
 	PrintBorder();
 	PrintKata(PName(P));
 	i = 15 - PName(P).Length;
-	PrintCLoop('*', i);
+	PrintCLoop(' ', i);
 	PrintGuard();
 	
 	printf("LVL : %d", PLevel(P));
 	i = 4 - digit(PLevel(P));
-	PrintCLoop('*', i);
+	PrintCLoop(' ', i);
 	PrintGuard();
 	
 	printf("HP : %d", PHP(P));
 	i = 4 - digit(PHP(P));
-	PrintCLoop('*', i);
+	PrintCLoop(' ', i);
 	printf(" "); //karena "H""P" hanya 2 huruf jadi ditambah 1 spasi biar sama panjang
 	PrintGuard();
 	
 	printf("STR : %d", PSTR(P));
 	i = 4 - digit(PSTR(P));
-	PrintCLoop('*', i);
+	PrintCLoop(' ', i);
 	PrintGuard();
 	
 	printf("DEF : %d", PDEF(P));
 	i = 4 - digit(PDEF(P));
-	PrintCLoop('*', i);
+	PrintCLoop(' ', i);
 	PrintGuard();
 	
 	printf("EXP : %d", PEXP(P));
 	i = 4 - digit(PEXP(P));
-	PrintCLoop('*', i);
+	PrintCLoop(' ', i);
 	printf("\n");
 	PrintBorder();
 	

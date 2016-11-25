@@ -5,6 +5,7 @@
 /****** compile : gcc mbattle.c player.c enemy.c battle.c mesinkata.c stack.c queue.c mesinkar.c point.c matriks.c map.c listlinier.c graph.c -o battle *****/
 
 #include "boolean.h"
+#include "color.h"
 #include "player.h"
 #include "enemy.h"
 #include "battle.h"
@@ -21,13 +22,13 @@ int ronde = 1;
 void PrintBorder ()
 /* buat ngeprint border panjang */
 {
-    printf("-----------------------------------------------------------------------------------------\n");
+    printf(COLOR_MAGENTA "-----------------------------------------------------------------------------------------\n" COLOR_RESET);
 }
 
 void PrintGuard ()
 /* buat pring guard */
 {
-    printf(" | ");
+    printf(COLOR_RED " | " COLOR_RESET );
 }
 
 void PrintPlayer ( PLAYER P )

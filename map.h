@@ -64,7 +64,7 @@ int SearchPos1(TEMap T,POINT P);
 /* Mengeluarkan indeks di tabel T dimana P tersimpan, mengeluarkan 0 jika tidak ada di map */
 ENEMY SearchPos2(TEMap T,POINT P);
 /* mengeluarkan enemy yang terletak pada posisi P, mengeluarkan Undefined jika tidak ada enemy */
-POINT SearchWayIn(int M);
+POINT SearchWayIn(int M, int dir);
 /* Mencari point jalan masuk jika player sebelumnya berada di CMap dan akan pergi ke MiniMap M */
 /* Asumsi : CMap dan M adalah dua map yang saling adjacent pada CMap */
 
