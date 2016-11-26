@@ -1,7 +1,8 @@
 /* File : mprogram.c */
 /*
-gcc -o mprogram mprogram.c jam.c fileeksternal.c matriks.c battle.c stack.c queue.c enemy.c player.c point.c map.c graph.c listlinier.c mesinkata.c mesinkar.c -lm
+gcc -o mprogram mprogram.c jam.c narasi.c fileeksternal.c matriks.c battle.c stack.c queue.c enemy.c player.c point.c map.c graph.c gambar.c listlinier.c mesinkata.c mesinkar.c -lm
 */
+#include "gambar.h"
 #include "map.h"
 #include "player.h"
 #include "enemy.h"
@@ -34,51 +35,11 @@ void SetAllKata()
     CreateKata("SKILL",&SKILL);
 }
 
-void PrintLogoGede()
-{
-printf("\n");
-printf("                      ;\n");
-printf("                      @\n");
-printf("                      @.\n");
-printf("                      @,\n");
-printf("                      @'\n");
-printf("                      @#\n");
-printf("                      @@\n");
-printf("                      @@\n");
-printf("                      @@\n");
-printf("                      @@\n");
-printf("     @@@@@@@@`        @@                                                           :\n");
-printf("    @@@@@#@@@         @@    `                                                  @@@@@\n");
-printf("   @,,@@  @@          @@     @            .;       ;                    +`     @@`:@`\n");
-printf("     ,@@ @@'  ##@@@@  @@  `#@@#  @@@ @@@ @@##@;  @@@@   #@@@   ,@'  @@ @@@     @@#  `\n");
-printf("     `@@@@@   +@# @@+ @@ #@@@@@  :@+ ;@#@@@@@@@,#@  @   @@@@'  #@   @:  @@     @@@@.\n");
-printf("     `@@@@@@  #@# @@  @@ @@@     .@   @`#,@@+   +@@;   @@` @@  @@   @@  @#      @@@@@\n");
-printf("     ,@@##@@@ @@'@@   @@`@@  +#` :@@@@@`  @@     @@@@ `@#  #@+ @@   @@  @;     ; @@@@:\n");
-printf("     #@@   @@ @@@@@+  @@ @@   @@ #@@ ;@,  @@    ` #@@@@@,  ,@@ @@. :@@  @;  @ @@  +@@#\n");
-printf("     @@@  ;@@ @@@@@@  @@ @@@  `@;@@# @@#  @@   .@+ .@@'@@@@@@; #@@+@@' `@++@@+@@@++@@.\n");
-printf("     @@@@@@@: @@@ @@  :@  @@@@@@ @@@ @@@  @@   @@@@@@+ +@@@@;   @@@@#  @@@@@@# ;@@@@#\n");
-printf("    +@@@@@@+       @@ #@   `,  @                  ##                             .`\n");
-printf("                    ,@@@\n");
-printf("                     `@@`     +\n");
-printf("                      +@\n");
-printf("  @@@@      @@@@      @@@     @@@      @@@@      #@@@      +@@@;     ;@@@@     ,@@@@    ,\n");
-printf(" @@@@`   '@@@@@'  .;;,;;;;;' @@@    #@@@@@;   ,@@@@@@   `@@@@@@    @@@@@@    @@@@@@    @@\n");
-printf(" @@     @@@@@         @:   , @     @@@@@     @@@@@  `  +@@@@     ;@@@@,     @@@@@     @@@\n");
-printf(" @@    @@@@@@         +:     @   `@@@@@@    @@@@@@    @@@@@@    @@@@@@:   ;@@@@@@   `@@@@\n");
-printf(" @@@#@@@@@@@@@#@      @;     @@#@@@@@@@@@#@@@@@@@@@#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#@@@@@@\n");
-printf(" @@@@@@@@@@@@@@@      '+     @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
-printf("                      @+\n");
-printf("                      ;;\n");
-printf("                     ;@+;\n");
-printf("                     .@:+\n");
-printf("                     `::\n");
-printf("\n");
-}
 void Interface()
 /* Nampilin interface awal */
 {
     clrscr();
-    PrintLogoGede();
+    PrintCoolBS();
     PrintBorder();
     PrintCLoop(' ',20); printf("NEW GAME\n");
     PrintCLoop(' ',20); printf("START GAME\n");
@@ -137,7 +98,7 @@ void ProcessCommand(Kata pilihan)
     if (IsKataSama(pilihan,NG))
     {
         Kata player;
-        CreateUser(&player);
+        NarasiOpening(&player);
         CreateEmptyPlayer(&P,player);
         NamaDone = true;
     }
@@ -152,7 +113,7 @@ void ProcessCommand(Kata pilihan)
     }
     else if (IsKataSama(pilihan,LG))
     {
-
+		
     }
     else if (IsKataSama(pilihan,GL))
     {
@@ -211,7 +172,6 @@ int main()
 		while (c!='\n');
         do
         {
-            //PrintBrightsouls();
             Interface();
             BacaCommandAwal(&input);
             ProcessCommand(input);

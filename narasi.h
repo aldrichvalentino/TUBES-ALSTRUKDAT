@@ -1,9 +1,12 @@
 #include <stdio.h>
+#include "mesinkata.h"
+#include "mesinkar.h"
 
-void NarasiOpening();
-void NarasiClosing();
-void NarasiContinue(); 
+void NarasiOpening(Kata *Nama);
+void NarasiClosing(Kata Nama);
+void NarasiContinue(Kata Nama); 
 void NarasiBoss (); 
+void NarasiLaut(int X);
 void NarasiLaut10 (); 
 void NarasiLaut9 (); 
 void NarasiLaut8 (); 

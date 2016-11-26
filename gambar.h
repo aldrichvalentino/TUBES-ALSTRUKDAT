@@ -1,6 +1,7 @@
 /* File: gambar.h */
 /* Definisi Prosedur */
 
+void PrintCoolBS();
 void PrintBrightsouls();
 /* Judul buat opening memulai game */
 

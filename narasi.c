@@ -1,36 +1,46 @@
 #include <stdio.h>
 #include "narasi.h"
+#include "mesinkata.h"
 
-void NarasiOpening()
+void NarasiOpening(Kata *Nama)
 {
-	//Kamus
-	char name[16];
-	
-	//Algoritma
 	printf("%s\n","Ahoyyy Captain!");
 	printf("%s\n","What should we call you??");
 	printf("%s\n","Insert Name Here: (max.16 character)");
-	scanf("%s", &name);
-	printf("%s %s\n","Congratulations Captain", name);
+	InputUser(Nama);
+	while (Nama->Length > 16)
+        {
+            printf("Nama harus dibawah 16 Huruf\n");
+            InputUser(Nama);
+        }
+	printf("%s","Congratulations Captain ");
+	PrintKata(*Nama);
+	printf("\n");
 	printf("%s\n","Kamu baru saja mendapatkan informasi harta karun baru!");
 	printf("%s\n","Harta karun tersebut berada dan tersembunyi di Samudra Bermuda, Samudra penuh misteri yang dihindari setiap penjelajah.");
 	printf("%s\n","Yaitu harta Sang Bright Souls!!!");
 	printf("%s\n","Dia dikenal sebagai Souls paling 'BRIGHT'.");
 	printf("%s\n","Cahaya itu berasal dari hartanya yang menumpuk selalu memantulkan cahaya benderang baik disiang maupun malam hari.");
-	printf("%s %s %s\n","Dalam perjalannya Captain", name, "harus mengarungi puluhan lautan untuk menemukan dikediaman Sang Bright Souls.");
+	printf("%s","Dalam perjalannya Captain ");
+	PrintKata(*Nama); 
+	printf("%s\n"," harus mengarungi puluhan lautan untuk menemukan dikediaman Sang Bright Souls.");
 	printf("%s\n","HATI-HATI!!! Karena ditiap lautan ada 'Souls' lain yaitu monster22 kerabat dari Sang Bright Souls untuk melindungi hartanya.");
 	printf("%s\n","SOOOO.. Let's begin the journey");
 	
 }
 
-void NarasiClosing() {
+void NarasiClosing(Kata Nama) {
 	printf("%s\n","I have never expect that you will get finish this journey.");
-	printf("%s %s %s\n","Sekarang kau adalah orang terkaya diseluruh negeri, Captain ", name, "!!!");
+	printf("%s","Sekarang kau adalah orang terkaya diseluruh negeri, Captain ");
+	PrintKata(Nama);
+	printf("%s\n", "!!!");
 	printf("%s\n","Semoga kamu bisa menggunakan harta itu secara bijak tidak seperti Sang Bright Souls");
 }
 
-void NarasiContinue() {
-	printf("%s %s %s\n","Selamat datang kembali Captain ", name,"!!!");
+void NarasiContinue(Kata Nama) {
+	printf("%s","Selamat datang kembali Captain ");
+	PrintKata(Nama);
+	printf("%s\n","!!!");
 	printf("%s\n","Kami kira Captain sudah siap kembali untuk melanjutkan petualangan mencari harta Bright Souls");
 	printf("%s\n","Semoga berhasil!!");
 }
@@ -42,6 +52,21 @@ void NarasiBoss () {
 	printf("%s\n","Namun sebelumnya kamu harus mengalah BOSS dulu tentunya.");
 	printf("%s\n","Yapp benar sekali! BOSS tidak lain adalah Sang Bright Souls!!!");
 	printf("%s\n","Kami doakan segala kebaikkan padamu Captain!!");
+}
+
+void NarasiLaut(int X) {
+	switch (X) {
+		case 1 : NarasiLaut1(); break; 
+		case 2 : NarasiLaut2(); break;
+		case 3 : NarasiLaut3(); break;
+		case 4 : NarasiLaut4(); break;
+		case 5 : NarasiLaut5(); break;
+		case 6 : NarasiLaut6(); break;
+		case 7 : NarasiLaut7(); break;
+		case 8 : NarasiLaut8(); break;
+		case 9 : NarasiLaut9(); break;
+		case 10 : NarasiLaut10(); break;
+	}
 }
 
 void NarasiLaut10 () {

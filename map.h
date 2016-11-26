@@ -118,7 +118,7 @@ void SwitchMap(PLAYER *P, int i);
 /* Player berpindah map, kiri jika 0, atas jika 1, kanan jika 2, bawah jika 3 */
 
 /* ********** Penulisan Map ********** */
-void PrintMap();
+void PrintMap(int *X);
 /* Menampilkan map yang sedang aktif di layar */
 
 #endif // MAP_H

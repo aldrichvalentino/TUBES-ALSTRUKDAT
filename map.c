@@ -262,13 +262,14 @@ void SwitchMap(PLAYER *P, int i)
 }
 
 /* ********** Penulisan Map ********** */
-void PrintMap()
+void PrintMap(int *X)
 /* Menampilkan map yang sedang aktif di layar */
 {
     MATRIKS M;
     indeks i,j;
     M = (Mat(ElMini(CMap,CMiniMap)));
-
+	*X = CMiniMap;
+	
     for (i=GetFirstIdxBrs(M); i<=GetLastIdxBrs(M); i++)
     {
 		PrintCLoop(' ',22);
