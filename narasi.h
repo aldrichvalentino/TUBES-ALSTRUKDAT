@@ -4,6 +4,7 @@
 
 void NarasiOpening(Kata *Nama);
 void NarasiClosing(Kata Nama);
+void NarasiKalah(Kata Nama);
 void NarasiContinue(Kata Nama); 
 void NarasiBoss (); 
 void NarasiLaut(int X);
