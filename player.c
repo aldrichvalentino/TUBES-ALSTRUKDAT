@@ -147,6 +147,11 @@ void PrintGame(PLAYER P)
 	PrintBorder();
 
 	NarasiLaut(X);
+	if (PHP(P)<=20)
+	{
+		PrintBorder();
+		NarasiKekuranganEnergi();
+	}
 	
 }
 
