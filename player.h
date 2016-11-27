@@ -49,7 +49,7 @@ void SwitchPos(PLAYER *P,MATRIKS *M, POINT Po);
 /* I.S. Pemain akan pindah map, M matriks setelah pindah dan Po adalah titiknya */
 /* F.S. Pemain sudah berada di Po dan matriks sudah ada cplayer */
 
-void Jalan(PLAYER *P, MATRIKS *M, int dir,TE T);
+void Jalan(PLAYER *P, MATRIKS *M, int dir,TE T, boolean *medicine);
 //I.S: di matriks ada player, input dir 0(left),1(up),2(right),3(down).
 /*F.S: posisi player bisa berubah/nggak, matriks bisa jadi gaada playernya,diisi '-'*/
 
@@ -57,7 +57,7 @@ void InitPosPlayer(PLAYER *P,MATRIKS *M);
 /* I.S. game dimulai */
 /* F.S. Posisi player sudah ditentukan */
 
-void PrintGame(PLAYER P);
+void PrintGame(PLAYER P, int darah);
 void PrintCLoop(char c, int x);
 int digit(int X);
 #endif

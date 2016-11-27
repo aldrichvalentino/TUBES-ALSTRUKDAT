@@ -9,11 +9,11 @@ void NarasiOpening(Kata *Nama)
 	char C;
 	
 	//Algoritma
-	printf("%s\n","Ahoyyy Captain!");
-	printf("%s\n","What should we call you??");
-	printf("%s\n","Insert Name Here: (max.16 character)");
+	PrintCLoop(' ',20);printf("%s\n","Ahoyyy Captain!");
+	PrintCLoop(' ',20);printf("%s\n","What should we call you??");
+	PrintCLoop(' ',20);printf("%s\n","Insert Name Here: (max.15 character)");
 	InputUser(Nama);
-	while (Nama->Length > 16)
+	while ((*Nama).Length > 15)
         {
             printf("Nama harus dibawah 16 Huruf\n");
             InputUser(Nama);

@@ -3,6 +3,7 @@
 gcc -o mprogram mprogram.c jam.c narasi.c fileeksternal.c matriks.c battle.c stack.c queue.c enemy.c player.c point.c map.c graph.c gambar.c listlinier.c mesinkata.c mesinkar.c -lm
 */
 #include "gambar.h"
+#include "narasi.h"
 #include "map.h"
 #include "player.h"
 #include "enemy.h"
@@ -114,8 +115,8 @@ void ProcessCommand(Kata pilihan)
     {
         if (!NamaDone)
         {
-			PrintCLoop(' ',20);
-            printf("Anda belum memasukkan username anda\n");
+			//PrintCLoop(' ',20);
+            //printf("Anda belum memasukkan username anda\n");
             ProcessCommand(NG);
         }
         if (!ready) InitAll();
@@ -124,7 +125,7 @@ void ProcessCommand(Kata pilihan)
     {
         if (!NamaDone)
         {
-            printf("Anda belum memasukkan username anda\n");
+            //printf("Anda belum memasukkan username anda\n");
             ProcessCommand(NG);
         }
         ready = LoadGame(&P,&JamGame);
@@ -173,6 +174,7 @@ void ProcessCommand(Kata pilihan)
 int main()
 {
 	char c;
+	int HP = MaxHP(P);
     srand((unsigned)time(NULL));
     Kata input;
     SetAllKata();
@@ -186,7 +188,6 @@ int main()
     while (c!='\n');
     do
     {	
-		
         do
         {
             Interface();
@@ -195,11 +196,12 @@ int main()
         } while ((!IsKataSama(input,SG))&&(!IsKataSama(input,EXIT)));
         if (IsKataSama(input,SG))
         {
-            PrintGame(P);
+            PrintGame(P,HP);
             do
             {
                 BacaCommandGame(&input);
                 ProcessCommand(input);
+                HP = PHP(P);
             } while (!IsKataSama(input,EXIT));
            CreateKata("",&input);
         }
