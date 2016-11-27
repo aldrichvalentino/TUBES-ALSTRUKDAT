@@ -108,14 +108,4 @@ B B B A
 A A F A
 F F A F
 A F A B
-B F B F
-A B A B
-B A B A
-A F A F
-F A F A
-F A A A
-B B B A
-A A F A
-F F A F
-A F A B
 .
