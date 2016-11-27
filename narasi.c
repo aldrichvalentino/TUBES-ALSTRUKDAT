@@ -53,6 +53,15 @@ void NarasiClosing(Kata Nama) {
 	printf("%s\n","seperti Sang Bright Souls");
 }
 
+void NarasiKalah(Kata Nama)
+{
+	printf("%s","Sayang sekali, Captain");
+	PrintKata(Nama);
+	printf("%s\n",".");
+	printf("%s\n","Nampaknya kemampuanmu belum cukup untuk mengarungi Samudra Bermuda ini.");
+	printf("%s\n","Kau harus berlayar pulang dan kembali saat sudah siap lagi nanti.");
+}
+
 void NarasiContinue(Kata Nama) {
 	printf("%s","Selamat datang kembali Captain ");
 	PrintKata(Nama);

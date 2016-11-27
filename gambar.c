@@ -1,8 +1,7 @@
 #include "gambar.h"
-#include "player.h"
 #include "color.h"
 #include <stdio.h>
-#define margin 6
+
 
 void PrintCredits()
 {
@@ -180,76 +179,77 @@ void PrintCredits()
 	printf("%s\n","                                                                            ``,+;                  "COLOR_RESET);
 
 }
- void PrintCoolBS ()
+ 
+void PrintCoolBS()
 {
-	PrintCLoop(' ',margin);printf("%s\n",COLOR_WHITE"                      ;");
-    PrintCLoop(' ',margin); printf("%s\n","                      @");
-    PrintCLoop(' ',margin);printf("%s\n","                      @.");
-    PrintCLoop(' ',margin);printf("%s\n","                      @,");
-    PrintCLoop(' ',margin);printf("%s\n","                      @'");
-    PrintCLoop(' ',margin);printf("%s\n","                      @#");
-    PrintCLoop(' ',margin);printf("%s\n","                      @@");
-    PrintCLoop(' ',margin);printf("%s\n","                      @@");
-    PrintCLoop(' ',margin);printf("%s\n","                      @@");
-    PrintCLoop(' ',margin);printf("%s\n","                      @@");
-    PrintCLoop(' ',margin);printf("%s",COLOR_LRED"     @@@@@@@@`        ");
+	printf("%s\n",COLOR_WHITE"                      ;");
+    printf("%s\n","                      @");
+    printf("%s\n","                      @.");
+    printf("%s\n","                      @,");
+    printf("%s\n","                      @'");
+    printf("%s\n","                      @#");
+    printf("%s\n","                      @@");
+    printf("%s\n","                      @@");
+    printf("%s\n","                      @@");
+    printf("%s\n","                      @@");
+    printf("%s",COLOR_LRED"     @@@@@@@@`        ");
     printf("%s\n",COLOR_WHITE"@@ ");
-    PrintCLoop(' ',margin);printf("%s",COLOR_LRED"    @@@@@#@@@         ");
+    printf("%s",COLOR_LRED"    @@@@@#@@@         ");
     printf("%s",COLOR_WHITE"@@");
     printf("%s\n",COLOR_LRED"    `                                                 @@@@@");
-    PrintCLoop(' ',margin);printf("%s","   @,,@@  @@          ");
+    printf("%s","   @,,@@  @@          ");
     printf("%s",COLOR_WHITE"@@");
     printf("%s\n",COLOR_LRED"     @            .;       ;                    +`     @@`:@`");
-    PrintCLoop(' ',margin);printf("%s","     ,@@ @@'  ##@@@@  ");
+    printf("%s","     ,@@ @@'  ##@@@@  ");
     printf("%s",COLOR_WHITE"@@");
     printf("%s\n",COLOR_LRED"  `#@@#  @@@ @@@ @@##@;  @@@@   #@@@   ,@'  @@ @@@     @@#  `");
-    PrintCLoop(' ',margin);printf("%s","     `@@@@@   +@# @@+ ");
+    printf("%s","     `@@@@@   +@# @@+ ");
     printf("%s",COLOR_WHITE"@@");
     printf("%s\n",COLOR_LRED" #@@@@@  :@+ ;@#@@@@@@@,#@  @   @@@@'  #@   @:  @@     @@@@.");
-    PrintCLoop(' ',margin);printf("%s","     `@@@@@@  #@# @@  ");
+    printf("%s","     `@@@@@@  #@# @@  ");
     printf("%s",COLOR_WHITE"@@");
     printf("%s\n",COLOR_LRED" @@@     .@   @`#,@@+   +@@;   @@` @@  @@   @@  @#      @@@@@");
-    PrintCLoop(' ',margin);printf("%s","     ,@@##@@@ @@'@@   ");
+    printf("%s","     ,@@##@@@ @@'@@   ");
     printf("%s",COLOR_WHITE"@@");
     printf("%s\n",COLOR_LRED"`@@  +#` :@@@@@`  @@     @@@@ `@#  #@+ @@   @@  @;     ; @@@@:");
-    PrintCLoop(' ',margin);printf("%s","     #@@   @@ @@@@@+  ");
+    printf("%s","     #@@   @@ @@@@@+  ");
     printf("%s",COLOR_WHITE"@@");
     printf("%s\n",COLOR_LRED" @@   @@ #@@ ;@,  @@    ` #@@@@@,  ,@@ @@. :@@  @;  @ @@  +@@#");
-    PrintCLoop(' ',margin);printf("%s","     @@@  ;@@ @@@@@@  ");
+    printf("%s","     @@@  ;@@ @@@@@@  ");
     printf("%s",COLOR_WHITE"@@");
     printf("%s\n",COLOR_LRED" @@@  `@;@@# @@#  @@   .@+ .@@'@@@@@@; #@@+@@' `@++@@+@@@++@@.");
-    PrintCLoop(' ',margin);printf("%s","     @@@@@@@: @@@ @@  ");
+    printf("%s","     @@@@@@@: @@@ @@  ");
     printf("%s",COLOR_WHITE":@");
     printf("%s\n",COLOR_LRED"  @@@@@@ @@@ @@@  @@   @@@@@@+ +@@@@;   @@@@#  @@@@@@# ;@@@@#");
-    PrintCLoop(' ',margin);printf("%s","    +@@@@@@+       @@ ");
+    printf("%s","    +@@@@@@+       @@ ");
     printf("%s",COLOR_WHITE"#@");
     printf("%s\n",COLOR_LRED"   `,  @                  ##                             .`");
-    PrintCLoop(' ',margin);printf("%s\n",COLOR_WHITE"                    ,@@@");
-    PrintCLoop(' ',margin);printf("%s\n",COLOR_WHITE"                     `@@`");
-    PrintCLoop(' ',margin);printf("%s\n",COLOR_WHITE"                      +@");
-    PrintCLoop(' ',margin);printf("%s",COLOR_CYAN"  @@@@      @@@@      ");
+    printf("%s\n",COLOR_WHITE"                    ,@@@");
+    printf("%s\n",COLOR_WHITE"                     `@@`");
+    printf("%s\n",COLOR_WHITE"                      +@");
+    printf("%s",COLOR_CYAN"  @@@@      @@@@      ");
     printf("%s",COLOR_WHITE"@@@");
     printf("%s\n",COLOR_CYAN"     @@@      @@@@      #@@@      +@@@;     ;@@@@     ,@@@@");
-    PrintCLoop(' ',margin);printf("%s"," @@@@`   '@@@@@'  ");
+    printf("%s"," @@@@`   '@@@@@'  ");
     printf("%s",COLOR_BROWN".;;,;;;;;'");
     printf("%s\n",COLOR_CYAN" @@@    #@@@@@;   ,@@@@@@   `@@@@@@    @@@@@@    @@@@@@    @@");
-    PrintCLoop(' ',margin);printf("%s"," @@     @@@@@         ");
+    printf("%s"," @@     @@@@@         ");
     printf("%s",COLOR_BROWN"@:");
     printf("%s\n",COLOR_CYAN"   , @     @@@@@     @@@@@  `  +@@@@     ;@@@@,     @@@@@     @@@");
-    PrintCLoop(' ',margin);printf("%s"," @@    @@@@@@         ");
+    printf("%s"," @@    @@@@@@         ");
     printf("%s",COLOR_BROWN"+:");
     printf("%s\n",COLOR_CYAN"     @   `@@@@@@    @@@@@@    @@@@@@    @@@@@@:   ;@@@@@@   `@@@@");
-    PrintCLoop(' ',margin);printf("%s"," @@@#@@@@@@@@@#@      ");
+    printf("%s"," @@@#@@@@@@@@@#@      ");
     printf("%s",COLOR_BROWN"@;");
     printf("%s\n",COLOR_CYAN"     @@#@@@@@@@@@#@@@@@@@@@#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#@@@@@@");
-    PrintCLoop(' ',margin);printf("%s"," @@@@@@@@@@@@@@@      ");
+    printf("%s"," @@@@@@@@@@@@@@@      ");
     printf("%s",COLOR_BROWN"'+");
     printf("%s\n",COLOR_CYAN"     @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-    PrintCLoop(' ',margin);printf("%s\n",COLOR_BROWN"                      @+");
-    PrintCLoop(' ',margin);printf("%s\n","                      ;;");
-    PrintCLoop(' ',margin);printf("%s\n","                     ;@+;");
-    PrintCLoop(' ',margin);printf("%s\n","                     .@:+");
-    PrintCLoop(' ',margin);printf("%s\n","                     `::"COLOR_RESET);
+    printf("%s\n",COLOR_BROWN"                      @+");
+    printf("%s\n","                      ;;");
+    printf("%s\n","                     ;@+;");
+    printf("%s\n","                     .@:+");
+    printf("%s\n","                     `::"COLOR_RESET);
 }
 
 void PrintWin()
@@ -267,17 +267,26 @@ void PrintWin()
 	printf("%s\n","\033[01;33m       ****    **    **  **    **        **              **	**	**  **	  **");
 	printf("%s\n","\033[01;34m        **     **    **  **    **        **      **      **	**	**   **   **");
 	printf("%s\n","\033[01;35m        **     **    **  **    **         **     **     **	**	**    **  **");
-	printf("%s\n","\033[01;36m        **     **    **  **    **          **    **    **	**	**     ** **");
-	printf("%s\n","\033[01;37m        **       ****      ****              ****  ****		**	**      ****\033[30;0m");
+	printf("%s\n","\033[01;36m        **     **    **  **    **          **    **    **	    **	**     ** **");
+	printf("%s\n","\033[01;37m        **       ****      ****              ****  ****		**	**      ****"COLOR_RESET);
 }
 
 void PrintLose()
 {
-	printf("%s\n","\033[22;31m**    **     ****    **    **        **          ****     *******    *******");
-	printf("%s\n","\033[01;31m **  **    **    **  **    **        **        **    **  **          **");
-	printf("%s\n","\033[22;31m  ****     **    **  **    **        **        **    **  **          **");
-	printf("%s\n","\033[01;31m   **      **    **  **    **        **        **    **   *******    *****");
-	printf("%s\n","\033[22;31m   **      **    **  **    **        **        **    **         **   **");	
-	printf("%s\n","\033[01;31m   **      **    **  **    **        **        **    **         **   **");
-	printf("%s\n","\033[22;31m   **        ****      ****          ********    ****     *******    *******\033[30;0m");
+	printf("%s\n","\033[01;31m  ****       *****    ****     ****  *******          ****    **      **  *******  *******");
+	printf("%s\n","\033[22;31m**          **   **   ** **   ** **  **             **    **  **      **  **       **    **");
+	printf("%s\n","\033[01;31m**         **     **  **  ** **  **  **             **    **  **      **  **       **    **");
+	printf("%s\n","\033[22;31m**   ****  *********  **   ***   **  *****          **    **  **      **  *****    *******");
+	printf("%s\n","\033[01;31m**    **   **     **  **         **  **             **    **   **    **   **       **    **");
+	printf("%s\n","\033[22;31m**    **   **     **  **         **  **             **    **    **  **    **       **     **");
+	printf("%s\n","\033[01;31m  ****     **     **  **         **  *******          ****       ****     *******  **     **");
+	printf("\n");
+	printf("%s\n","\033[22;31m      **    **     ****    **    **        **          ****     *******    *******");
+	printf("%s\n","\033[01;31m       **  **    **    **  **    **        **        **    **  **          **");
+	printf("%s\n","\033[22;31m        ****     **    **  **    **        **        **    **  **          **");
+	printf("%s\n","\033[01;31m         **      **    **  **    **        **        **    **   *******    *****");
+	printf("%s\n","\033[22;31m         **      **    **  **    **        **        **    **         **   **");	
+	printf("%s\n","\033[01;31m         **      **    **  **    **        **        **    **         **   **");
+	printf("%s\n","\033[22;31m         **        ****      ****          ********    ****     *******    *******"COLOR_RESET);
 }
+
