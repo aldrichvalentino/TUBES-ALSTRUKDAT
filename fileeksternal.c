@@ -2,6 +2,7 @@
 
 #include "fileeksternal.h"
 #include "map.h"
+#include "narasi.h"
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
@@ -225,7 +226,7 @@ boolean LoadGame(PLAYER *P,JAM *J)
             PrecG = PG;
         }
         fclose(F);
-	printf("Load berhasil!\n");
+	NarasiContinue();
         return true;
     }
 }
