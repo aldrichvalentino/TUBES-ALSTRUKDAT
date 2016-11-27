@@ -2,7 +2,7 @@
 //Jadi isinya semua interface buat battle
 //Tanggal 5 November 2016
 
-/****** compile : gcc mbattle.c player.c enemy.c battle.c mesinkata.c stack.c queue.c mesinkar.c point.c matriks.c map.c listlinier.c graph.c -o battle *****/
+/****** compile : gcc -o battle mbattle.c player.c enemy.c battle.c mesinkata.c stack.c queue.c mesinkar.c point.c matriks.c map.c narasi.c listlinier.c graph.c skilltree.c -lm *****/
 
 #include "color.h"
 #include "boolean.h"
@@ -46,7 +46,11 @@ void PrintPlayer ( PLAYER P )
 	PrintCLoop(' ', i);
     PrintGuard();
 
-    printf("HP : %d",P.HP); //HP
+	if(PHP(P) < 0){
+		printf("HP : 0"); 
+	} else {
+		printf("HP : %d",P.HP); //HP
+	}
     i = 4 - digit(PHP(P));
 	PrintCLoop(' ', i);
 	printf(" "); //karena "H""P" hanya 2 huruf jadi ditambah 1 spasi biar sama panjang
@@ -76,8 +80,12 @@ void PrintEnemy ( ENEMY E , infotypeQ M1, infotypeQ M2, infotypeQ M3, infotypeQ 
     i = 15 - EName(E).Length;
 	PrintCLoop(' ', i);
     PrintGuard();
-
-    printf("HP : %d",E.HP);
+	
+	if(EHP(E) < 0){ 
+		printf("HP : 0");
+	} else {
+		printf("HP : %d",E.HP);
+	}
     i = 4 - digit(EHP(E));
 	PrintCLoop(' ', i);
 	printf(" ");
@@ -260,7 +268,28 @@ void BattleUIoutput (PLAYER *P, ENEMY *E, infotypeQ M1, infotypeQ M2, infotypeQ 
 		
 		PrintBorder();
 		printf("Inserted Commands : "); 
-		PrintQueue(Temp); printf("\n"); //blm dibikin pake panah2
+		switch (movenum) {
+			case 1 : 
+			{ DelQueue(&Temp,&aksi); printf(">%c ",aksi);
+			  DelQueue(&Temp,&aksi); printf("%c ",aksi);
+			  DelQueue(&Temp,&aksi); printf("%c ",aksi);
+			  DelQueue(&Temp,&aksi); printf("%c ",aksi); break; }
+			case 2 :
+			{ DelQueue(&Temp,&aksi); printf("%c ",aksi);
+			  DelQueue(&Temp,&aksi); printf(">%c ",aksi);
+			  DelQueue(&Temp,&aksi); printf("%c ",aksi);
+			  DelQueue(&Temp,&aksi); printf("%c ",aksi); break; }
+			case 3 :
+			{ DelQueue(&Temp,&aksi); printf("%c ",aksi);
+			  DelQueue(&Temp,&aksi); printf("%c ",aksi);
+			  DelQueue(&Temp,&aksi); printf(">%c ",aksi);
+			  DelQueue(&Temp,&aksi); printf("%c ",aksi); break; }
+			case 4 :
+			{ DelQueue(&Temp,&aksi); printf("%c ",aksi);
+			  DelQueue(&Temp,&aksi); printf("%c ",aksi);
+			  DelQueue(&Temp,&aksi); printf("%c ",aksi);
+			  DelQueue(&Temp,&aksi); printf(">%c ",aksi); break; }
+		} printf("\n"); 
 		PrintBorder();    
 	}
 	else
@@ -525,7 +554,7 @@ void InitBattle (PLAYER *P, TE T, int *result)
         rnd = rand() % 11;
     }
     if (rnd == 0) rnd += 1 ;
-    CreateEnemy(&E,T,rnd); 
+    CreateEnemy(&E,T,5); 
 
 	//pertarungan
     do {
@@ -543,13 +572,10 @@ void InitBattle (PLAYER *P, TE T, int *result)
         movenum = 0; 
         PHPawal = PHP(*P);
         EHPawal = EHP(E);
-        while(movenum <= 4 && EHP(E) > 0){
+        while(movenum <= 4){
 			BattleUIoutput(P,&E,me1,me2,me3,me4,PlayerMoves,round,movenum,0);
-			if(PHP(*P) > 0 && EHP(E) > 0){
-				BattleUIoutput(P,&E,me1,me2,me3,me4,PlayerMoves,round,movenum,1);
-			} else {
-				break;
-			}
+			BattleUIoutput(P,&E,me1,me2,me3,me4,PlayerMoves,round,movenum,1);
+			if(PHP(*P) <= 0 || EHP(E) <= 0) break;
 			scanf("%c",&buang);
 			clrscr();
 			movenum++;
