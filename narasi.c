@@ -156,7 +156,7 @@ void NarasiLaut8 () {
 void NarasiLaut7 () {
 	printf("%s\n","Selamat Datang di 'Abyssal Bay' Captain!!");
 	printf("%s\n","Laut ini merasa dimiliki oleh seluruh penghuninya.");
-	printf("%s\n"," Rasa memiliki yang lebih dari sekedar rasa memiliki biasa.");
+	printf("%s\n","Rasa memiliki yang lebih dari sekedar rasa memiliki biasa.");
 	printf("%s\n","Biasanya tidak ada yang selamat dari lautan ini, ");
 	printf("%s\n","karena akan diculik dan para monster merasa 'memiliki' pengunjung tersebut.");
 	printf("%s\n","Berhati-hatilah Captain!!!");
