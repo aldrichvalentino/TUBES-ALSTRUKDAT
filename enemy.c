@@ -60,7 +60,7 @@ void LoadEnemy(TE *T)
         ADVKATA(); EHP(E) = KataToInt(CKata);
         ADVKATA(); ESTR(E) = KataToInt(CKata);
         ADVKATA(); EDEF(E) = KataToInt(CKata);
-        ADVKATA(); EEXP(E) = KataToInt(CKata);
+        ADVKATA(); EEXP(E) = KataToInt(CKata); EEXP(E) /= 10;
         for (i=IdxMinAksi;i<=IdxMaxAksi;++i)
         {
             CreateEmptyQueue(&Q,4);

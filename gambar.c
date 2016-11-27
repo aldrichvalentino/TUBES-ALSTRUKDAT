@@ -1,4 +1,5 @@
 #include "gambar.h"
+#include "color.h"
 #include <stdio.h>
 
 /*
@@ -19,6 +20,78 @@
 \033[01;36m - light cyan
 \033[01;37m - white
  */
+ 
+void PrintCoolBS ()
+{
+	printf("%s\n",COLOR_WHITE"                      ;");
+    printf("%s\n","                      @");
+    printf("%s\n","                      @.");
+    printf("%s\n","                      @,");
+    printf("%s\n","                      @'");
+    printf("%s\n","                      @#");
+    printf("%s\n","                      @@");
+    printf("%s\n","                      @@");
+    printf("%s\n","                      @@");
+    printf("%s\n","                      @@");
+    printf("%s",COLOR_LRED"     @@@@@@@@`        ");
+    printf("%s\n",COLOR_WHITE"@@ ");
+    printf("%s",COLOR_LRED"    @@@@@#@@@         ");
+    printf("%s",COLOR_WHITE"@@");
+    printf("%s\n",COLOR_LRED"    `                                                 @@@@@");
+    printf("%s","   @,,@@  @@          ");
+    printf("%s",COLOR_WHITE"@@");
+    printf("%s\n",COLOR_LRED"     @            .;       ;                    +`     @@`:@`");
+    printf("%s","     ,@@ @@'  ##@@@@  ");
+    printf("%s",COLOR_WHITE"@@");
+    printf("%s\n",COLOR_LRED"  `#@@#  @@@ @@@ @@##@;  @@@@   #@@@   ,@'  @@ @@@     @@#  `");
+    printf("%s","     `@@@@@   +@# @@+ ");
+    printf("%s",COLOR_WHITE"@@");
+    printf("%s\n",COLOR_LRED" #@@@@@  :@+ ;@#@@@@@@@,#@  @   @@@@'  #@   @:  @@     @@@@.");
+    printf("%s","     `@@@@@@  #@# @@  ");
+    printf("%s",COLOR_WHITE"@@");
+    printf("%s\n",COLOR_LRED" @@@     .@   @`#,@@+   +@@;   @@` @@  @@   @@  @#      @@@@@");
+    printf("%s","     ,@@##@@@ @@'@@   ");
+    printf("%s",COLOR_WHITE"@@");
+    printf("%s\n",COLOR_LRED"`@@  +#` :@@@@@`  @@     @@@@ `@#  #@+ @@   @@  @;     ; @@@@:");
+    printf("%s","     #@@   @@ @@@@@+  ");
+    printf("%s",COLOR_WHITE"@@");
+    printf("%s\n",COLOR_LRED" @@   @@ #@@ ;@,  @@    ` #@@@@@,  ,@@ @@. :@@  @;  @ @@  +@@#");
+    printf("%s","     @@@  ;@@ @@@@@@  ");
+    printf("%s",COLOR_WHITE"@@");
+    printf("%s\n",COLOR_LRED" @@@  `@;@@# @@#  @@   .@+ .@@'@@@@@@; #@@+@@' `@++@@+@@@++@@.");
+    printf("%s","     @@@@@@@: @@@ @@  ");
+    printf("%s",COLOR_WHITE":@");
+    printf("%s\n",COLOR_LRED"  @@@@@@ @@@ @@@  @@   @@@@@@+ +@@@@;   @@@@#  @@@@@@# ;@@@@#");
+    printf("%s","    +@@@@@@+       @@ ");
+    printf("%s",COLOR_WHITE"#@");
+    printf("%s\n",COLOR_LRED"   `,  @                  ##                             .`");
+    printf("%s\n",COLOR_WHITE"                    ,@@@");
+    printf("%s\n",COLOR_WHITE"                     `@@`");
+    printf("%s\n",COLOR_WHITE"                      +@");
+    printf("%s",COLOR_CYAN"  @@@@      @@@@      ");
+    printf("%s",COLOR_WHITE"@@@");
+    printf("%s\n",COLOR_CYAN"     @@@      @@@@      #@@@      +@@@;     ;@@@@     ,@@@@");
+    printf("%s"," @@@@`   '@@@@@'  ");
+    printf("%s",COLOR_BROWN".;;,;;;;;'");
+    printf("%s\n",COLOR_CYAN" @@@    #@@@@@;   ,@@@@@@   `@@@@@@    @@@@@@    @@@@@@    @@");
+    printf("%s"," @@     @@@@@         ");
+    printf("%s",COLOR_BROWN"@:");
+    printf("%s\n",COLOR_CYAN"   , @     @@@@@     @@@@@  `  +@@@@     ;@@@@,     @@@@@     @@@");
+    printf("%s"," @@    @@@@@@         ");
+    printf("%s",COLOR_BROWN"+:");
+    printf("%s\n",COLOR_CYAN"     @   `@@@@@@    @@@@@@    @@@@@@    @@@@@@:   ;@@@@@@   `@@@@");
+    printf("%s"," @@@#@@@@@@@@@#@      ");
+    printf("%s",COLOR_BROWN"@;");
+    printf("%s\n",COLOR_CYAN"     @@#@@@@@@@@@#@@@@@@@@@#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#@@@@@@");
+    printf("%s"," @@@@@@@@@@@@@@@      ");
+    printf("%s",COLOR_BROWN"'+");
+    printf("%s\n",COLOR_CYAN"     @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+    printf("%s\n",COLOR_BROWN"                      @+");
+    printf("%s\n","                      ;;");
+    printf("%s\n","                     ;@+;");
+    printf("%s\n","                     .@:+");
+    printf("%s\n","                     `::"COLOR_RESET);
+}
 
 void PrintBrightsouls()
 {

@@ -37,26 +37,27 @@ void InitBattle (PLAYER *P, TE T, boolean *result);
    F.S. : player menang atau kalah, enemy kalah atau kabur,
 */
 
-void InputUserMoves (Queue *PlayerMoves);
-/* Prosedur untuk menampilkan battle */
-/* I.S. : Seluruh peta, player, enemy terdefinisi */
-/* F.S. : enemy dikalahkan atau tidak, HP berkurang, exp bertambah atau berkurang */
-/*        result akan terisi true apabila menang, false bila kalah */
-/* setelah selesai dan exp bertambah, program caller harus mengecek exp, lalu menambahkan level jika sudah cukup */
-
 void BattleProccess (PLAYER *P, char MP, ENEMY *E, infotypeQ ME);
 /* I.S. : player, enemy, dan player moves dan enemy moves terdefinisi
    F.S. : Permainan selesai dengan HP player dan enemey berkurang, seluruh move sudah dieksekusi
 */
 
-void BattleUI (PLAYER P, ENEMY E, infotypeQ M1, infotypeQ M2, infotypeQ M3, infotypeQ M4, int round );
-/* Prosedur untuk menampilkan battle */
+void BattleUIinput (PLAYER P, ENEMY E, infotypeQ M1, infotypeQ M2, infotypeQ M3, infotypeQ M4, int round, Queue *PlayerMoves);
+/* Prosedur untuk menampilkan battle saat input pengguna */
 /* I.S. : Seluruh peta, player, enemy terdefinisi */
-/* F.S. : enemy dikalahkan atau tidak, HP berkurang, exp bertambah atau berkurang */
-/*        result akan terisi true apabila menang, false bila kalah */
-/* setelah selesai dan exp bertambah, program caller harus mengecek exp, lalu menambahkan level jika sudah cukup */
+/* F.S. : Seluruh input pengguna disimpan dalam queue */
+
+void BattleUIoutput (PLAYER *P, ENEMY *E, infotypeQ M1, infotypeQ M2, infotypeQ M3, infotypeQ M4, Queue PlayerMoves, int round, int movenum);
+/* untuk mengeprint seluruh proses battle setelah input
+ * I.S. : semua player, enemy, dan move nya terdefinisi
+ * F.S. : diprint hasil dari battle
+ */
 
 int Damage(int Attack, int Defense);
 /* fungsi menghitung damage yang dihasilkan */
 
+void LevelUp (PLAYER *P);
+/* menghitung skema naik level */
+/* I.S. : sudah selesai battle, exp sudah bertambah */
+/* F.S. : level naik */
 #endif

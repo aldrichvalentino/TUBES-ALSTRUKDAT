@@ -4,6 +4,7 @@
 
 /****** compile : gcc mbattle.c player.c enemy.c battle.c mesinkata.c stack.c queue.c mesinkar.c point.c matriks.c map.c listlinier.c graph.c -o battle *****/
 
+#include "color.h"
 #include "boolean.h"
 #include "player.h"
 #include "enemy.h"
@@ -14,20 +15,17 @@
 #include <stdlib.h>
 #include <time.h>
 
-/* kamus global */
-int ronde = 1;
-
 /* *************** Primitif *************** */
 void PrintBorder ()
 /* buat ngeprint border panjang */
 {
-    printf("-----------------------------------------------------------------------------------------\n");
+    printf(COLOR_MAGENTA"---------------------------------------------------------------------------------------\n"COLOR_RESET);
 }
 
 void PrintGuard ()
 /* buat pring guard */
 {
-    printf(" | ");
+    printf(COLOR_CYAN" | "COLOR_RESET);
 }
 
 void PrintPlayer ( PLAYER P )
@@ -70,8 +68,6 @@ void PrintEnemy ( ENEMY E , infotypeQ M1, infotypeQ M2, infotypeQ M3, infotypeQ 
 /* F.S. : Menampilkan nama, HP, dan 2 command dari enemy */
 {
     /* kamus */
-    char Aksi;
-    Queue Q;
     int i;
 
     /* algoritma */
@@ -85,8 +81,8 @@ void PrintEnemy ( ENEMY E , infotypeQ M1, infotypeQ M2, infotypeQ M3, infotypeQ 
 	PrintCLoop(' ', i);
 	printf(" ");
     PrintGuard();
-
-    printf("%c ",M1);
+	
+    printf("Command : %c ",M1);
     printf("%c ",M2);
     printf("%c ",M3);
     printf("%c ",M4);
@@ -127,8 +123,8 @@ void InitBattle (PLAYER *P, TE T, boolean *result)
     /* Kamus */
     ENEMY E;
     Stack S;
-    int i, round;
-    char me1,me2,me3,me4,mp1,mp2,mp3,mp4,o1,o2,o3,o4;
+    int i, round, movenum;
+    char me1,me2,me3,me4,mp1,mp2,mp3,mp4,o1,o2,o3,o4,buang;
     Queue PlayerMoves;
 
     /* inisiasi enemy */
@@ -152,54 +148,28 @@ void InitBattle (PLAYER *P, TE T, boolean *result)
     if (rnd == 0) rnd += 1 ;
     CreateEnemy(&E,T,rnd); //rnd
 
-    /* dialog box */
-    PopStack(&S,&i);      //ambil 1
-    //mengambil move dari queue
-    DelQueue(&EAksi(E)[i],&me1);
-    DelQueue(&EAksi(E)[i],&me2);
-    DelQueue(&EAksi(E)[i],&me3);
-    DelQueue(&EAksi(E)[i],&me4);
-    HideTwoMoves(me1,me2,me3,me4,&o1,&o2,&o3,&o4);
-    clrscr();
-    BattleUI(*P,E,o1,o2,o3,o4,round); //ditutup 2
-    PrintKata(EName(E)); printf(" has appeared!\n");
-    printf("What will you do?\n");
-    InputUserMoves(&PlayerMoves);
-    PrintBorder();
-
-    /* akan diulan 10 ronde */
+	//pertarungan
     do {
-        clrscr();
-        /* pertarungan dimulai */
-        BattleUI(*P,E,me1,me2,me3,me4,round);
-        DelQueue(&PlayerMoves,&mp1);
-        DelQueue(&PlayerMoves,&mp2);
-        DelQueue(&PlayerMoves,&mp3);
-        DelQueue(&PlayerMoves,&mp4);
-        printf("Inserted Commands : %c %c %c %c \n",mp1,mp2,mp3,mp4);
-
-        BattleProccess(P,mp1,&E,me1);
-        BattleProccess(P,mp2,&E,me2);
-        BattleProccess(P,mp3,&E,me3);
-        BattleProccess(P,mp4,&E,me4);
-
+		PopStack(&S,&i);      //ambil 1
+		//mengambil move dari queue
+		DelQueue(&EAksi(E)[i],&me1);
+		DelQueue(&EAksi(E)[i],&me2);
+		DelQueue(&EAksi(E)[i],&me3);
+		DelQueue(&EAksi(E)[i],&me4);
+		HideTwoMoves(me1,me2,me3,me4,&o1,&o2,&o3,&o4);
+		clrscr();
+    
+		BattleUIinput(*P,E,o1,o2,o3,o4,round,&PlayerMoves);
+        
+        movenum = 0;
+        while(movenum <= 4 && EHP(E) > 0){
+			BattleUIoutput(P,&E,me1,me2,me3,me4,PlayerMoves,round,movenum);
+			scanf("%c",&buang);
+			clrscr();
+			movenum++;
+		}
+		
         ++round;
-
-        if(PHP(*P) > 0 && EHP(E) > 0 && round <= 10){        //player masih punya HP
-            PopStack(&S,&i);      //ambil 1
-            //mengambil move dari queue
-            DelQueue(&EAksi(E)[i],&me1);
-            DelQueue(&EAksi(E)[i],&me2);
-            DelQueue(&EAksi(E)[i],&me3);
-            DelQueue(&EAksi(E)[i],&me4);
-            HideTwoMoves(me1,me2,me3,me4,&o1,&o2,&o3,&o4);
-            BattleUI(*P,E,o1,o2,o3,o4,round);
-            InputUserMoves(&PlayerMoves);
-            PrintBorder();
-            clrscr();
-        } else {
-            break;
-        }
     } while ((round <= 10) && (EHP(E) > 0));
 
     /* akhiran */
@@ -207,12 +177,12 @@ void InitBattle (PLAYER *P, TE T, boolean *result)
     if ((PHP(*P) > 0) || (round > 10)){
         *result = true;
         EDie(E) = true;
-        printf("Congratulations! %s has been defeated!\n",EName(E));
+        printf("Congratulations! ");PrintKata(EName(E));printf(" has been defeated!\n");
         if(EHP(E) <= 0){
             printf("You received %d experience!\n",EEXP(E));
             PEXP(*P) += EEXP(E);
         } else {
-            printf("%s fled!\n",EName(E));
+            PrintKata(EName(E));printf(" fled!\n");
         }
     } else
     if (PHP(*P) <= 0){
@@ -220,34 +190,13 @@ void InitBattle (PLAYER *P, TE T, boolean *result)
         printf("You have lost!\n");
     }
     PrintBorder();
+    LevelUp (P);
+    PrintBorder();
+
     printf("Enter R to return!\n");
     do{
         scanf(" %c",&me1);
     }while (me1 != 'R');
-}
-
-void InputUserMoves (Queue *PlayerMoves)
-/* Prosedur untuk menampilkan battle */
-/* I.S. : Seluruh peta, player, enemy terdefinisi */
-/* F.S. : enemy dikalahkan atau tidak, HP berkurang, exp bertambah atau berkurang */
-/*        result akan terisi true apabila menang, false bila kalah */
-/* setelah selesai dan exp bertambah, program caller harus mengecek exp, lalu menambahkan level jika sudah cukup */
-{
-    /* Kamus */
-    char c;
-
-    /*Insert Command*/
-    printf("Please insert 4 commands : ");
-    CreateEmptyQueue(PlayerMoves,4);
-    while(!IsFullQueue(*PlayerMoves)){
-        scanf("%c",&c);
-        if(c == 'A' || c == 'F' || c == 'B'){   //Memasukan input A F B
-            AddQueue(PlayerMoves,c);
-        } else
-        if(c == 'E'){                           //Mendelete E
-            CreateEmptyQueue(PlayerMoves,4);
-        }
-    }
 }
 
 void BattleProccess (PLAYER *P, char MP, ENEMY *E, infotypeQ ME)
@@ -261,8 +210,8 @@ void BattleProccess (PLAYER *P, char MP, ENEMY *E, infotypeQ ME)
     } else
     if(MP == 'B' && ME == 'F'){
         PrintKata(PName(*P));
-        printf(" received damage from the flank! -%d HP\n",Damage(ESTR(*E),PDEF(*P)));
-        PHP(*P) -= Damage(ESTR(*E),PDEF(*P));
+        printf(" received damage from the flank! -%d HP\n",Damage(ESTR(*E),PDEF(*P))*3/2);
+        PHP(*P) -= Damage(ESTR(*E),PDEF(*P))*3/2;
     } else
     if(MP == 'F' && ME == 'A'){
         PrintKata(EName(*E));
@@ -284,8 +233,8 @@ void BattleProccess (PLAYER *P, char MP, ENEMY *E, infotypeQ ME)
         PrintKata(PName(*P));
         printf(" flanked! ");
         PrintKata(EName(*E));
-        printf(" received damage! -%d HP\n",Damage(PSTR(*P),EDEF(*E)));
-        EHP(*E) -= Damage(PSTR(*P),EDEF(*E)) * 1.5; //flank memberi lebih banyak damage
+        printf(" received damage! -%d HP\n",Damage(PSTR(*P),EDEF(*E))*3/2);
+        EHP(*E) -= Damage(PSTR(*P),EDEF(*E)) * 3/2; //flank memberi lebih banyak damage
     } else
     if(MP == 'A' && ME == 'A'){
         PrintKata(PName(*P));
@@ -304,23 +253,174 @@ void BattleProccess (PLAYER *P, char MP, ENEMY *E, infotypeQ ME)
     }
 }
 
-void BattleUI (PLAYER P, ENEMY E, infotypeQ M1, infotypeQ M2, infotypeQ M3, infotypeQ M4, int round )
-/* Prosedur untuk menampilkan battle */
+void BattleUIinput (PLAYER P, ENEMY E, infotypeQ M1, infotypeQ M2, infotypeQ M3, infotypeQ M4, int round, Queue *PlayerMoves)
+/* Prosedur untuk menampilkan battle saat input pengguna */
 /* I.S. : Seluruh peta, player, enemy terdefinisi */
-/* F.S. : enemy dikalahkan atau tidak, HP berkurang, exp bertambah atau berkurang */
-/*        result akan terisi true apabila menang, false bila kalah */
-/* setelah selesai dan exp bertambah, program caller harus mengecek exp, lalu menambahkan level jika sudah cukup */
+/* F.S. : Seluruh input pengguna disimpan dalam queue */
 {
-    /* print player */
+	/* print player */
     PrintBorder();
     PrintPlayer(P);
     printf("Round %d",round); //Round
-    PrintGuard();
-    printf("\n");
-    PrintBorder();
+    PrintGuard(); printf("\n"); PrintBorder();
+    PrintEnemy(E,M1,M2,M3,M4); PrintBorder();
+    
+    /* input pengguna */
+    PrintKata(EName(E)); printf(" Attacked!\n");
+    printf("Please input your command\n"); PrintBorder();
+    
+    /* Kamus */
+    char c;
 
-    /* print enemy */
-    PrintEnemy(E,M1,M2,M3,M4);
+    /*Insert Command*/
+    CreateEmptyQueue(PlayerMoves,4);
+    
+    while(!IsFullQueue(*PlayerMoves)){
+		printf("Inserted Commands : "); PrintQueue(*PlayerMoves); printf("\n");
+		PrintBorder();
+		printf("Command (A / F / B) : ");
+        scanf("%c",&c);
+        if(c == 'A' || c == 'F' || c == 'B'){   //Memasukan input A F B
+            AddQueue(PlayerMoves,c);
+        } else
+        if(c == 'E'){                           //Mendelete E
+            CreateEmptyQueue(PlayerMoves,4);
+        }
+        PrintBorder();
+        clrscr();
+        /* print player */
+		PrintBorder();
+		PrintPlayer(P);
+		printf("Round %d",round); //Round
+		PrintGuard(); printf("\n"); PrintBorder();
+		PrintEnemy(E,M1,M2,M3,M4); PrintBorder();
+    
+		/* input pengguna */
+		PrintKata(EName(E)); printf(" Attacked!\n");
+		printf("Please input your command\n");
+		PrintBorder();
+    }
+}
+
+void BattleUIoutput (PLAYER *P, ENEMY *E, infotypeQ M1, infotypeQ M2, infotypeQ M3, infotypeQ M4, Queue PlayerMoves, int round, int movenum)
+/* untuk mengeprint seluruh proses battle setelah input
+ * I.S. : semua player, enemy, dan move nya terdefinisi
+ * F.S. : diprint hasil dari battle
+ */
+{
+	int i; char aksi, buang; 
+	Queue Temp = PlayerMoves;
+		
+		/* print header */
+		PrintBorder();
+		PrintPlayer(*P);
+		printf("Round %d",round); //Round
+		PrintGuard(); printf("\n"); PrintBorder();
+		switch (movenum) {
+			case 1 : 
+			{
+				PrintKata(EName(*E));
+				i = 15 - EName(*E).Length;
+				PrintCLoop(' ', i);
+				PrintGuard();
+
+				printf("HP : %d",EHP(*E));
+				i = 4 - digit(EHP(*E));
+				PrintCLoop(' ', i);
+				printf(" ");
+				PrintGuard();
+				
+				printf("Command : >%c ",M1);
+				printf("%c ",M2);
+				printf("%c ",M3);
+				printf("%c ",M4);
+				break;
+			}
+			case 2 : 
+			{
+				PrintKata(EName(*E));
+				i = 15 - EName(*E).Length;
+				PrintCLoop(' ', i);
+				PrintGuard();
+
+				printf("HP : %d",EHP(*E));
+				i = 4 - digit(EHP(*E));
+				PrintCLoop(' ', i);
+				printf(" ");
+				PrintGuard();
+				
+				printf("Command : %c ",M1);
+				printf(">%c ",M2);
+				printf("%c ",M3);
+				printf("%c ",M4);
+				break;
+			}
+			case 3 : 
+			{
+				PrintKata(EName(*E));
+				i = 15 - EName(*E).Length;
+				PrintCLoop(' ', i);
+				PrintGuard();
+
+				printf("HP : %d",EHP(*E));
+				i = 4 - digit(EHP(*E));
+				PrintCLoop(' ', i);
+				printf(" ");
+				PrintGuard();
+				
+				printf("Command : %c ",M1);
+				printf("%c ",M2);
+				printf(">%c ",M3);
+				printf("%c ",M4);
+				break;
+			}
+			case 4 : 
+			{
+				PrintKata(EName(*E));
+				i = 15 - EName(*E).Length;
+				PrintCLoop(' ', i);
+				PrintGuard();
+
+				printf("HP : %d",EHP(*E));
+				i = 4 - digit(EHP(*E));
+				PrintCLoop(' ', i);
+				printf(" ");
+				PrintGuard();
+				
+				printf("Command : %c ",M1);
+				printf("%c ",M2);
+				printf("%c ",M3);
+				printf(">%c ",M4);
+				break;
+			}
+		}
+		
+		printf("\n");
+		PrintBorder();
+		PrintKata(EName(*E)); printf(" Attacked!\n");
+
+		/* dialog box */
+		switch (movenum) {
+			case 1 : 
+			{ DelQueue(&PlayerMoves,&aksi); BattleProccess(P,aksi,E,M1); break; }
+			case 2 : 
+			{ DelQueue(&PlayerMoves,&aksi); BattleProccess(P,aksi,E,M1); 
+			  DelQueue(&PlayerMoves,&aksi); BattleProccess(P,aksi,E,M2); break; }
+			case 3 : 
+			{ DelQueue(&PlayerMoves,&aksi); BattleProccess(P,aksi,E,M1); 
+			  DelQueue(&PlayerMoves,&aksi); BattleProccess(P,aksi,E,M2); 
+			  DelQueue(&PlayerMoves,&aksi); BattleProccess(P,aksi,E,M3); break; }
+			case 4 : 
+			{ DelQueue(&PlayerMoves,&aksi); BattleProccess(P,aksi,E,M1); 
+			  DelQueue(&PlayerMoves,&aksi); BattleProccess(P,aksi,E,M2); 
+			  DelQueue(&PlayerMoves,&aksi); BattleProccess(P,aksi,E,M3); 
+			  DelQueue(&PlayerMoves,&aksi); BattleProccess(P,aksi,E,M4); break; }
+		}
+		
+		PrintBorder();
+		printf("Inserted Commands : "); 
+		PrintQueue(Temp); printf("\n");
+		PrintBorder();    
 }
 
 int Damage (int Attack, int Defense)
@@ -340,4 +440,89 @@ int Damage (int Attack, int Defense)
     } else {             //Jika defense > attack, -100 < selisih < -1
         return (int)(20 + 0.15*selisih);
     }
+}
+
+void LevelUp (PLAYER *P)
+/* menghitung skema naik level */
+/* I.S. : sudah selesai battle, exp sudah bertambah */
+/* F.S. : level naik */
+{
+	//KAMUS
+	int lvlawal = PLevel(*P);
+	
+	//algoritma
+	if(PLevel(*P) == 1 && PEXP(*P) >= 100)
+	{
+		PLevel(*P) += 1;
+		PEXP(*P) -= 100;
+		MaxHP(*P) += 50;
+		PSTR(*P) += 50;
+		PDEF(*P) += 50;
+	} else 
+	if(PLevel(*P) == 2 && PEXP(*P) >= 150)
+	{
+		PLevel(*P) += 1;
+		PEXP(*P) -= 150;
+		MaxHP(*P) += 50;
+		PSTR(*P) += 50;
+		PDEF(*P) += 50;
+	} else 
+	if(PLevel(*P) == 3 && PEXP(*P) >= 200)
+	{
+		PLevel(*P) += 1;
+		PEXP(*P) -= 200;
+		MaxHP(*P) += 50;
+		PSTR(*P) += 50;
+		PDEF(*P) += 50;
+	} else 
+	if(PLevel(*P) == 4 && PEXP(*P) >= 250)
+	{
+		PLevel(*P) += 1;
+		PEXP(*P) -= 250;
+		MaxHP(*P) += 50;
+		PSTR(*P) += 50;
+		PDEF(*P) += 50;
+	} else 
+	if(PLevel(*P) == 5 && PEXP(*P) >= 300)
+	{
+		PLevel(*P) += 1;
+		PEXP(*P) -= 300;
+		MaxHP(*P) += 50;
+		PSTR(*P) += 50;
+		PDEF(*P) += 50;
+	} else 
+	if(PLevel(*P) == 6 && PEXP(*P) >= 350)
+	{
+		PLevel(*P) += 1;
+		PEXP(*P) -= 350;
+		MaxHP(*P) += 50;
+		PSTR(*P) += 50;
+		PDEF(*P) += 50;
+	} else 
+	if(PLevel(*P) == 7 && PEXP(*P) >= 400)
+	{
+		PLevel(*P) += 1;
+		PEXP(*P) -= 400;
+		MaxHP(*P) += 100;
+		PSTR(*P) += 100;
+		PDEF(*P) += 100;
+	} else 
+	if(PLevel(*P) == 8 && PEXP(*P) >= 450)
+	{
+		PLevel(*P) += 1;
+		PEXP(*P) -= 450;
+		MaxHP(*P) += 100;
+		PSTR(*P) += 100;
+		PDEF(*P) += 100;
+	} else 
+	if(PLevel(*P) == 9 && PEXP(*P) >= 500)
+	{
+		PLevel(*P) += 1;
+		PEXP(*P) -= 500;
+		MaxHP(*P) += 100;
+		PSTR(*P) += 50;
+		PDEF(*P) += 50;
+	}
+	
+	if(PLevel(*P) > lvlawal) printf("Congratulations! You are now level %d!\n",PLevel(*P));
 }

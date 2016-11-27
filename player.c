@@ -1,6 +1,7 @@
 /* File: player.c */
 #include <stdio.h>
 #include "color.h"
+#include "narasi.h"
 #include "player.h"
 #include "matriks.h"
 #include "boolean.h"
@@ -98,6 +99,10 @@ void InitPosPlayer(PLAYER *P,MATRIKS *M)
 
 void PrintGame(PLAYER P)
 {
+	//Kamus
+	int X;
+	
+	//Algoritma
 	clrscr();
 	int i;
 	PrintBorder();
@@ -133,10 +138,10 @@ void PrintGame(PLAYER P)
 	printf("\n");
 	PrintBorder();
 	
-	PrintMap();
+	PrintMap(&X);
 	PrintBorder();
 
-	printf("<narasi baris 1>\n");
+	NarasiLaut(X);
 	printf("<narasi baris 2>\n");
 	PrintBorder();
 
