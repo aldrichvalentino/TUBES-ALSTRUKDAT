@@ -20,7 +20,7 @@
 void PrintBorder ()
 /* buat ngeprint border panjang */
 {
-    printf(COLOR_MAGENTA"---------------------------------------------------------------------------------------\n"COLOR_RESET);
+    printf(COLOR_MAGENTA"------------------------------------------------------------------------------------------------------\n"COLOR_RESET);
 }
 
 void PrintGuard ()
