@@ -1,6 +1,6 @@
 /* File : mprogram.c */
 /*
-gcc -o mprogram mprogram.c jam.c narasi.c fileeksternal.c matriks.c battle.c stack.c queue.c enemy.c player.c point.c map.c graph.c gambar.c listlinier.c mesinkata.c mesinkar.c -lm
+gcc -o mprogram mprogram.c jam.c narasi.c fileeksternal.c matriks.c battle.c stack.c queue.c enemy.c player.c point.c map.c graph.c gambar.c listlinier.c mesinkata.c mesinkar.c skilltree.c -lm
 */
 #include "skilltree.h"
 #include "gambar.h"
@@ -145,6 +145,7 @@ void ProcessCommand(Kata pilihan)
         PrintGame(P);
         if (med)
         {
+			PrintBorder();
 			printf("You got a medicine!\n");
 		}
 		PrintBorder();
@@ -156,6 +157,7 @@ void ProcessCommand(Kata pilihan)
         PrintGame(P);
         if (med)
         {
+			PrintBorder();
 			printf("You got a medicine!\n");
 		}
 		PrintBorder();
@@ -167,6 +169,7 @@ void ProcessCommand(Kata pilihan)
         PrintGame(P);
         if (med)
         {
+			PrintBorder();
 			printf("You got a medicine!\n");
 		}
 		PrintBorder();
@@ -178,6 +181,7 @@ void ProcessCommand(Kata pilihan)
         PrintGame(P);
         if (med)
         {
+			PrintBorder();
 			printf("You got a medicine!\n");
 		}
 		PrintBorder();

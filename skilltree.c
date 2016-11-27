@@ -3,7 +3,7 @@
 #include "skilltree.h"
 #include <stdlib.h>
 #include <stdio.h>
-
+#include "player.h"
 
 /* *** Konstruktor *** */
 BinTree Tree (infotype Akar, BinTree L, BinTree R, int i)
@@ -113,21 +113,21 @@ void PrintTree1(BinTree P, int h, int inc)
         if (Sudah(P))
         {
             switch (Akar(P)){
-                case 8 : printf(COLOR_GREEN     "(1) PIRATES HAT"     COLOR_RESET "\n");break;
+                case 8 : printf(COLOR_GREEN     "(1) PIRATES HAT "     COLOR_RESET "\n");break;
                 case 4 : printf(COLOR_GREEN     "(2) CAPTAINS BLOOD"     COLOR_RESET "\n");break;
-                case 12 : printf(COLOR_GREEN    "(3) CAPTAINS SENSE(3)"     COLOR_RESET "\n");break;
-                case 2 : printf(COLOR_GREEN     "(4) BLOODY HOOK(4)"     COLOR_RESET "\n");break;
-                case 6 : printf(COLOR_GREEN     "(5) TOXIC ATTACK(5)"     COLOR_RESET "\n");break;
-                case 10 : printf(COLOR_GREEN    "(6) PIRATES EYES(6)"     COLOR_RESET "\n");break;
-                case 14 : printf(COLOR_GREEN    "(7) DEFENSIVE STANCE(7)"     COLOR_RESET "\n");break;
-                case 1 : printf(COLOR_GREEN     "(8) SACRED SWORD(8)"     COLOR_RESET "\n");break;
-                case 3 : printf(COLOR_GREEN     "(9) WAVE STRIKE(9)"     COLOR_RESET "\n");break;
-                case 5 : printf(COLOR_GREEN     "(10) BACKSTAB(10)"     COLOR_RESET "\n");break;
-                case 7 : printf(COLOR_GREEN     "(11) CAPTAINS RAGE(11)"     COLOR_RESET "\n");break;
-                case 9 : printf(COLOR_GREEN     "(12) SUPERIOR BLOCK(12)"     COLOR_RESET "\n");break;
-                case 11 : printf(COLOR_GREEN    "(13) WATER FORM(13)"     COLOR_RESET "\n");break;
-                case 13 : printf(COLOR_GREEN    "(14) SALTY SKIN(14)"     COLOR_RESET "\n");break;
-                case 15 : printf(COLOR_GREEN    "(15) ICE SHIELD(15)"     COLOR_RESET "\n");break;
+                case 12 : printf(COLOR_GREEN    "(3) CAPTAINS SENSE"     COLOR_RESET "\n");break;
+                case 2 : printf(COLOR_GREEN     "(4) BLOODY HOOK"     COLOR_RESET "\n");break;
+                case 6 : printf(COLOR_GREEN     "(5) TOXIC ATTACK"     COLOR_RESET "\n");break;
+                case 10 : printf(COLOR_GREEN    "(6) PIRATES EYES"     COLOR_RESET "\n");break;
+                case 14 : printf(COLOR_GREEN    "(7) DEFENSIVE STANCE"     COLOR_RESET "\n");break;
+                case 1 : printf(COLOR_GREEN     "(8) SACRED SWORD"     COLOR_RESET "\n");break;
+                case 3 : printf(COLOR_GREEN     "(9) WAVE STRIKE"     COLOR_RESET "\n");break;
+                case 5 : printf(COLOR_GREEN     "(10) BACKSTAB"     COLOR_RESET "\n");break;
+                case 7 : printf(COLOR_GREEN     "(11) CAPTAINS RAGE"     COLOR_RESET "\n");break;
+                case 9 : printf(COLOR_GREEN     "(12) SUPERIOR BLOCK"     COLOR_RESET "\n");break;
+                case 11 : printf(COLOR_GREEN    "(13) WATER FORM"     COLOR_RESET "\n");break;
+                case 13 : printf(COLOR_GREEN    "(14) SALTY SKIN"     COLOR_RESET "\n");break;
+                case 15 : printf(COLOR_GREEN    "(15) ICE SHIELD"     COLOR_RESET "\n");break;
             }
         }
         else
@@ -312,7 +312,7 @@ void CreateNewSkillTree(BinTree *P)
 
     T3 = Tree(12,T6,T7,0);
     T2 = Tree(4,T4,T5,0);
-
+    *P = Nil;
     MakeTree(8,T2,T3,P);
     Sudah(*P) = true;
 }
@@ -370,23 +370,48 @@ addrNode Parent(BinTree P, infotype X)
     }
 }
 
-void AmbilSkill(BinTree *P)
+void AmbilSkill(PLAYER *P)
 // Prosedur untuk ngambil skill
 {
     char pilih;
     int x;
     int skill;
     BinTree T;
+    PrintSkillTree(PSkill(*P));
+    printf("                                      PLAYER SKILL TREE\n");
+    PrintBorder();
+    printf("If you choose the left path your STR will increase!\nIf you choose the right path your DEF will increase!\n")
     printf("Pilih nomor skill yang ingin diambil :\n");
     scanf("%d",&skill);
+    while ((skill >= 16) || (skill <= 0))
+    {
+        printf("Input tidak terdefinisi, ulangi input :\n");
+        scanf("%d",&skill);
+    }
     if (skill <= 15 && skill >= 2)
     {
-        if (!IsSudah(*P,SkillToInt(x)))
+        if (!IsSudah(PSkill(*P),SkillToInt(x)))
         {
-            T = Parent(*P,SkillToInt(skill));
-            if (IsSudah(*P,Akar(T)))
+            T = Parent(PSkill(*P),SkillToInt(skill));
+            if (IsSudah(PSkill(*P),Akar(T)))
             {
-                Sudah(SearchBST(*P,SkillToInt(skill))) = true;
+                Sudah(SearchBST(PSkill(*P),SkillToInt(skill))) = true;
+                switch (skill){
+                    case 2 : PSTR(*P) = PSTR(*P) + 10; PDEF(*P) = PDEF(*P) + 5; printf("STR bertambah 10, DEF bertambah 5\n"); break;
+                    case 3 : PSTR(*P) = PSTR(*P) + 5; PDEF(*P) = PDEF(*P) + 10; printf("STR bertambah 5, DEF bertambah 10\n"); break;
+                    case 4 : PSTR(*P) = PSTR(*P) + 20; PDEF(*P) = PDEF(*P) + 5; printf("STR bertambah 20, DEF bertambah 5\n"); break;
+                    case 5 : PSTR(*P) = PSTR(*P) + 15; PDEF(*P) = PDEF(*P) + 10; printf("STR bertambah 15, DEF bertambah 10\n"); break;
+                    case 6 : PSTR(*P) = PSTR(*P) + 10; PDEF(*P) = PDEF(*P) + 15; printf("STR bertambah 10, DEF bertambah 15\n"); break;
+                    case 7 : PSTR(*P) = PSTR(*P) + 5; PDEF(*P) = PDEF(*P) + 20; printf("STR bertambah 5, DEF bertambah 20\n"); break;
+                    case 8 : PSTR(*P) = PSTR(*P) + 40; PDEF(*P) = PDEF(*P) + 5; printf("STR bertambah 40, DEF bertambah 5\n"); break;
+                    case 9 : PSTR(*P) = PSTR(*P) + 35; PDEF(*P) = PDEF(*P) + 10; printf("STR bertambah 35, DEF bertambah 10\n"); break;
+                    case 10 : PSTR(*P) = PSTR(*P) + 30; PDEF(*P) = PDEF(*P) + 15; printf("STR bertambah 30, DEF bertambah 15\n"); break;
+                    case 11 : PSTR(*P) = PSTR(*P) + 25; PDEF(*P) = PDEF(*P) + 20; printf("STR bertambah 25, DEF bertambah 20\n"); break;
+                    case 12 : PSTR(*P) = PSTR(*P) + 20; PDEF(*P) = PDEF(*P) + 25; printf("STR bertambah 20, DEF bertambah 25\n"); break;
+                    case 13 : PSTR(*P) = PSTR(*P) + 15; PDEF(*P) = PDEF(*P) + 30; printf("STR bertambah 15, DEF bertambah 30\n"); break;
+                    case 14 : PSTR(*P) = PSTR(*P) + 10; PDEF(*P) = PDEF(*P) + 35; printf("STR bertambah 10, DEF bertambah 35\n"); break;
+                    case 15 : PSTR(*P) = PSTR(*P) + 5; PDEF(*P) = PDEF(*P) + 40; printf("STR bertambah 5, DEF bertambah 40\n"); break;
+                }
             }
             else
             {
@@ -400,14 +425,7 @@ void AmbilSkill(BinTree *P)
     }
     else
     {
-        if (skill != 1)
-        {
-            printf("Input nomor skill salah, pengambilan skill gagal\n");
-        }
-        else
-        {
-            printf("Skill tersebut sudah diambil, pengambilan skill gagal\n");
-        }
+        printf("Skill tersebut sudah diambil, pengambilan skill gagal\n");
     }
 }
 

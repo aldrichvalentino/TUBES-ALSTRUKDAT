@@ -31,7 +31,6 @@ void CreateEmptyPlayer(PLAYER *P, Kata X)
 	PEXP(*P) = 0;
 	PLevel(*P) = 1;
 	Posisi(*P) = MakePOINT(-1,-1);
-	PSkill(*P) = Nil;
 	CreateNewSkillTree(&PSkill(*P));
 }
 
