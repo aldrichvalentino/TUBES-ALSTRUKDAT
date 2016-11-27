@@ -62,15 +62,21 @@ void SaveGame(PLAYER P,JAM J)
 {
     Kata K = PName(P);
     K = ConvertToTxt(K);
-    char c;
+
     if (IsFileExist(K.TabKata))
     {
-        while (c!='y')
+    	char c[100];
+	do
         {
             PrintCLoop(' ',20); printf("Anda sudah pernah menyimpan game. Apakah anda ingin melanjutkan?(y/n)\n");
-            scanf("%c",&c);
-            if (c=='n') return;
-        }
+	    PrintCLoop(' ',20);
+            scanf("%s",c);
+            if (!strcmp(c,"n")) 
+	    {
+		printf("Command : ");
+		return;
+	    }
+        } while (strcmp(c,"y"));
     }
     FILE *F = fopen(K.TabKata,"w");
     //print jam

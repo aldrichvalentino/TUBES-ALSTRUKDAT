@@ -615,6 +615,6 @@ void InitBattle (PLAYER *P, TE T, int *result)
     LevelUp (P);
     PrintBorder();
 
-    printf("Enter any key to return!\n");
+    printf("Press Enter to continue!\n");
     scanf("%c",&buang);
 }
