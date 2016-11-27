@@ -66,7 +66,7 @@ void Jalan(PLAYER *P, MATRIKS *M, int dir,TE T,boolean *medicine,boolean *gameov
 {
     POINT po;
     char C;
-    boolean win;
+    int win;
     *medicine = false;
 	switch (dir){
 		case 0 : po = PrevY(Posisi(*P)) ; break;

@@ -84,7 +84,7 @@ void PrintEnemy ( ENEMY E , infotypeQ M1, infotypeQ M2, infotypeQ M3, infotypeQ 
 	if(EHP(E) < 0){ 
 		printf("HP : 0");
 	} else {
-		printf("HP : %d",E.HP);
+		printf("HP : %d",EHP(E));
 	}
     i = 4 - digit(EHP(E));
 	PrintCLoop(' ', i);
@@ -173,7 +173,8 @@ void BattleUIoutput (PLAYER *P, ENEMY *E, infotypeQ M1, infotypeQ M2, infotypeQ 
 				PrintCLoop(' ', i);
 				PrintGuard();
 
-				printf("HP : %d",EHP(*E));
+				if (EHP(*E)>=0) printf("HP : %d",EHP(*E));
+				else printf("HP : 0");
 				i = 4 - digit(EHP(*E));
 				PrintCLoop(' ', i);
 				printf(" ");
@@ -594,7 +595,6 @@ void InitBattle (PLAYER *P, TE T, int *result)
     } while ((round <= 10) && (EHP(E) > 0) && (PHP(*P) > 0));
 
     /* akhiran */
-    PrintBorder();
     if ((PHP(*P) > 0) || (round > 10)){
         EDie(E) = true;
         printf("Congratulations! ");PrintKata(EName(E));printf(" has been defeated!\n");

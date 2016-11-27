@@ -17,10 +17,11 @@ void NarasiOpening(Kata *Nama)
 	printf("%s\n","Insert Name Here: (max.16 character)");
 	PrintCLoop(' ',20);
 	InputUser(Nama);
-	while (Nama->Length > 16)
+	while ((Nama->Length > 16)||(Nama->Length==0))
         {
 			PrintCLoop(' ',20);
-            printf("Nama harus dibawah 16 Huruf\n");
+            if (Nama->Length>16) printf("Nama harus dibawah 16 Huruf\n");
+	    else printf("Nama tidak boleh kosong\n");
             PrintCLoop(' ',20);
             InputUser(Nama);
         }
@@ -33,7 +34,7 @@ void NarasiOpening(Kata *Nama)
 	PrintCLoop(' ',20);
 	printf("%s\n","Harta karun tersebut berada dan tersembunyi di Samudra Bermuda,");
 	PrintCLoop(' ',20);
-	printf("%s\n"," Samudra penuh misteri yang dihindari setiap penjelajah.");
+	printf("%s\n","Samudra penuh misteri yang dihindari setiap penjelajah.");
 	PrintCLoop(' ',20);
 	printf("%s\n","Yaitu harta Sang Bright Souls!!!");
 	PrintCLoop(' ',20);
@@ -41,13 +42,13 @@ void NarasiOpening(Kata *Nama)
 	PrintCLoop(' ',20);
 	printf("%s\n","Cahaya itu berasal dari hartanya yang menumpuk selalu memantulkan ");
 	PrintCLoop(' ',20);
-	printf("%s\n"," cahaya benderang baik disiang maupun malam hari.");
+	printf("%s\n","cahaya benderang baik disiang maupun malam hari.");
 	PrintCLoop(' ',20);
 	printf("%s","Dalam perjalannya Captain ");
 	PrintKata(*Nama); 
 	printf("%s\n"," harus mengarungi puluhan");
 	PrintCLoop(' ',20);
-	printf("%s\n"," lautan untuk menemukan dikediaman ");
+	printf("%s\n","lautan untuk menemukan dikediaman ");
 	PrintCLoop(' ',20);
 	printf("%s\n","Sang Bright Souls.");
 	PrintCLoop(' ',20);
@@ -67,29 +68,40 @@ void NarasiOpening(Kata *Nama)
 }
 
 void NarasiClosing(Kata Nama) {
+	PrintCLoop(' ',20);
 	printf("%s\n","I have never expect that you will get finish this journey.");
+	PrintCLoop(' ',20);
 	printf("%s","Sekarang kau adalah orang terkaya diseluruh negeri, Captain ");
 	PrintKata(Nama);
 	printf("%s\n", "!!!");
+	PrintCLoop(' ',20);
 	printf("%s\n","Semoga kamu bisa menggunakan harta itu secara bijak tidak ");
+	PrintCLoop(' ',20);
 	printf("%s\n","seperti Sang Bright Souls");
 }
 
 void NarasiKalah(Kata Nama)
 {
+	PrintCLoop(' ',20);
 	printf("%s","Sayang sekali, Captain");
 	PrintKata(Nama);
 	printf("%s\n",".");
+	PrintCLoop(' ',20);
 	printf("%s\n","Nampaknya kemampuanmu belum cukup untuk mengarungi Samudra Bermuda ini.");
+	PrintCLoop(' ',20);
 	printf("%s\n","Kau harus berlayar pulang dan kembali saat sudah siap lagi nanti.");
 }
 
 void NarasiContinue(Kata Nama) {
+	PrintCLoop(' ',20);
 	printf("%s","Selamat datang kembali Captain ");
 	PrintKata(Nama);
 	printf("%s\n","!!!");
+	PrintCLoop(' ',20);
 	printf("%s\n","Kami kira Captain sudah siap kembali untuk melanjutkan ");
+	PrintCLoop(' ',20);
 	printf("%s\n","petualangan mencari harta Bright Souls");
+	PrintCLoop(' ',20);
 	printf("%s\n","Semoga berhasil!!");
 }
 

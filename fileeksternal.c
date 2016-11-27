@@ -112,6 +112,24 @@ void SaveGame(PLAYER P,JAM J)
             }
         }
     }
+    //print skill
+    int a[16];
+    for (i = 2; i <= 15; i++)
+    {
+        if (Sudah(SearchBST(PSkill(P),SkillToInt(i))) == true)
+        {
+            a[i] = 1;
+        }
+        else
+        {
+            a[i] = 0;
+        }
+    }
+    for (i = 2; i <= 15 ; i++)
+    {
+        fprintf(F,"%d ", a[i]);
+    }
+    fprintf(F,"\n");
     //print graph
     Graph G = Gr(CMap);
     addressG PG = FirstG(G);
@@ -201,6 +219,33 @@ boolean LoadGame(PLAYER *P,JAM *J)
                 }
             }
         }
+	//load skill
+	int a[16];
+    for (i = 2; i <= 15; i++)
+    {
+        fscanf(F,"%d",&a[i]);
+    }
+    BinTree T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
+
+    T15 = Tree(15,Nil,Nil,a[15]);
+    T14 = Tree(13,Nil,Nil,a[14]);
+    T13 = Tree(11,Nil,Nil,a[13]);
+    T12 = Tree(9,Nil,Nil,a[12]);
+    T11 = Tree(7,Nil,Nil,a[11]);
+    T10 = Tree(5,Nil,Nil,a[10]);
+    T9 = Tree(3,Nil,Nil,a[9]);
+    T8 = Tree(1,Nil,Nil,a[8]);
+
+    T7 = Tree(14,T14,T15,a[7]);
+    T6 = Tree(10,T12,T13,a[6]);
+    T5 = Tree(6,T10,T11,a[5]);
+    T4 = Tree(2,T8,T9,a[4]);
+
+    T3 = Tree(12,T6,T7,a[3]);
+    T2 = Tree(4,T4,T5,a[2]);
+
+    MakeTree(8,T2,T3,&PSkill(*P));
+    Sudah(PSkill(*P)) = true;
         //load graph
         CreateEmptyGraph(&Gr(CMap));
         addressG PG,PrecG=Nil;
@@ -227,6 +272,10 @@ boolean LoadGame(PLAYER *P,JAM *J)
         }
         fclose(F);
 	NarasiContinue(PName(*P));
+	PrintCLoop(' ',20);
+	printf("Press Enter to Continue\n");
+	char c;
+	do scanf("%c",&c); while (c!='\n');
         return true;
     }
 }

@@ -149,7 +149,7 @@ void ProcessCommand(Kata pilihan)
 			NarasiKetemuEnergi();
 		}
 		PrintBorder();
-		printf("Command : ");     
+		if (!GameOver) printf("Command : "); 
     }
     else if (IsKataSama(pilihan,GU))
     {
@@ -161,7 +161,7 @@ void ProcessCommand(Kata pilihan)
 			NarasiKetemuEnergi();
 		}
 		PrintBorder();
-		printf("Command : ");
+		if (!GameOver) printf("Command : "); 
     }
     else if (IsKataSama(pilihan,GR))
     {
@@ -173,7 +173,7 @@ void ProcessCommand(Kata pilihan)
 			NarasiKetemuEnergi();
 		}
 		PrintBorder();
-		printf("Command : "); 
+		if (!GameOver) printf("Command : "); 
     }
     else if (IsKataSama(pilihan,GD))
     {
@@ -185,7 +185,7 @@ void ProcessCommand(Kata pilihan)
 			NarasiKetemuEnergi();
 		}
 		PrintBorder();
-		printf("Command : "); 
+		if (!GameOver) printf("Command : "); 
     }
     else if (IsKataSama(pilihan,SAVE))
     {
@@ -194,7 +194,8 @@ void ProcessCommand(Kata pilihan)
     }
     else if (IsKataSama(pilihan,SKILL))
     {
-
+	PrintSkillTree(PSkill(P));
+	printf("Command : ");
     }
     else if (IsKataSama(pilihan,EXIT))
     {
@@ -207,7 +208,9 @@ void ProcessCommand(Kata pilihan)
 void EndGame()
 /* procedure untuk mengakhiri pemainan */
 {
-	printf("Kalaaaaaaaahhh\n");
+	clrscr();
+	PrintLose();
+	NarasiKalah(PName(P));
 }
 
 int main()
@@ -228,6 +231,7 @@ int main()
     {	
         do
         {
+	    Interface();
             BacaCommandAwal(&input);
             ProcessCommand(input);
         } while ((!IsKataSama(input,SG))&&(!IsKataSama(input,EXIT)));
@@ -240,10 +244,10 @@ int main()
             {
                 BacaCommandGame(&input);
                 ProcessCommand(input);
-            } while (!IsKataSama(input,EXIT));
-           CreateKata("",&input);
+            } while (!IsKataSama(input,EXIT)&&(!GameOver));
+           if (GameOver) EndGame();
+	   else CreateKata("",&input);
         }
-    } while (!IsKataSama(input,EXIT));
-    clrscr();
+    } while (!IsKataSama(input,EXIT)&&(!GameOver));
     return 0;
 }
