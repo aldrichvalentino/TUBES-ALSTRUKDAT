@@ -9,6 +9,7 @@
 #include "point.h"
 #include "battle.h"
 #include "map.h"
+#include "skilltree.h"
 #include <stdlib.h>
 #define cplayer 'P'
 #define cmedicine 50
@@ -30,7 +31,8 @@ void CreateEmptyPlayer(PLAYER *P, Kata X)
 	PEXP(*P) = 0;
 	PLevel(*P) = 1;
 	Posisi(*P) = MakePOINT(-1,-1);
-	//MakeTree(A,L,R,PSkill(*P));
+	BinTree Skill = Nil;
+	PSkill(*P) = CreateNewSkillTree(&Skill);
 }
 
 void DarahNaik(PLAYER *P)
@@ -104,7 +106,6 @@ void PrintGame(PLAYER P, int darah)
 	//Kamus
 	int X;
 	int i;
-	
 	//Algoritma
 	clrscr();
 	PrintBorder();
@@ -112,34 +113,34 @@ void PrintGame(PLAYER P, int darah)
 	i = 15 - PName(P).Length;
 	PrintCLoop(' ', i);
 	PrintGuard();
-	
+
 	printf("LVL : %d", PLevel(P));
 	i = 4 - digit(PLevel(P));
 	PrintCLoop(' ', i);
 	PrintGuard();
-	
+
 	printf("HP : %d", PHP(P));
 	i = 4 - digit(PHP(P));
 	PrintCLoop(' ', i);
 	printf(" "); //karena "H""P" hanya 2 huruf jadi ditambah 1 spasi biar sama panjang
 	PrintGuard();
-	
+
 	printf("STR : %d", PSTR(P));
 	i = 4 - digit(PSTR(P));
 	PrintCLoop(' ', i);
 	PrintGuard();
-	
+
 	printf("DEF : %d", PDEF(P));
 	i = 4 - digit(PDEF(P));
 	PrintCLoop(' ', i);
 	PrintGuard();
-	
+
 	printf("EXP : %d", PEXP(P));
 	i = 4 - digit(PEXP(P));
 	PrintCLoop(' ', i);
 	printf("\n");
 	PrintBorder();
-	
+
 	PrintMap(&X);
 	PrintBorder();
 

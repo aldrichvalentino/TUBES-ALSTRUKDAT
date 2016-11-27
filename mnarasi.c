@@ -20,8 +20,6 @@ int main () {
 	NarasiLaut(8);
 	NarasiLaut(9);
 	NarasiLaut(10); 
-	NarasiKetemuMonster (); 
-	NarasiMenangLawanMonster (); 
 	NarasiKetemuEnergi (); 
 	NarasiKekuranganEnergi ();
 	return 0;

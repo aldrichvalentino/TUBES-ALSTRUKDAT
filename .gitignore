@@ -1,5 +1,6 @@
 *.exe
 *.o
+*.txt*
 *.*~
 
 interface.c

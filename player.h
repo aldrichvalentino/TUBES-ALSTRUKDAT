@@ -22,7 +22,7 @@ typedef struct {
 	int EXP;
 	int LEVEL;
 	POINT POS;
-	// BinTree SKILL;
+	BinTree SKILL;
 } PLAYER;
 
 /* *** Notasi Akses: selektor PLAYER *** */
@@ -36,7 +36,7 @@ typedef struct {
 #define Posisi(P) (P).POS
 #define PosisiX(P) (P).POS.X
 #define PosisiY(P) (P).POS.Y
-// #define PSkill(P) (P).SKILL
+#define PSkill(P) (P).SKILL
 
 void clrscr();
 
