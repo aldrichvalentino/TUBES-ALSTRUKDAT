@@ -9,35 +9,57 @@ void NarasiOpening(Kata *Nama)
 	char C;
 	
 	//Algoritma
+	PrintCLoop(' ',20);
 	printf("%s\n","Ahoyyy Captain!");
+	PrintCLoop(' ',20);
 	printf("%s\n","What should we call you??");
+	PrintCLoop(' ',20);
 	printf("%s\n","Insert Name Here: (max.16 character)");
+	PrintCLoop(' ',20);
 	InputUser(Nama);
 	while (Nama->Length > 16)
         {
+			PrintCLoop(' ',20);
             printf("Nama harus dibawah 16 Huruf\n");
+            PrintCLoop(' ',20);
             InputUser(Nama);
         }
+    PrintCLoop(' ',20);
 	printf("%s","Congratulations Captain ");
 	PrintKata(*Nama);
 	printf("\n");
+	PrintCLoop(' ',20);
 	printf("%s\n","Kamu baru saja mendapatkan informasi harta karun baru!");
+	PrintCLoop(' ',20);
 	printf("%s\n","Harta karun tersebut berada dan tersembunyi di Samudra Bermuda,");
+	PrintCLoop(' ',20);
 	printf("%s\n"," Samudra penuh misteri yang dihindari setiap penjelajah.");
+	PrintCLoop(' ',20);
 	printf("%s\n","Yaitu harta Sang Bright Souls!!!");
+	PrintCLoop(' ',20);
 	printf("%s\n","Dia dikenal sebagai Souls paling 'BRIGHT'.");
+	PrintCLoop(' ',20);
 	printf("%s\n","Cahaya itu berasal dari hartanya yang menumpuk selalu memantulkan ");
+	PrintCLoop(' ',20);
 	printf("%s\n"," cahaya benderang baik disiang maupun malam hari.");
+	PrintCLoop(' ',20);
 	printf("%s","Dalam perjalannya Captain ");
 	PrintKata(*Nama); 
-	printf("%s\n"," harus mengarungi puluhan lautan untuk menemukan dikediaman ");
+	printf("%s\n"," harus mengarungi puluhan");
+	PrintCLoop(' ',20);
+	printf("%s\n"," lautan untuk menemukan dikediaman ");
+	PrintCLoop(' ',20);
 	printf("%s\n","Sang Bright Souls.");
+	PrintCLoop(' ',20);
 	printf("%s\n","HATI-HATI!!! Karena ditiap lautan ada 'Souls' lain yaitu monster22 ");
+	PrintCLoop(' ',20);
 	printf("%s\n","kerabat dari Sang Bright Souls untuk melindungi hartanya.");
+	PrintCLoop(' ',20);
 	printf("%s\n","SOOOO.. Let's begin the journey");
 	printf("\n");
+	PrintCLoop(' ',20);
 	printf("%s\n", "Press enter to continue");
-	
+	PrintCLoop(' ',20);
 	do 
 		scanf("%c", &C);
 	while (C != '\n');
