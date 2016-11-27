@@ -6,6 +6,7 @@
 #define PLAYER_H
 
 #include "boolean.h"
+#include "skilltree.h"
 #include "mesinkata.h"
 #include "point.h"
 #include "enemy.h"
@@ -49,7 +50,7 @@ void SwitchPos(PLAYER *P,MATRIKS *M, POINT Po);
 /* I.S. Pemain akan pindah map, M matriks setelah pindah dan Po adalah titiknya */
 /* F.S. Pemain sudah berada di Po dan matriks sudah ada cplayer */
 
-void Jalan(PLAYER *P, MATRIKS *M, int dir,TE T);
+void Jalan(PLAYER *P, MATRIKS *M, int dir,TE T, boolean *medicine);
 //I.S: di matriks ada player, input dir 0(left),1(up),2(right),3(down).
 /*F.S: posisi player bisa berubah/nggak, matriks bisa jadi gaada playernya,diisi '-'*/
 

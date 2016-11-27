@@ -31,8 +31,8 @@ void CreateEmptyPlayer(PLAYER *P, Kata X)
 	PEXP(*P) = 0;
 	PLevel(*P) = 1;
 	Posisi(*P) = MakePOINT(-1,-1);
-	BinTree Skill = Nil;
-	PSkill(*P) = CreateNewSkillTree(&Skill);
+	PSkill(*P) = Nil;
+	CreateNewSkillTree(&PSkill(*P));
 }
 
 void DarahNaik(PLAYER *P)
@@ -60,13 +60,15 @@ void SwitchPos(PLAYER *P,MATRIKS *M, POINT Po)
     SetElmt(M,Po,cplayer);
 }
 
-void Jalan(PLAYER *P, MATRIKS *M, int dir,TE T)
+void Jalan(PLAYER *P, MATRIKS *M, int dir,TE T,boolean *medicine)
 //I.S: di matriks ada player, input dir 0(left),1(up),2(right),3(down).
-/*F.S: posisi player bisa berubah/nggak, matriks bisa jadi gaada playernya,diisi '-'*/
+/*F.S: posisi player bisa berubah/nggak, matriks bisa jadi gaada playernya,diisi '-'
+		kalo nginjek medicine, boolean jadi true */
 {
     POINT po;
     char C;
     boolean win;
+    *medicine = false;
 	switch (dir){
 		case 0 : po = PrevY(Posisi(*P)) ; break;
 		case 1 : po = PrevX(Posisi(*P)) ; break;
@@ -79,7 +81,7 @@ void Jalan(PLAYER *P, MATRIKS *M, int dir,TE T)
         C = Elmt2(*M,po);
         switch (C)
         {
-            case 'M' : SwitchPos(P,M,po); DarahNaik(P); break;
+            case 'M' : SwitchPos(P,M,po); DarahNaik(P);	*medicine = true; break;
             case 'E' : InitBattle(P,T,&win); if (win) SwitchPos(P,M,po); break;
             case '-' : SwitchPos(P,M,po); break;
             case '#' : break;
@@ -103,10 +105,9 @@ void PrintGame(PLAYER P)
 {
 	//Kamus
 	int X;
-
+	int i;
 	//Algoritma
 	clrscr();
-	int i;
 	PrintBorder();
 	PrintKata(PName(P));
 	i = 15 - PName(P).Length;
@@ -144,10 +145,7 @@ void PrintGame(PLAYER P)
 	PrintBorder();
 
 	NarasiLaut(X);
-	printf("<narasi baris 2>\n");
-	PrintBorder();
-
-	printf("Command : ");
+	
 }
 
 void PrintCLoop(char c, int x)
