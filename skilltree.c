@@ -414,6 +414,10 @@ void AmbilSkill(BinTree *P, int *STR, int *DEF)
 							case 13 : *STR += 15; *DEF += 30; printf("STR bertambah 15, DEF bertambah 30\n"); break;
 							case 14 : *STR += 10; *DEF += 35; printf("STR bertambah 10, DEF bertambah 35\n"); break;
 							case 15 : *STR += 5; *DEF += 40; printf("STR bertambah 5, DEF bertambah 40\n"); break;
+							printf("Press Enter to Continue\n");
+							char buang;
+							do scanf("%c",&buang); while (buang!='\n');
+								
 						}
 					stop = true;
 					}

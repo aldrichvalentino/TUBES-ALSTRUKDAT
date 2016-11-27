@@ -175,7 +175,8 @@ void BattleUIoutput (PLAYER *P, ENEMY *E, infotypeQ M1, infotypeQ M2, infotypeQ 
 				PrintCLoop(' ', i);
 				PrintGuard();
 
-				printf("HP : %d",EHP(*E));
+				if (EHP(*E)>=0) printf("HP : %d",EHP(*E));
+				else printf("HP : 0");
 				i = 4 - digit(EHP(*E));
 				PrintCLoop(' ', i);
 				printf(" ");
@@ -194,7 +195,8 @@ void BattleUIoutput (PLAYER *P, ENEMY *E, infotypeQ M1, infotypeQ M2, infotypeQ 
 				PrintCLoop(' ', i);
 				PrintGuard();
 
-				printf("HP : %d",EHP(*E));
+				if (EHP(*E)>=0) printf("HP : %d",EHP(*E));
+				else printf("HP : 0");
 				i = 4 - digit(EHP(*E));
 				PrintCLoop(' ', i);
 				printf(" ");
@@ -213,7 +215,8 @@ void BattleUIoutput (PLAYER *P, ENEMY *E, infotypeQ M1, infotypeQ M2, infotypeQ 
 				PrintCLoop(' ', i);
 				PrintGuard();
 
-				printf("HP : %d",EHP(*E));
+				if (EHP(*E)>=0) printf("HP : %d",EHP(*E));
+				else printf("HP : 0");
 				i = 4 - digit(EHP(*E));
 				PrintCLoop(' ', i);
 				printf(" ");
