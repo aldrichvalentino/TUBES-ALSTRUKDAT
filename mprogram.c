@@ -146,7 +146,7 @@ void ProcessCommand(Kata pilihan)
         if (med)
         {
 			PrintBorder();
-			printf("You got a medicine!\n");
+			NarasiKetemuEnergi();
 		}
 		PrintBorder();
 		printf("Command : ");     
@@ -158,7 +158,7 @@ void ProcessCommand(Kata pilihan)
         if (med)
         {
 			PrintBorder();
-			printf("You got a medicine!\n");
+			NarasiKetemuEnergi();
 		}
 		PrintBorder();
 		printf("Command : ");
@@ -170,7 +170,7 @@ void ProcessCommand(Kata pilihan)
         if (med)
         {
 			PrintBorder();
-			printf("You got a medicine!\n");
+			NarasiKetemuEnergi();
 		}
 		PrintBorder();
 		printf("Command : "); 
@@ -182,7 +182,7 @@ void ProcessCommand(Kata pilihan)
         if (med)
         {
 			PrintBorder();
-			printf("You got a medicine!\n");
+			NarasiKetemuEnergi();
 		}
 		PrintBorder();
 		printf("Command : "); 
@@ -202,6 +202,12 @@ void ProcessCommand(Kata pilihan)
         Node(CMap) = 0;
         ready = false;
     }
+}
+
+void EndGame()
+/* procedure untuk mengakhiri pemainan */
+{
+	printf("Kalaaaaaaaahhh\n");
 }
 
 int main()
