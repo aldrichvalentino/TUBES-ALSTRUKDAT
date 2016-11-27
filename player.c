@@ -59,7 +59,7 @@ void SwitchPos(PLAYER *P,MATRIKS *M, POINT Po)
     SetElmt(M,Po,cplayer);
 }
 
-void Jalan(PLAYER *P, MATRIKS *M, int dir,TE T,boolean *medicine)
+void Jalan(PLAYER *P, MATRIKS *M, int dir,TE T,boolean *medicine,boolean *gameover)
 //I.S: di matriks ada player, input dir 0(left),1(up),2(right),3(down).
 /*F.S: posisi player bisa berubah/nggak, matriks bisa jadi gaada playernya,diisi '-'
 		kalo nginjek medicine, boolean jadi true */
@@ -81,7 +81,10 @@ void Jalan(PLAYER *P, MATRIKS *M, int dir,TE T,boolean *medicine)
         switch (C)
         {
             case 'M' : SwitchPos(P,M,po); DarahNaik(P);	*medicine = true; break;
-            case 'E' : InitBattle(P,T,&win); if (win) SwitchPos(P,M,po); break;
+            case 'E' : InitBattle(P,T,&win); 
+			if (win==1) SwitchPos(P,M,po); 
+			else if (win==3) *gameover = true;
+			break;
             case '-' : SwitchPos(P,M,po); break;
             case '#' : break;
         }
@@ -144,6 +147,11 @@ void PrintGame(PLAYER P)
 	PrintBorder();
 
 	NarasiLaut(X);
+	if (PHP(P)<=20)
+	{
+		PrintBorder();
+		NarasiKekuranganEnergi();
+	}
 	
 }
 

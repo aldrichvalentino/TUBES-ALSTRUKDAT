@@ -105,10 +105,10 @@ void ProcessCommand(Kata pilihan)
 /* I.S. command merupakan instruksi yang valid */
 /* Proses sudah dilakukan, done bernilai true jika start game atau exit */
 {
+	Kata player;
 	boolean med;
     if (IsKataSama(pilihan,NG))
     {
-        Kata player;
         NarasiOpening(&player);
         CreateEmptyPlayer(&P,player);
         NamaDone = true;
@@ -125,7 +125,16 @@ void ProcessCommand(Kata pilihan)
     {
         if (!NamaDone)
         {
-            ProcessCommand(NG);
+            PrintCLoop(' ',20);printf("%s\n","Ahoyyy Captain!");
+	    PrintCLoop(' ',20);printf("%s\n","Insert Name Here: (max.15 character)");
+	    PrintCLoop(' ',20);InputUser(&player);
+	    while ((player).Length > 15)
+            {
+                PrintCLoop(' ',20);printf("Nama harus dibawah 16 Huruf\n");
+                PrintCLoop(' ',20);InputUser(&player);
+            }
+	    CreateEmptyPlayer(&P,player);
+	    NamaDone = true;
         }
         ready = LoadGame(&P,&JamGame);
         LoadEnemy(&T);
@@ -137,7 +146,7 @@ void ProcessCommand(Kata pilihan)
         if (med)
         {
 			PrintBorder();
-			printf("You got a medicine!\n");
+			NarasiKetemuEnergi();
 		}
 		PrintBorder();
 		printf("Command : ");     
@@ -149,7 +158,7 @@ void ProcessCommand(Kata pilihan)
         if (med)
         {
 			PrintBorder();
-			printf("You got a medicine!\n");
+			NarasiKetemuEnergi();
 		}
 		PrintBorder();
 		printf("Command : ");
@@ -161,7 +170,7 @@ void ProcessCommand(Kata pilihan)
         if (med)
         {
 			PrintBorder();
-			printf("You got a medicine!\n");
+			NarasiKetemuEnergi();
 		}
 		PrintBorder();
 		printf("Command : "); 
@@ -173,7 +182,7 @@ void ProcessCommand(Kata pilihan)
         if (med)
         {
 			PrintBorder();
-			printf("You got a medicine!\n");
+			NarasiKetemuEnergi();
 		}
 		PrintBorder();
 		printf("Command : "); 
@@ -195,6 +204,12 @@ void ProcessCommand(Kata pilihan)
     }
 }
 
+void EndGame()
+/* procedure untuk mengakhiri pemainan */
+{
+	printf("Kalaaaaaaaahhh\n");
+}
+
 int main()
 {
     char c;
@@ -213,7 +228,6 @@ int main()
     {	
         do
         {
-            Interface();
             BacaCommandAwal(&input);
             ProcessCommand(input);
         } while ((!IsKataSama(input,SG))&&(!IsKataSama(input,EXIT)));

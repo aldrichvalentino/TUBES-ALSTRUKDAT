@@ -9,9 +9,9 @@
 #include "jam.h"
 #include "mesinkata.h"
 
-void CreateUser(Kata *K);
+void CreateUser(Kata K);
 /* I.S. sembarang */
-/* F.S. succeed bernilai true jika berhasil membuat user, selain itu false, K berisi nama user jika proses berhasil */
+/* F.S. K berisi nama user jika proses berhasil */
 
 boolean IsFileExist(char *c);
 /* Mengeluarkan true jika file bernama c ada */

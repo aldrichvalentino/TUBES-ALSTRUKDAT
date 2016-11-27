@@ -2,34 +2,30 @@
 
 #include "fileeksternal.h"
 #include "map.h"
+#include "narasi.h"
 #include <stdio.h>
 #include <string.h>
-#include <fcntl.h>
-#include <sys/stat.h>
+#include <unistd.h>
 #include <stdlib.h>
 
-void CreateUser(Kata *K)
+void CreateUser(Kata K)
 /* I.S. sembarang */
-/* F.S. succeed bernilai true jika berhasil membuat user, selain itu false, K berisi nama user jika proses berhasil */
+/* F.S. K berisi nama user jika proses berhasil */
 {
     boolean sama;
     char c[256];
     char line[256];
     int i;
+    for (i=0;i<K.Length;++i) c[i] = K.TabKata[i];
+    c[K.Length] = '\n';
+    c[K.Length+1] = 0;
     FILE *F = fopen("listplayer.txt", "r");
-    PrintCLoop(' ',20); printf("Masukkan Nama User : ");
-    fgets(c,sizeof(c),stdin);
-    while (strlen(c) > 16)
-    {
-        if (strlen(c) > 16)
-        {
-            PrintCLoop(' ',20); printf("Nama User harus dibawah 16 Huruf\n");
-            PrintCLoop(' ',20); printf("Masukkan Nama User : ");
-        }
-        fgets(c,sizeof(c),stdin);
-    }
     sama = false;
-    while ((fgets(line,sizeof(line),F)!=NULL)&&(!sama)) sama = !strcmp(line,c);
+    while ((fgets(line,sizeof(line),F)!=NULL)&&(!sama)) 
+	{
+		printf("%s-%s-",c,line);
+		sama = !strcmp(line,c);
+	}
     fclose(F);
     if (!sama)
     {
@@ -37,16 +33,12 @@ void CreateUser(Kata *K)
         fputs(c,F);
         fclose(F);
     }
-    CreateKata(c,K);
-    --(*K).Length;
 }
 
 boolean IsFileExist(char *c)
 /* Mengeluarkan true jika file bernama c ada */
 {
-    struct stat buf;
-    stat(c,&buf);
-    return (buf.st_size!=0);
+	return (access(c,F_OK)!=-1);    
 }
 
 Kata ConvertToTxt(Kata K)
@@ -150,8 +142,13 @@ boolean LoadGame(PLAYER *P,JAM *J)
         char temp;
 	PrintCLoop(' ',20);
 	printf("Anda belum pernah menyimpan permainan\n");
-	printf("Tekan tombol apa saja untuk melanjutkan\n");
-        scanf("%c",&temp);
+	PrintCLoop(' ',20);
+	printf("Press Enter to Continue\n");
+	PrintCLoop(' ',20);
+        do
+	{
+		scanf("%c",&temp);
+	} while (temp!='\n');
         return false;
     }
     else
@@ -229,6 +226,7 @@ boolean LoadGame(PLAYER *P,JAM *J)
             PrecG = PG;
         }
         fclose(F);
+	NarasiContinue();
         return true;
     }
 }
