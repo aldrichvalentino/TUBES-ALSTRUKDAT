@@ -554,7 +554,7 @@ void InitBattle (PLAYER *P, TE T, int *result)
         rnd = rand() % 11;
     }
     if (rnd == 0) rnd += 1 ;
-    CreateEnemy(&E,T,5); 
+    CreateEnemy(&E,T,rnd); 
 
 	//pertarungan
     do {
