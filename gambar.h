@@ -1,6 +1,9 @@
 /* File: gambar.h */
 /* Definisi Prosedur */
 
+void PrintCredits();
+/* Print di ending games untuk menampilkan credits */
+
 void PrintCoolBS();
 /* Merupakan header saat awal bermain */
 

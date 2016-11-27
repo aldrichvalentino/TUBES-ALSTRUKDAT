@@ -9,40 +9,37 @@ void NarasiOpening(Kata *Nama)
 	char C;
 	
 	//Algoritma
-	PrintCLoop(' ',20);printf("%s\n","Ahoyyy Captain!");
-	PrintCLoop(' ',20);printf("%s\n","What should we call you??");
-	PrintCLoop(' ',20);printf("%s\n","Insert Name Here: (max.15 character)");
-	PrintCLoop(' ',20);InputUser(Nama);
-	while ((*Nama).Length > 15)
+	printf("%s\n","Ahoyyy Captain!");
+	printf("%s\n","What should we call you??");
+	printf("%s\n","Insert Name Here: (max.16 character)");
+	InputUser(Nama);
+	while (Nama->Length > 16)
         {
-            PrintCLoop(' ',20);printf("Nama harus dibawah 16 Huruf\n");
-            PrintCLoop(' ',20);InputUser(Nama);
+            printf("Nama harus dibawah 16 Huruf\n");
+            InputUser(Nama);
         }
-	PrintCLoop(' ',20);printf("%s","Congratulations Captain ");
+	printf("%s","Congratulations Captain ");
 	PrintKata(*Nama);
 	printf("\n");
-	PrintCLoop(' ',20);printf("%s\n","Kamu baru saja mendapatkan informasi harta karun baru!");
-	PrintCLoop(' ',20);printf("%s\n","Harta karun tersebut berada dan tersembunyi di Samudra Bermuda,");
-	PrintCLoop(' ',20);printf("%s\n","Samudra penuh misteri yang dihindari setiap penjelajah.");
-	PrintCLoop(' ',20);printf("%s\n","Yaitu harta Sang Bright Souls!!!");
-	PrintCLoop(' ',20);printf("%s\n","Dia dikenal sebagai Souls paling 'BRIGHT'.");
-	PrintCLoop(' ',20);printf("%s\n","Cahaya itu berasal dari hartanya yang menumpuk selalu memantulkan ");
-	PrintCLoop(' ',20);printf("%s\n","cahaya benderang baik disiang maupun malam hari.");
-	PrintCLoop(' ',20);printf("%s","Dalam perjalannya Captain ");
+	printf("%s\n","Kamu baru saja mendapatkan informasi harta karun baru!");
+	printf("%s\n","Harta karun tersebut berada dan tersembunyi di Samudra Bermuda,");
+	printf("%s\n"," Samudra penuh misteri yang dihindari setiap penjelajah.");
+	printf("%s\n","Yaitu harta Sang Bright Souls!!!");
+	printf("%s\n","Dia dikenal sebagai Souls paling 'BRIGHT'.");
+	printf("%s\n","Cahaya itu berasal dari hartanya yang menumpuk selalu memantulkan ");
+	printf("%s\n"," cahaya benderang baik disiang maupun malam hari.");
+	printf("%s","Dalam perjalannya Captain ");
 	PrintKata(*Nama); 
-	printf("%s\n"," harus mengarungi puluhan ");
-	PrintCLoop(' ',20);printf("%s\n","lautan untuk menemukan dikediaman Sang Bright Souls.");
-	PrintCLoop(' ',20);printf("%s\n","HATI-HATI!!! Karena ditiap lautan ada 'Souls' lain yaitu ");
-	PrintCLoop(' ',20);printf("%s\n","monster22 kerabat dari Sang Bright Souls untuk melindungi hartanya.");
-	PrintCLoop(' ',20);printf("%s\n","SOOOO.. Let's begin the journey");
+	printf("%s\n"," harus mengarungi puluhan lautan untuk menemukan dikediaman ");
+	printf("%s\n","Sang Bright Souls.");
+	printf("%s\n","HATI-HATI!!! Karena ditiap lautan ada 'Souls' lain yaitu monster22 ");
+	printf("%s\n","kerabat dari Sang Bright Souls untuk melindungi hartanya.");
+	printf("%s\n","SOOOO.. Let's begin the journey");
 	printf("\n");
-	PrintCLoop(' ',20);printf("%s\n", "Press enter to continue");
-	PrintCLoop(' ',20);
+	printf("%s\n", "Press enter to continue");
+	
 	do 
-	{
-		
 		scanf("%c", &C);
-	}
 	while (C != '\n');
 	
 }
@@ -52,21 +49,25 @@ void NarasiClosing(Kata Nama) {
 	printf("%s","Sekarang kau adalah orang terkaya diseluruh negeri, Captain ");
 	PrintKata(Nama);
 	printf("%s\n", "!!!");
-	printf("%s\n","Semoga kamu bisa menggunakan harta itu secara bijak tidak seperti Sang Bright Souls");
+	printf("%s\n","Semoga kamu bisa menggunakan harta itu secara bijak tidak ");
+	printf("%s\n","seperti Sang Bright Souls");
 }
 
 void NarasiContinue(Kata Nama) {
 	printf("%s","Selamat datang kembali Captain ");
 	PrintKata(Nama);
 	printf("%s\n","!!!");
-	printf("%s\n","Kami kira Captain sudah siap kembali untuk melanjutkan petualangan mencari harta Bright Souls");
+	printf("%s\n","Kami kira Captain sudah siap kembali untuk melanjutkan ");
+	printf("%s\n","petualangan mencari harta Bright Souls");
 	printf("%s\n","Semoga berhasil!!");
 }
 
 void NarasiBoss () {
 	printf("%s\n","Lihatlah Captain!!");
-	printf("%s\n","Setelah melewati perjalanan yang cukup panjang, sekarang kamu telah menemukan pulau kediaman Sang Bright Souls");
-	printf("%s\n","Diujung sana telah tampak tujuan utamamu, segunung harta yang sangat terang!");
+	printf("%s\n","Setelah melewati perjalanan yang cukup panjang, sekarang kamu ");
+	printf("%s\n","telah menemukan pulau kediaman Sang Bright Souls");
+	printf("%s\n","Diujung sana telah tampak tujuan utamamu, segunung harta yang ");
+	printf("%s\n","sangat terang!");
 	printf("%s\n","Namun sebelumnya kamu harus mengalah BOSS dulu tentunya.");
 	printf("%s\n","Yapp benar sekali! BOSS tidak lain adalah Sang Bright Souls!!!");
 	printf("%s\n","Kami doakan segala kebaikkan padamu Captain!!");
@@ -89,7 +90,8 @@ void NarasiLaut(int X) {
 
 void NarasiLaut10 () {
 	printf("%s\n","Selamat Datang di 'Mirrored Waves Ocean' Captain!!");
-	printf("%s\n","Laut ini memiliki kemampuan magis mendatangkan ombak yang kongruen dari kanan maupun kiri.");
+	printf("%s\n","Laut ini memiliki kemampuan magis mendatangkan ombak yang ");
+	printf("%s\n","kongruen dari kanan maupun kiri.");
 	printf("%s\n","Bagaikan entah dengan apa ombak-ombak itu di 'Mirror'.");
 	printf("%s\n","Berhati-hatilah Captain!!!");
 }
@@ -110,21 +112,25 @@ void NarasiLaut8 () {
 
 void NarasiLaut7 () {
 	printf("%s\n","Selamat Datang di 'Abyssal Bay' Captain!!");
-	printf("%s\n","Laut ini merasa dimiliki oleh seluruh penghuninya. Rasa memiliki yang lebih dari sekedar rasa memiliki biasa.");
-	printf("%s\n","Biasanya tidak ada yang selamat dari lautan ini, karena akan diculik dan para monster merasa 'memiliki' pengunjung tersebut.");
+	printf("%s\n","Laut ini merasa dimiliki oleh seluruh penghuninya.");
+	printf("%s\n"," Rasa memiliki yang lebih dari sekedar rasa memiliki biasa.");
+	printf("%s\n","Biasanya tidak ada yang selamat dari lautan ini, ");
+	printf("%s\n","karena akan diculik dan para monster merasa 'memiliki' pengunjung tersebut.");
 	printf("%s\n","Berhati-hatilah Captain!!!");
 }
 
 void NarasiLaut6 () {
 	printf("%s\n","Selamat Datang di 'Neglected Ocean' Captain!!");
 	printf("%s\n","Nama laut ini berasal dari sejarah bahwa dahulu laut ini tidak dianggap .");
-	printf("%s\n","Walaupun sekarang sudah dianggap, monster22 yang menaung di lautan ini sudah terlanjur memiliki dendam mendalam.");
+	printf("%s\n","Walaupun sekarang sudah dianggap, monster22 yang menaung ");
+	printf("%s\n","di lautan ini sudah terlanjur memiliki dendam mendalam.");
 	printf("%s\n","Berhati-hatilah Captain!!!");
 }
 
 void NarasiLaut5 () {
 	printf("%s\n","Selamat Datang di 'Red Sea' Captain!!");
-	printf("%s\n","Diketahui bahwa laut ini berwarna merah berasal dari darah makhluk hidup yang menjadi santapan penghuni disini.");
+	printf("%s\n","Diketahui bahwa laut ini berwarna merah berasal dari darah ");
+	printf("%s\n","makhluk hidup yang menjadi santapan penghuni disini.");
 	printf("%s\n","Monster22 yang menaung di lautan ini hobby memakan siapapun yang melintas");
 	printf("%s\n","Berhati-hatilah Captain!!!");
 }
@@ -138,14 +144,16 @@ void NarasiLaut4 () {
 
 void NarasiLaut3 () {
 	printf("%s\n","Selamat Datang di 'Overwhelming Waves' Captain!!");
-	printf("%s\n","Laut ini telah disihir secara mistis sehingga arus-arusnya dapat secara misterius menggulung kapal22");
+	printf("%s\n","Laut ini telah disihir secara mistis sehingga arus-arusnya");
+	printf("%s\n"," dapat secara misterius menggulung kapal22");
 	printf("%s\n","Kendalikan kapal dengan baik Captain!!");
 	printf("%s\n","Berhati-hatilah Captain!!!");
 }
 
 void NarasiLaut2 () {
 	printf("%s\n","Selamat Datang di 'Forbidden Depths' Captain!!");
-	printf("%s\n","Diketahui bahwa laut ini dikatakan 'Terlarang' karena monster22 disini BENCI diganggu para pendatang");
+	printf("%s\n","Diketahui bahwa laut ini dikatakan 'Terlarang' karena monster22");
+	printf("%s\n"," disini BENCI diganggu para pendatang");
 	printf("%s\n","Cobalah melintas tanpa mengganggu monster disini sama sekali");
 	printf("%s\n","Berhati-hatilah Captain!!!");
 }
@@ -153,7 +161,8 @@ void NarasiLaut2 () {
 void NarasiLaut1 () {
 	printf("%s\n","Selamat Datang di 'Bottomless Bay' Captain!!");
 	printf("%s\n","Diketahui bahwa laut ini tidak memiliki dasar.");
-	printf("%s\n","Monster22 yang menaung di lautan ini gemar menarik lawannya yang lengah ke lautan untuk tinggal bersama mereka.");
+	printf("%s\n","Monster22 yang menaung di lautan ini gemar menarik lawannya ");
+	printf("%s\n","yang lengah ke lautan untuk tinggal bersama mereka.");
 	printf("%s\n","Serta tentunya mereka tidak akan pernah kembali");
 	printf("%s\n","Berhati-hatilah Captain!!!");
 }
