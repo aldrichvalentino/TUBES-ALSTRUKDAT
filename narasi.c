@@ -151,20 +151,6 @@ void NarasiLaut1 () {
 	printf("%s\n","Berhati-hatilah Captain!!!");
 }
 
-void NarasiKetemuMonster () {
-	printf("%s\n","Oh NOO!!");
-	printf("%s\n","Sepertinya ada monster menghalangi jalanmu Captain!!");
-	printf("%s\n","Kalahkan dan menangkan pertarungannya!");
-	printf("%s\n","Semoga berhasil Captain!!!");
-}
-
-void NarasiMenangLawanMonster () {
-	printf("%s\n","Congratulation Captain!!");
-	printf("%s\n","Kamu berhasil membuat monster itu menyerah.");
-	printf("%s\n","Namun perjalanan belum selesai, masih banyak tantangan yang harus dilewati.");
-	printf("%s\n","Tetap semangat Captain!!!");
-}
-
 void NarasiKetemuEnergi () {
 	printf("%s\n","Waaahh keberuntungan ada di pihakmu Captain!!");
 	printf("%s\n","Kamu baru saja menemukan sebotol 'Medicine'.");

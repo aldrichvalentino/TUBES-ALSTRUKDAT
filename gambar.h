@@ -2,11 +2,7 @@
 /* Definisi Prosedur */
 
 void PrintCoolBS();
-void PrintBrightsouls();
-/* Judul buat opening memulai game */
-
-void PrintNextLevel();
-/* Setiap saat berhasil melewati satu stage */
+/* Merupakan header saat awal bermain */
 
 void PrintWin();
 /* Saat menang melawan boss; memenangkan seluruh game */

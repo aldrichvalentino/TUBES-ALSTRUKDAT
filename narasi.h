@@ -17,7 +17,5 @@ void NarasiLaut4 ();
 void NarasiLaut3 (); 
 void NarasiLaut2 (); 
 void NarasiLaut1 (); 
-void NarasiKetemuMonster (); 
-void NarasiMenangLawanMonster (); 
 void NarasiKetemuEnergi (); 
 void NarasiKekuranganEnergi ();
