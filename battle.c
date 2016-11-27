@@ -559,7 +559,7 @@ void InitBattle (PLAYER *P, TE T, int *result)
     if (rnd == 0) rnd += 1 ;
     if (IsEnemyUndefined(SearchPos2(LEn(ElMini(CMap,CMiniMap)),Posisi(*P)))) 
     {
-	CreateEnemy(&E,T,10);
+	CreateEnemy(&E,T,rnd);
 	EMap(LEn(ElMini(CMap,CMiniMap)),SearchPos1(LEn(ElMini(CMap,CMiniMap)),Posisi(*P))) = E;
     }
     else
@@ -568,7 +568,6 @@ void InitBattle (PLAYER *P, TE T, int *result)
 	E = SearchPos2(LEn(ElMini(CMap,CMiniMap)),Posisi(*P));
     }
 
-    rnd = 10;
     if(rnd != 10)
     {
 
@@ -642,9 +641,10 @@ void InitBattle (PLAYER *P, TE T, int *result)
     printf("Enter any key to return!\n");
     scanf("%c",&buang);
 
+
     //pertarungan
     do {
-		PopStack(&S,&i);      //ambil 1
+    	PopStack(&S,&i);      //ambil 1
 		//mengambil move dari queue
 		DelQueue(&EAksi(E)[i],&me1);
 		DelQueue(&EAksi(E)[i],&me2);
@@ -677,11 +677,55 @@ void InitBattle (PLAYER *P, TE T, int *result)
 		BattleUIoutput(P,&E,me1,me2,me3,me4,PlayerMoves,round,4,0);
 
         ++round;
+    } while ((round <= 10) && (EHP(E) > 0) && (PHP(*P) > 0));
+
+    if(round > 10){
+    int temp = EHP(E);
+    CreateEnemy(&E,T,10);
+    EHP(E) = temp;
+
+    CreateEmptyStack(&S);
+    RandomStack(&S,10);
+    do {
+    	PopStack(&S,&i);
+		//mengambil move dari queue
+		DelQueue(&EAksi(E)[i],&me1); printf("%c\n",me1);
+		DelQueue(&EAksi(E)[i],&me2);printf("%c\n",me2);
+		DelQueue(&EAksi(E)[i],&me3);printf("%c\n",me3);
+		DelQueue(&EAksi(E)[i],&me4);printf("%c\n",me4);
+		HideTwoMoves(me1,me2,me3,me4,&o1,&o2,&o3,&o4);
+		clrscr();
+
+		BattleUIinput(*P,E,o1,o2,o3,o4,round,&PlayerMoves);
+
+        movenum = 0;
+        PHPawal = PHP(*P);
+        EHPawal = EHP(E);
+        while(movenum <= 4){
+			BattleUIoutput(P,&E,me1,me2,me3,me4,PlayerMoves,round,movenum,0);
+			BattleUIoutput(P,&E,me1,me2,me3,me4,PlayerMoves,round,movenum,1);
+			if(PHP(*P) <= 0 || EHP(E) <= 0) break;
+			scanf("%c",&buang);
+			clrscr();
+			movenum++;
+
+			if(PHP(*P) > 0 && EHP(E) > 0){
+				PHP(*P) = PHPawal;
+				EHP(E) = EHPawal;
+			}
+		}
+		PHP(*P) = PHPawal;
+		EHP(E) = EHPawal;
+
+		BattleUIoutput(P,&E,me1,me2,me3,me4,PlayerMoves,round,4,0);
+
+        ++round;
     } while ((round <= 20) && (EHP(E) > 0) && (PHP(*P) > 0));
+	}
 
     /* akhiran final battle */
     PrintBorder();
-    if ((PHP(*P) > 0) || (round > 10)){
+    if ((PHP(*P) > 0) || (round > 20)){
         EDie(E) = true;
         printf("Congratulations! ");PrintKata(EName(E));printf(" has been defeated!\n");
         if(EHP(E) <= 0){
