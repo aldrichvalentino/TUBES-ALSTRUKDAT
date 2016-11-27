@@ -115,19 +115,19 @@ void PrintTree1(BinTree P, int h, int inc)
             switch (Akar(P)){
                 case 8 : printf(COLOR_GREEN     "(1) PIRATES HAT"     COLOR_RESET "\n");break;
                 case 4 : printf(COLOR_GREEN     "(2) CAPTAINS BLOOD"     COLOR_RESET "\n");break;
-                case 12 : printf(COLOR_GREEN    "(3) CAPTAINS SENSE(3)"     COLOR_RESET "\n");break;
-                case 2 : printf(COLOR_GREEN     "(4) BLOODY HOOK(4)"     COLOR_RESET "\n");break;
-                case 6 : printf(COLOR_GREEN     "(5) TOXIC ATTACK(5)"     COLOR_RESET "\n");break;
-                case 10 : printf(COLOR_GREEN    "(6) PIRATES EYES(6)"     COLOR_RESET "\n");break;
-                case 14 : printf(COLOR_GREEN    "(7) DEFENSIVE STANCE(7)"     COLOR_RESET "\n");break;
-                case 1 : printf(COLOR_GREEN     "(8) SACRED SWORD(8)"     COLOR_RESET "\n");break;
-                case 3 : printf(COLOR_GREEN     "(9) WAVE STRIKE(9)"     COLOR_RESET "\n");break;
-                case 5 : printf(COLOR_GREEN     "(10) BACKSTAB(10)"     COLOR_RESET "\n");break;
-                case 7 : printf(COLOR_GREEN     "(11) CAPTAINS RAGE(11)"     COLOR_RESET "\n");break;
-                case 9 : printf(COLOR_GREEN     "(12) SUPERIOR BLOCK(12)"     COLOR_RESET "\n");break;
-                case 11 : printf(COLOR_GREEN    "(13) WATER FORM(13)"     COLOR_RESET "\n");break;
-                case 13 : printf(COLOR_GREEN    "(14) SALTY SKIN(14)"     COLOR_RESET "\n");break;
-                case 15 : printf(COLOR_GREEN    "(15) ICE SHIELD(15)"     COLOR_RESET "\n");break;
+                case 12 : printf(COLOR_GREEN    "(3) CAPTAINS SENSE"     COLOR_RESET "\n");break;
+                case 2 : printf(COLOR_GREEN     "(4) BLOODY HOOK"     COLOR_RESET "\n");break;
+                case 6 : printf(COLOR_GREEN     "(5) TOXIC ATTACK"     COLOR_RESET "\n");break;
+                case 10 : printf(COLOR_GREEN    "(6) PIRATES EYES"     COLOR_RESET "\n");break;
+                case 14 : printf(COLOR_GREEN    "(7) DEFENSIVE STANCE"     COLOR_RESET "\n");break;
+                case 1 : printf(COLOR_GREEN     "(8) SACRED SWORD"     COLOR_RESET "\n");break;
+                case 3 : printf(COLOR_GREEN     "(9) WAVE STRIKE"     COLOR_RESET "\n");break;
+                case 5 : printf(COLOR_GREEN     "(10) BACKSTAB"     COLOR_RESET "\n");break;
+                case 7 : printf(COLOR_GREEN     "(11) CAPTAINS RAGE"     COLOR_RESET "\n");break;
+                case 9 : printf(COLOR_GREEN     "(12) SUPERIOR BLOCK"     COLOR_RESET "\n");break;
+                case 11 : printf(COLOR_GREEN    "(13) WATER FORM"     COLOR_RESET "\n");break;
+                case 13 : printf(COLOR_GREEN    "(14) SALTY SKIN"     COLOR_RESET "\n");break;
+                case 15 : printf(COLOR_GREEN    "(15) ICE SHIELD"     COLOR_RESET "\n");break;
             }
         }
         else
@@ -312,7 +312,7 @@ void CreateNewSkillTree(BinTree *P)
 
     T3 = Tree(12,T6,T7,0);
     T2 = Tree(4,T4,T5,0);
-
+    *P = Nil;
     MakeTree(8,T2,T3,P);
     Sudah(*P) = true;
 }
@@ -377,8 +377,14 @@ void AmbilSkill(BinTree *P)
     int x;
     int skill;
     BinTree T;
+    PrintSkillTree(*P);
     printf("Pilih nomor skill yang ingin diambil :\n");
     scanf("%d",&skill);
+    while ((skill >= 16) || (skill <= 0))
+    {
+        printf("Input nomor skill salah, pengambilan skill gagal\n");
+        scanf("%d",&skill);
+    }
     if (skill <= 15 && skill >= 2)
     {
         if (!IsSudah(*P,SkillToInt(x)))
@@ -400,14 +406,7 @@ void AmbilSkill(BinTree *P)
     }
     else
     {
-        if (skill != 1)
-        {
-            printf("Input nomor skill salah, pengambilan skill gagal\n");
-        }
-        else
-        {
-            printf("Skill tersebut sudah diambil, pengambilan skill gagal\n");
-        }
+        printf("Skill tersebut sudah diambil, pengambilan skill gagal\n");
     }
 }
 
