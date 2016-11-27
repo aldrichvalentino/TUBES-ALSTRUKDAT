@@ -8,6 +8,7 @@ gcc -o mprogram mprogram.c jam.c narasi.c fileeksternal.c matriks.c battle.c sta
 #include "enemy.h"
 #include "battle.h"
 #include "jam.h"
+#include "skilltree.h"
 #include "fileeksternal.h"
 #include <stdio.h>
 #include <time.h>
@@ -19,6 +20,7 @@ time_t sec;
 Kata NG,SG,LG,EXIT,GU,GL,GD,GR,SAVE,LOAD,SKILL;
 PLAYER P;
 TE T;
+BinTree Skill;
 
 void SetAllKata()
 /* Mempersiapkan semua kata */
@@ -97,6 +99,8 @@ void InitAll()
     InitPosPlayer(&P,&Mat(ElMini(CMap,CMiniMap)));
     LoadEnemy(&T);
     StartRecord(&JamGame,&sec);
+    BinTree Skill = Nil;
+	CreateNewSkillTree(&Skill);
 }
 
 void ProcessCommand(Kata pilihan)
@@ -155,10 +159,12 @@ void ProcessCommand(Kata pilihan)
         Record(&JamGame,sec);
         SaveGame(P,JamGame);
         PrintGame(P);
+        FILE *FSkill;
+        SaveSkillTree(Skill,FSkill);
     }
     else if (IsKataSama(pilihan,SKILL))
     {
-
+        PrintSkillTree(Skill);
     }
     else if (IsKataSama(pilihan,EXIT))
     {
