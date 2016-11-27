@@ -376,7 +376,6 @@ void AmbilSkill(BinTree *P, int *STR, int *DEF)
 {
     char pilih;
     boolean stop = false;
-    int x;
     int skill;
     BinTree T;
     PrintSkillTree(*P);
@@ -394,7 +393,7 @@ void AmbilSkill(BinTree *P, int *STR, int *DEF)
 		}
 		else
 		{
-				if (!IsSudah(*P,SkillToInt(x)))
+				if ((!IsSudah(*P,SkillToInt(skill)))&&(skill!=1))
 				{
 					T = Parent(*P,SkillToInt(skill));
 					if (IsSudah(*P,Akar(T)))
