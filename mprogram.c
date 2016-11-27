@@ -152,9 +152,11 @@ void ProcessCommand(Kata pilihan)
     }
     else if (IsKataSama(pilihan,SAVE))
     {
-        Record(&JamGame,sec);
+        //Record(&JamGame,sec);
+	printf("dlasknjbzvcd");
         SaveGame(P,JamGame);
-        PrintGame(P);
+	printf("b");
+        //PrintGame(P);
     }
     else if (IsKataSama(pilihan,SKILL))
     {
@@ -174,17 +176,17 @@ int main()
     srand((unsigned)time(NULL));
     Kata input;
     SetAllKata();
+    clrscr();
+    printf("Make sure your window is on full-screen mode.\n");	
+    printf("Press enter to continue.");
     do
     {
-		/*ala-ala*/
-		clrscr();
-		printf("Make sure your window is on full-screen mode.\n");
-		printf("Press enter to continue.");
-		do
-		{
-			scanf("%c",&c);
-		}
-		while (c!='\n');
+	scanf("%c",&c);
+    }
+    while (c!='\n');
+    do
+    {	
+		
         do
         {
             Interface();
@@ -199,7 +201,7 @@ int main()
                 BacaCommandGame(&input);
                 ProcessCommand(input);
             } while (!IsKataSama(input,EXIT));
-           // CreateKata("",&input);
+           CreateKata("",&input);
         }
     } while (!IsKataSama(input,EXIT));
     clrscr();
