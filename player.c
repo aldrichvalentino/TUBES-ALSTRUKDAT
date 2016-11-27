@@ -16,7 +16,7 @@
 
 void clrscr()
 {
-	system("@cls||clear");
+	system("clear");
 }
 
 void CreateEmptyPlayer(PLAYER *P, Kata X)

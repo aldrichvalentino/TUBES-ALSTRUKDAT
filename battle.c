@@ -516,6 +516,7 @@ void LevelUp (PLAYER *P)
 	if(PLevel(*P) > lvlawal) {
 		printf("Congratulations! You are now level %d!\n",PLevel(*P));
 		AmbilSkill(&PSkill(*P),&PSTR(*P),&PDEF(*P));
+		PrintBorder();
 	}
 }
 
@@ -609,7 +610,6 @@ void InitBattle (PLAYER *P, TE T, int *result)
     } while ((round <= 10) && (EHP(E) > 0) && (PHP(*P) > 0));
 
     /* akhiran */
-    PrintBorder();
     if ((PHP(*P) > 0) || (round > 10)){
         EDie(E) = true;
         printf("Congratulations! ");PrintKata(EName(E));printf(" has been defeated!\n");
@@ -626,11 +626,11 @@ void InitBattle (PLAYER *P, TE T, int *result)
         *result = 3;
         printf("You have lost!\n");
     }
-    PrintBorder();
     LevelUp (P);
-    PrintBorder();
 
+    PrintCLoop(' ',20);
     printf("Press enter to continue!\n");
+    PrintCLoop(' ',20);
     do scanf("%c",&buang); while (buang!='\n');
 
     }
@@ -638,7 +638,9 @@ void InitBattle (PLAYER *P, TE T, int *result)
     {
 
     NarasiBoss();
+    PrintCLoop(' ',20);
     printf("Press enter to continue!\n");
+    PrintCLoop(' ',20);
     do scanf("%c",&buang); while (buang!='\n');
 
 
@@ -724,7 +726,6 @@ void InitBattle (PLAYER *P, TE T, int *result)
 	}
 
     /* akhiran final battle */
-    PrintBorder();
     if ((PHP(*P) > 0) || (round > 20)){
         EDie(E) = true;
         printf("Congratulations! ");PrintKata(EName(E));printf(" has been defeated!\n");
@@ -738,6 +739,8 @@ void InitBattle (PLAYER *P, TE T, int *result)
     	    do scanf("%c",&buang); while (buang!='\n');
 	    clrscr();
 	    PrintCredits();
+    	    //do scanf("%c",&buang); while (buang!='\n');
+		exit(0);
         } else {
 			*result = 2;
             PrintKata(EName(E));printf(" fled!\n");
@@ -747,9 +750,7 @@ void InitBattle (PLAYER *P, TE T, int *result)
         *result = 3;
         printf("You have lost!\n");
     }
-    PrintBorder();
     LevelUp (P);
-    PrintBorder();
 
     printf("Press Enter to continue!\n");
     scanf("%c",&buang);

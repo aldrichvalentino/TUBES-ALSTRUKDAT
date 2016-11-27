@@ -14,7 +14,7 @@ void NarasiOpening(Kata *Nama)
 	PrintCLoop(' ',20);
 	printf("%s\n","What should we call you??");
 	PrintCLoop(' ',20);
-	printf("%s\n","Insert Name Here: (max.16 character)");
+	printf("%s\n","Insert Name Here: (max.15 character)");
 	PrintCLoop(' ',20);
 	InputUser(Nama);
 	while ((Nama->Length > 16)||(Nama->Length==0))
