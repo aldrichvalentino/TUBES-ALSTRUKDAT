@@ -61,16 +61,6 @@ void CopyMATRIKS (MATRIKS MIn, MATRIKS * MHsl);
 /* Melakukan assignment MHsl  MIn */
 
 /* ********** KELOMPOK BACA/TULIS ********** */
-void BacaMATRIKS (MATRIKS *M, int NB, int NK);
-/* I.S. IsIdxValid(NB,NK) */
-/* F.S. M terdefinisi nilai elemen efektifnya, berukuran NB x NK */
-/* Proses: Melakukan MakeMATRIKS(M,NB,NK) dan mengisi nilai efektifnya */
-/* Selanjutnya membaca nilai elemen per baris dan kolom */
-/* Contoh: Jika NB = 3 dan NK = 3, maka contoh cara membaca isi matriks :
-1 2 3
-4 5 6
-8 9 10
-*/
 void TulisMATRIKS (MATRIKS M);
 /* I.S. M terdefinisi */
 /* F.S. Nilai M(i,j) ditulis ke layar per baris per kolom, masing-masing elemen per baris

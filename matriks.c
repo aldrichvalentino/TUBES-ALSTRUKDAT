@@ -69,16 +69,6 @@ void CopyMATRIKS (MATRIKS MIn, MATRIKS * MHsl){
 }
 
 /* ********** KELOMPOK BACA/TULIS ********** */
-void BacaMATRIKS (MATRIKS *M, int NB, int NK)
-/* I.S. IsIdxValid(NB,NK) */
-/* F.S. M terdefinisi nilai elemen efektifnya, berukuran NB x NK */
-{
-    indeks i,j;
-    MakeMATRIKS(NB,NK,M);
-    for (i=GetFirstIdxBrs(*M);i<=GetLastIdxBrs(*M);++i)
-        for (j=GetFirstIdxKol(*M);j<=GetLastIdxKol(*M);++j)
-            scanf("%d",&Elmt(*M,i,j));
-}
 void TulisMATRIKS (MATRIKS M){
 /* I.S. M terdefinisi */
 /* F.S. Nilai M(i,j) ditulis ke layar per baris per kolom, masing-masing elemen per baris

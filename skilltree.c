@@ -1,9 +1,8 @@
-
-#include "boolean.h"
 #include "skilltree.h"
+#include "boolean.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include "player.h"
+#include "battle.h"
 
 /* *** Konstruktor *** */
 BinTree Tree (infotype Akar, BinTree L, BinTree R, int i)
@@ -370,17 +369,19 @@ addrNode Parent(BinTree P, infotype X)
     }
 }
 
-void AmbilSkill(PLAYER *P)
-// Prosedur untuk ngambil skill
+void AmbilSkill(BinTree *P, int *STR, int *DEF)
+/* I.S. : Player terdefinisi, sudah naik level, STR adalah STR player, DEF adalah DEF player
+ * F.S. : skill diambil, status bertambah
+ */
 {
     char pilih;
     int x;
     int skill;
     BinTree T;
-    PrintSkillTree(PSkill(*P));
+    PrintSkillTree(*P);
     printf("                                      PLAYER SKILL TREE\n");
     PrintBorder();
-    printf("If you choose the left path your STR will increase!\nIf you choose the right path your DEF will increase!\n")
+    printf("If you choose the left path your STR will increase!\nIf you choose the right path your DEF will increase!\n");
     printf("Pilih nomor skill yang ingin diambil :\n");
     scanf("%d",&skill);
     while ((skill >= 16) || (skill <= 0))
@@ -390,27 +391,27 @@ void AmbilSkill(PLAYER *P)
     }
     if (skill <= 15 && skill >= 2)
     {
-        if (!IsSudah(PSkill(*P),SkillToInt(x)))
+        if (!IsSudah(*P,SkillToInt(x)))
         {
-            T = Parent(PSkill(*P),SkillToInt(skill));
-            if (IsSudah(PSkill(*P),Akar(T)))
+            T = Parent(*P,SkillToInt(skill));
+            if (IsSudah(*P,Akar(T)))
             {
-                Sudah(SearchBST(PSkill(*P),SkillToInt(skill))) = true;
+                Sudah(SearchBST(*P,SkillToInt(skill))) = true;
                 switch (skill){
-                    case 2 : PSTR(*P) = PSTR(*P) + 10; PDEF(*P) = PDEF(*P) + 5; printf("STR bertambah 10, DEF bertambah 5\n"); break;
-                    case 3 : PSTR(*P) = PSTR(*P) + 5; PDEF(*P) = PDEF(*P) + 10; printf("STR bertambah 5, DEF bertambah 10\n"); break;
-                    case 4 : PSTR(*P) = PSTR(*P) + 20; PDEF(*P) = PDEF(*P) + 5; printf("STR bertambah 20, DEF bertambah 5\n"); break;
-                    case 5 : PSTR(*P) = PSTR(*P) + 15; PDEF(*P) = PDEF(*P) + 10; printf("STR bertambah 15, DEF bertambah 10\n"); break;
-                    case 6 : PSTR(*P) = PSTR(*P) + 10; PDEF(*P) = PDEF(*P) + 15; printf("STR bertambah 10, DEF bertambah 15\n"); break;
-                    case 7 : PSTR(*P) = PSTR(*P) + 5; PDEF(*P) = PDEF(*P) + 20; printf("STR bertambah 5, DEF bertambah 20\n"); break;
-                    case 8 : PSTR(*P) = PSTR(*P) + 40; PDEF(*P) = PDEF(*P) + 5; printf("STR bertambah 40, DEF bertambah 5\n"); break;
-                    case 9 : PSTR(*P) = PSTR(*P) + 35; PDEF(*P) = PDEF(*P) + 10; printf("STR bertambah 35, DEF bertambah 10\n"); break;
-                    case 10 : PSTR(*P) = PSTR(*P) + 30; PDEF(*P) = PDEF(*P) + 15; printf("STR bertambah 30, DEF bertambah 15\n"); break;
-                    case 11 : PSTR(*P) = PSTR(*P) + 25; PDEF(*P) = PDEF(*P) + 20; printf("STR bertambah 25, DEF bertambah 20\n"); break;
-                    case 12 : PSTR(*P) = PSTR(*P) + 20; PDEF(*P) = PDEF(*P) + 25; printf("STR bertambah 20, DEF bertambah 25\n"); break;
-                    case 13 : PSTR(*P) = PSTR(*P) + 15; PDEF(*P) = PDEF(*P) + 30; printf("STR bertambah 15, DEF bertambah 30\n"); break;
-                    case 14 : PSTR(*P) = PSTR(*P) + 10; PDEF(*P) = PDEF(*P) + 35; printf("STR bertambah 10, DEF bertambah 35\n"); break;
-                    case 15 : PSTR(*P) = PSTR(*P) + 5; PDEF(*P) = PDEF(*P) + 40; printf("STR bertambah 5, DEF bertambah 40\n"); break;
+                    case 2 : *STR += 10; *DEF += 5; printf("STR bertambah 10, DEF bertambah 5\n"); break;
+                    case 3 : *STR += 5; *DEF += 10; printf("STR bertambah 5, DEF bertambah 10\n"); break;
+                    case 4 : *STR += 20; *DEF += 5; printf("STR bertambah 20, DEF bertambah 5\n"); break;
+                    case 5 : *STR += 15; *DEF += 10; printf("STR bertambah 15, DEF bertambah 10\n"); break;
+                    case 6 : *STR += 10; *DEF += 15; printf("STR bertambah 10, DEF bertambah 15\n"); break;
+                    case 7 : *STR += 5; *DEF += 20; printf("STR bertambah 5, DEF bertambah 20\n"); break;
+                    case 8 : *STR += 40; *DEF += 5; printf("STR bertambah 40, DEF bertambah 5\n"); break;
+                    case 9 : *STR += 35; *DEF += 10; printf("STR bertambah 35, DEF bertambah 10\n"); break;
+                    case 10 : *STR += 30; *DEF += 15; printf("STR bertambah 30, DEF bertambah 15\n"); break;
+                    case 11 : *STR += 25; *DEF += 20; printf("STR bertambah 25, DEF bertambah 20\n"); break;
+                    case 12 : *STR += 20; *DEF += 25; printf("STR bertambah 20, DEF bertambah 25\n"); break;
+                    case 13 : *STR += 15; *DEF += 30; printf("STR bertambah 15, DEF bertambah 30\n"); break;
+                    case 14 : *STR += 10; *DEF += 35; printf("STR bertambah 10, DEF bertambah 35\n"); break;
+                    case 15 : *STR += 5; *DEF += 40; printf("STR bertambah 5, DEF bertambah 40\n"); break;
                 }
             }
             else

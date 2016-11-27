@@ -1,12 +1,11 @@
-#ifndef _SKILTREE_H_
-#define _SKILTREE_H_
+#ifndef SKILLTREE_H
+#define SKILLTREE_H
 
 /* Modul lain yang digunakan : */
 #include "boolean.h"
+#include "color.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include "color.h"
-#include "player.h"
 
 #define Nil NULL /* konstanta Nil sesuai pada modul listrek */
 
@@ -79,8 +78,9 @@ void CreateNewSkillTree(BinTree *P);
 int SkillToInt(int skill);
 // Mengubah biar jadi BST kalo di proses di fungsi
 
-void AmbilSkill(PLAYER *P);
-// Prosedur untuk mengambil skill
-
-
+void AmbilSkill(BinTree *P, int *STR, int *DEF);
+/* I.S. : Player terdefinisi, sudah naik level, STR adalah STR player, DEF adalah DEF player
+ * F.S. : skill diambil, status bertambah
+ */
+ 
 #endif

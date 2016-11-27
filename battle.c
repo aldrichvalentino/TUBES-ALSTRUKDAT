@@ -512,7 +512,7 @@ void LevelUp (PLAYER *P)
 	
 	if(PLevel(*P) > lvlawal) {
 		printf("Congratulations! You are now level %d!\n",PLevel(*P));
-		AmbilSkill(&PSkill(*P));
+		AmbilSkill(&PSkill(*P),&PSTR(*P),&PDEF(*P));
 	}
 }
 
