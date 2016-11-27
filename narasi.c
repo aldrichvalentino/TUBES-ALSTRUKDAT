@@ -12,30 +12,37 @@ void NarasiOpening(Kata *Nama)
 	PrintCLoop(' ',20);printf("%s\n","Ahoyyy Captain!");
 	PrintCLoop(' ',20);printf("%s\n","What should we call you??");
 	PrintCLoop(' ',20);printf("%s\n","Insert Name Here: (max.15 character)");
-	InputUser(Nama);
+	PrintCLoop(' ',20);InputUser(Nama);
 	while ((*Nama).Length > 15)
         {
-            printf("Nama harus dibawah 16 Huruf\n");
-            InputUser(Nama);
+            PrintCLoop(' ',20);printf("Nama harus dibawah 16 Huruf\n");
+            PrintCLoop(' ',20);InputUser(Nama);
         }
-	printf("%s","Congratulations Captain ");
+	PrintCLoop(' ',20);printf("%s","Congratulations Captain ");
 	PrintKata(*Nama);
 	printf("\n");
-	printf("%s\n","Kamu baru saja mendapatkan informasi harta karun baru!");
-	printf("%s\n","Harta karun tersebut berada dan tersembunyi di Samudra Bermuda, Samudra penuh misteri yang dihindari setiap penjelajah.");
-	printf("%s\n","Yaitu harta Sang Bright Souls!!!");
-	printf("%s\n","Dia dikenal sebagai Souls paling 'BRIGHT'.");
-	printf("%s\n","Cahaya itu berasal dari hartanya yang menumpuk selalu memantulkan cahaya benderang baik disiang maupun malam hari.");
-	printf("%s","Dalam perjalannya Captain ");
+	PrintCLoop(' ',20);printf("%s\n","Kamu baru saja mendapatkan informasi harta karun baru!");
+	PrintCLoop(' ',20);printf("%s\n","Harta karun tersebut berada dan tersembunyi di Samudra Bermuda,");
+	PrintCLoop(' ',20);printf("%s\n","Samudra penuh misteri yang dihindari setiap penjelajah.");
+	PrintCLoop(' ',20);printf("%s\n","Yaitu harta Sang Bright Souls!!!");
+	PrintCLoop(' ',20);printf("%s\n","Dia dikenal sebagai Souls paling 'BRIGHT'.");
+	PrintCLoop(' ',20);printf("%s\n","Cahaya itu berasal dari hartanya yang menumpuk selalu memantulkan ");
+	PrintCLoop(' ',20);printf("%s\n","cahaya benderang baik disiang maupun malam hari.");
+	PrintCLoop(' ',20);printf("%s","Dalam perjalannya Captain ");
 	PrintKata(*Nama); 
-	printf("%s\n"," harus mengarungi puluhan lautan untuk menemukan dikediaman Sang Bright Souls.");
-	printf("%s\n","HATI-HATI!!! Karena ditiap lautan ada 'Souls' lain yaitu monster22 kerabat dari Sang Bright Souls untuk melindungi hartanya.");
-	printf("%s\n","SOOOO.. Let's begin the journey");
+	printf("%s\n"," harus mengarungi puluhan ");
+	PrintCLoop(' ',20);printf("%s\n","lautan untuk menemukan dikediaman Sang Bright Souls.");
+	PrintCLoop(' ',20);printf("%s\n","HATI-HATI!!! Karena ditiap lautan ada 'Souls' lain yaitu ");
+	PrintCLoop(' ',20);printf("%s\n","monster22 kerabat dari Sang Bright Souls untuk melindungi hartanya.");
+	PrintCLoop(' ',20);printf("%s\n","SOOOO.. Let's begin the journey");
 	printf("\n");
-	printf("%s\n", "Press enter to continue");
-	
+	PrintCLoop(' ',20);printf("%s\n", "Press enter to continue");
+	PrintCLoop(' ',20);
 	do 
+	{
+		
 		scanf("%c", &C);
+	}
 	while (C != '\n');
 	
 }

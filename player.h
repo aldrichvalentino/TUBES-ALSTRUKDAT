@@ -6,6 +6,7 @@
 #define PLAYER_H
 
 #include "boolean.h"
+#include "skilltree.h"
 #include "mesinkata.h"
 #include "point.h"
 #include "enemy.h"
@@ -57,7 +58,7 @@ void InitPosPlayer(PLAYER *P,MATRIKS *M);
 /* I.S. game dimulai */
 /* F.S. Posisi player sudah ditentukan */
 
-void PrintGame(PLAYER P, int darah);
+void PrintGame(PLAYER P);
 void PrintCLoop(char c, int x);
 int digit(int X);
 #endif

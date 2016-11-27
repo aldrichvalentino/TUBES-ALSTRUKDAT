@@ -2,6 +2,7 @@
 /*
 gcc -o mprogram mprogram.c jam.c narasi.c fileeksternal.c matriks.c battle.c stack.c queue.c enemy.c player.c point.c map.c graph.c gambar.c listlinier.c mesinkata.c mesinkar.c -lm
 */
+#include "skilltree.h"
 #include "gambar.h"
 #include "narasi.h"
 #include "map.h"
@@ -104,6 +105,7 @@ void ProcessCommand(Kata pilihan)
 /* I.S. command merupakan instruksi yang valid */
 /* Proses sudah dilakukan, done bernilai true jika start game atau exit */
 {
+	boolean med;
     if (IsKataSama(pilihan,NG))
     {
         Kata player;
@@ -115,8 +117,6 @@ void ProcessCommand(Kata pilihan)
     {
         if (!NamaDone)
         {
-			//PrintCLoop(' ',20);
-            //printf("Anda belum memasukkan username anda\n");
             ProcessCommand(NG);
         }
         if (!ready) InitAll();
@@ -125,7 +125,6 @@ void ProcessCommand(Kata pilihan)
     {
         if (!NamaDone)
         {
-            //printf("Anda belum memasukkan username anda\n");
             ProcessCommand(NG);
         }
         ready = LoadGame(&P,&JamGame);
@@ -133,23 +132,47 @@ void ProcessCommand(Kata pilihan)
     }
     else if (IsKataSama(pilihan,GL))
     {
-        Jalan(&P,&Mat(ElMini(CMap,CMiniMap)),0,T);
+        Jalan(&P,&Mat(ElMini(CMap,CMiniMap)),0,T,&med);
         PrintGame(P);
+        if (med)
+        {
+			printf("You got a medicine!\n");
+		}
+		PrintBorder();
+		printf("Command : ");     
     }
     else if (IsKataSama(pilihan,GU))
     {
-        Jalan(&P,&Mat(ElMini(CMap,CMiniMap)),1,T);
+        Jalan(&P,&Mat(ElMini(CMap,CMiniMap)),1,T,&med);
         PrintGame(P);
+        if (med)
+        {
+			printf("You got a medicine!\n");
+		}
+		PrintBorder();
+		printf("Command : ");
     }
     else if (IsKataSama(pilihan,GR))
     {
-        Jalan(&P,&Mat(ElMini(CMap,CMiniMap)),2,T);
+        Jalan(&P,&Mat(ElMini(CMap,CMiniMap)),2,T,&med);
         PrintGame(P);
+        if (med)
+        {
+			printf("You got a medicine!\n");
+		}
+		PrintBorder();
+		printf("Command : "); 
     }
     else if (IsKataSama(pilihan,GD))
     {
-        Jalan(&P,&Mat(ElMini(CMap,CMiniMap)),3,T);
+        Jalan(&P,&Mat(ElMini(CMap,CMiniMap)),3,T,&med);
         PrintGame(P);
+        if (med)
+        {
+			printf("You got a medicine!\n");
+		}
+		PrintBorder();
+		printf("Command : "); 
     }
     else if (IsKataSama(pilihan,SAVE))
     {
@@ -192,12 +215,13 @@ int main()
         } while ((!IsKataSama(input,SG))&&(!IsKataSama(input,EXIT)));
         if (IsKataSama(input,SG))
         {
-            PrintGame(P,HP);
+            PrintGame(P);
+            PrintBorder();
+			printf("Command : ");
             do
             {
                 BacaCommandGame(&input);
                 ProcessCommand(input);
-                HP = PHP(P);
             } while (!IsKataSama(input,EXIT));
            CreateKata("",&input);
         }

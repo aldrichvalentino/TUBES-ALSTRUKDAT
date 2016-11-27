@@ -31,8 +31,8 @@ void CreateEmptyPlayer(PLAYER *P, Kata X)
 	PEXP(*P) = 0;
 	PLevel(*P) = 1;
 	Posisi(*P) = MakePOINT(-1,-1);
-	BinTree Skill = Nil;
-	PSkill(*P) = CreateNewSkillTree(&Skill);
+	PSkill(*P) = Nil;
+	CreateNewSkillTree(&PSkill(*P));
 }
 
 void DarahNaik(PLAYER *P)
@@ -101,7 +101,7 @@ void InitPosPlayer(PLAYER *P,MATRIKS *M)
     SetElmt(M,Po,cplayer);
 }
 
-void PrintGame(PLAYER P, int darah)
+void PrintGame(PLAYER P)
 {
 	//Kamus
 	int X;
@@ -145,10 +145,7 @@ void PrintGame(PLAYER P, int darah)
 	PrintBorder();
 
 	NarasiLaut(X);
-	PrintBorder();
-	if (PHP(P)>darah)//nginjek medicine
-		printf("You got a medicine!\n");
-	printf("Command : ");
+	
 }
 
 void PrintCLoop(char c, int x)
