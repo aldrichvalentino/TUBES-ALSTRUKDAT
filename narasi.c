@@ -1,9 +1,14 @@
 #include <stdio.h>
 #include "narasi.h"
 #include "mesinkata.h"
+#include "player.h"
 
 void NarasiOpening(Kata *Nama)
 {
+	//Kamus
+	char C;
+	
+	//Algoritma
 	printf("%s\n","Ahoyyy Captain!");
 	printf("%s\n","What should we call you??");
 	printf("%s\n","Insert Name Here: (max.16 character)");
@@ -26,6 +31,12 @@ void NarasiOpening(Kata *Nama)
 	printf("%s\n"," harus mengarungi puluhan lautan untuk menemukan dikediaman Sang Bright Souls.");
 	printf("%s\n","HATI-HATI!!! Karena ditiap lautan ada 'Souls' lain yaitu monster22 kerabat dari Sang Bright Souls untuk melindungi hartanya.");
 	printf("%s\n","SOOOO.. Let's begin the journey");
+	printf("\n");
+	printf("%s\n", "Press enter to continue");
+	
+	do 
+		scanf("%c", &C);
+	while (C != '\n');
 	
 }
 
@@ -156,12 +167,12 @@ void NarasiMenangLawanMonster () {
 
 void NarasiKetemuEnergi () {
 	printf("%s\n","Waaahh keberuntungan ada di pihakmu Captain!!");
-	printf("%s\n","Kamu baru saja menemukan sebotol energi.");
-	printf("%s\n","Oleh karena itu, energi naik XX HP.");
+	printf("%s\n","Kamu baru saja menemukan sebotol 'Medicine'.");
+	printf("%s\n","Oleh karena itu, HP naik 50 HP.");
 }
 
 void NarasiKekuranganEnergi () {
 	printf("%s\n","Ada masalah Captain!");
 	printf("%s\n","Tampaknya energi telah berkurang banyak.");
-	printf("%s\n","Captain butuh energi tambahan segera!!");
+	printf("%s\n","Captain butuh 'Medicine' tambahan segera!!");
 }
