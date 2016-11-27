@@ -152,11 +152,8 @@ void ProcessCommand(Kata pilihan)
     }
     else if (IsKataSama(pilihan,SAVE))
     {
-        //Record(&JamGame,sec);
-	printf("dlasknjbzvcd");
+        Record(&JamGame,sec);
         SaveGame(P,JamGame);
-	printf("b");
-        //PrintGame(P);
     }
     else if (IsKataSama(pilihan,SKILL))
     {
@@ -172,7 +169,7 @@ void ProcessCommand(Kata pilihan)
 
 int main()
 {
-	char c;
+    char c;
     srand((unsigned)time(NULL));
     Kata input;
     SetAllKata();

@@ -4,6 +4,8 @@
 #include "map.h"
 #include <stdio.h>
 #include <string.h>
+#include <fcntl.h>
+#include <sys/stat.h>
 #include <stdlib.h>
 
 void CreateUser(Kata *K)
@@ -42,10 +44,9 @@ void CreateUser(Kata *K)
 boolean IsFileExist(char *c)
 /* Mengeluarkan true jika file bernama c ada */
 {
-    FILE *F = fopen(c,"r");
-    boolean temp = (F!=NULL);
-    fclose(F);
-    return temp;
+    struct stat buf;
+    stat(c,&buf);
+    return (buf.st_size!=0);
 }
 
 Kata ConvertToTxt(Kata K)
@@ -68,9 +69,9 @@ void SaveGame(PLAYER P,JAM J)
 /* F.S. Data permainan sudah disimpan di (namaplayer).txt */
 {
     Kata K = PName(P);
-    Kata T = ConvertToTxt(K);
+    K = ConvertToTxt(K);
     char c;
-    if (IsFileExist(T.TabKata))
+    if (IsFileExist(K.TabKata))
     {
         while (c!='y')
         {
@@ -79,7 +80,7 @@ void SaveGame(PLAYER P,JAM J)
             if (c=='n') return;
         }
     }
-    FILE *F = fopen(T.TabKata,"w");
+    FILE *F = fopen(K.TabKata,"w");
     //print jam
     char jam[10];
     ConvertJamToString(J,jam);
@@ -134,7 +135,7 @@ void SaveGame(PLAYER P,JAM J)
         PG = Next(PG);
     }
     fprintf(F,"-1");
-    printf("Save berhasil!\n");
+    printf("Save berhasil!\nCommand: ");
     fclose(F);
 }
 
@@ -146,15 +147,17 @@ boolean LoadGame(PLAYER *P,JAM *J)
     K = ConvertToTxt(K);
     if (!IsFileExist(K.TabKata))
     {
+	printf("b");
         char temp;
-		PrintCLoop(' ',20);
-		printf("Anda belum pernah menyimpan permainan\n");
-		printf("Tekan tombol apa saja untuk melanjutkan\n");
+	PrintCLoop(' ',20);
+	printf("Anda belum pernah menyimpan permainan\n");
+	printf("Tekan tombol apa saja untuk melanjutkan\n");
         scanf("%c",&temp);
         return false;
     }
     else
     {
+	printf("a");
         FILE *F = fopen(K.TabKata,"r");
         //load jam
         char jam[10];
