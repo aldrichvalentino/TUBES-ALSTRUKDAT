@@ -15,7 +15,7 @@ gcc -o mprogram mprogram.c jam.c narasi.c fileeksternal.c matriks.c battle.c sta
 #include <time.h>
 #include <stdlib.h>
 
-boolean NamaDone = false,ready=false;
+boolean NamaDone = false,ready=false,GameOver=false;
 JAM JamGame;
 time_t sec;
 Kata NG,SG,LG,EXIT,GU,GL,GD,GR,SAVE,LOAD,SKILL;
@@ -141,7 +141,7 @@ void ProcessCommand(Kata pilihan)
     }
     else if (IsKataSama(pilihan,GL))
     {
-        Jalan(&P,&Mat(ElMini(CMap,CMiniMap)),0,T,&med);
+        Jalan(&P,&Mat(ElMini(CMap,CMiniMap)),0,T,&med,&GameOver);
         PrintGame(P);
         if (med)
         {
@@ -153,7 +153,7 @@ void ProcessCommand(Kata pilihan)
     }
     else if (IsKataSama(pilihan,GU))
     {
-        Jalan(&P,&Mat(ElMini(CMap,CMiniMap)),1,T,&med);
+        Jalan(&P,&Mat(ElMini(CMap,CMiniMap)),1,T,&med,&GameOver);
         PrintGame(P);
         if (med)
         {
@@ -165,7 +165,7 @@ void ProcessCommand(Kata pilihan)
     }
     else if (IsKataSama(pilihan,GR))
     {
-        Jalan(&P,&Mat(ElMini(CMap,CMiniMap)),2,T,&med);
+        Jalan(&P,&Mat(ElMini(CMap,CMiniMap)),2,T,&med,&GameOver);
         PrintGame(P);
         if (med)
         {
@@ -177,7 +177,7 @@ void ProcessCommand(Kata pilihan)
     }
     else if (IsKataSama(pilihan,GD))
     {
-        Jalan(&P,&Mat(ElMini(CMap,CMiniMap)),3,T,&med);
+        Jalan(&P,&Mat(ElMini(CMap,CMiniMap)),3,T,&med,&GameOver);
         PrintGame(P);
         if (med)
         {

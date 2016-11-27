@@ -226,7 +226,7 @@ boolean LoadGame(PLAYER *P,JAM *J)
             PrecG = PG;
         }
         fclose(F);
-	NarasiContinue();
+	NarasiContinue(PName(*P));
         return true;
     }
 }
