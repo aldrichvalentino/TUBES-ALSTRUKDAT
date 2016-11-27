@@ -147,7 +147,6 @@ boolean LoadGame(PLAYER *P,JAM *J)
     K = ConvertToTxt(K);
     if (!IsFileExist(K.TabKata))
     {
-	printf("b");
         char temp;
 	PrintCLoop(' ',20);
 	printf("Anda belum pernah menyimpan permainan\n");
@@ -157,7 +156,6 @@ boolean LoadGame(PLAYER *P,JAM *J)
     }
     else
     {
-	printf("a");
         FILE *F = fopen(K.TabKata,"r");
         //load jam
         char jam[10];
