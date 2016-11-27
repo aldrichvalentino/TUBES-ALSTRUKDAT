@@ -83,7 +83,7 @@ void NarasiClosing(Kata Nama) {
 void NarasiKalah(Kata Nama)
 {
 	PrintCLoop(' ',20);
-	printf("%s","Sayang sekali, Captain");
+	printf("%s","Sayang sekali, Captain ");
 	PrintKata(Nama);
 	printf("%s\n",".");
 	PrintCLoop(' ',20);

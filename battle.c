@@ -231,7 +231,8 @@ void BattleUIoutput (PLAYER *P, ENEMY *E, infotypeQ M1, infotypeQ M2, infotypeQ 
 				PrintCLoop(' ', i);
 				PrintGuard();
 
-				printf("HP : %d",EHP(*E));
+				if (EHP(*E)>=0) printf("HP : %d",EHP(*E));
+				else printf("HP : 0");
 				i = 4 - digit(EHP(*E));
 				PrintCLoop(' ', i);
 				printf(" ");
@@ -555,7 +556,16 @@ void InitBattle (PLAYER *P, TE T, int *result)
         rnd = rand() % 11;
     }
     if (rnd == 0) rnd += 1 ;
-    CreateEnemy(&E,T,rnd);
+    if (IsEnemyUndefined(SearchPos2(LEn(ElMini(CMap,CMiniMap)),Posisi(*P)))) 
+    {
+	CreateEnemy(&E,T,rnd);
+	EMap(LEn(ElMini(CMap,CMiniMap)),SearchPos1(LEn(ElMini(CMap,CMiniMap)),Posisi(*P))) = E;
+    }
+    else
+    {
+	rnd = 0;
+	E = SearchPos2(LEn(ElMini(CMap,CMiniMap)),Posisi(*P));
+    }
 
     Kata BossName;
     CreateKata("BRIGHTSOUL",&BossName);

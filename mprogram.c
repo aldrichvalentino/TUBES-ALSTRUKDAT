@@ -211,6 +211,11 @@ void EndGame()
 	clrscr();
 	PrintLose();
 	NarasiKalah(PName(P));
+	PrintCLoop(' ',20);
+	printf("Press Enter to Continue\n");
+	char c;
+	do scanf("%c",&c); while (c!='\n');
+	PrintCredits();
 }
 
 int main()
