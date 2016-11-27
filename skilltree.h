@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "color.h"
-
+#include "player.h"
 
 #define Nil NULL /* konstanta Nil sesuai pada modul listrek */
 
@@ -79,7 +79,8 @@ void CreateNewSkillTree(BinTree *P);
 int SkillToInt(int skill);
 // Mengubah biar jadi BST kalo di proses di fungsi
 
-void AmbilSkill(BinTree *P);
+void AmbilSkill(PLAYER *P);
 // Prosedur untuk mengambil skill
+
 
 #endif

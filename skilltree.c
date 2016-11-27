@@ -3,7 +3,7 @@
 #include "skilltree.h"
 #include <stdlib.h>
 #include <stdio.h>
-
+#include "player.h"
 
 /* *** Konstruktor *** */
 BinTree Tree (infotype Akar, BinTree L, BinTree R, int i)
@@ -113,7 +113,7 @@ void PrintTree1(BinTree P, int h, int inc)
         if (Sudah(P))
         {
             switch (Akar(P)){
-                case 8 : printf(COLOR_GREEN     "(1) PIRATES HAT"     COLOR_RESET "\n");break;
+                case 8 : printf(COLOR_GREEN     "(1) PIRATES HAT "     COLOR_RESET "\n");break;
                 case 4 : printf(COLOR_GREEN     "(2) CAPTAINS BLOOD"     COLOR_RESET "\n");break;
                 case 12 : printf(COLOR_GREEN    "(3) CAPTAINS SENSE"     COLOR_RESET "\n");break;
                 case 2 : printf(COLOR_GREEN     "(4) BLOODY HOOK"     COLOR_RESET "\n");break;
@@ -370,29 +370,48 @@ addrNode Parent(BinTree P, infotype X)
     }
 }
 
-void AmbilSkill(BinTree *P)
+void AmbilSkill(PLAYER *P)
 // Prosedur untuk ngambil skill
 {
     char pilih;
     int x;
     int skill;
     BinTree T;
-    PrintSkillTree(*P);
+    PrintSkillTree(PSkill(*P));
+    printf("                                      PLAYER SKILL TREE\n");
+    PrintBorder();
+    printf("If you choose the left path your STR will increase!\nIf you choose the right path your DEF will increase!\n")
     printf("Pilih nomor skill yang ingin diambil :\n");
     scanf("%d",&skill);
     while ((skill >= 16) || (skill <= 0))
     {
-        printf("Input nomor skill salah, pengambilan skill gagal\n");
+        printf("Input tidak terdefinisi, ulangi input :\n");
         scanf("%d",&skill);
     }
     if (skill <= 15 && skill >= 2)
     {
-        if (!IsSudah(*P,SkillToInt(x)))
+        if (!IsSudah(PSkill(*P),SkillToInt(x)))
         {
-            T = Parent(*P,SkillToInt(skill));
-            if (IsSudah(*P,Akar(T)))
+            T = Parent(PSkill(*P),SkillToInt(skill));
+            if (IsSudah(PSkill(*P),Akar(T)))
             {
-                Sudah(SearchBST(*P,SkillToInt(skill))) = true;
+                Sudah(SearchBST(PSkill(*P),SkillToInt(skill))) = true;
+                switch (skill){
+                    case 2 : PSTR(*P) = PSTR(*P) + 10; PDEF(*P) = PDEF(*P) + 5; printf("STR bertambah 10, DEF bertambah 5\n"); break;
+                    case 3 : PSTR(*P) = PSTR(*P) + 5; PDEF(*P) = PDEF(*P) + 10; printf("STR bertambah 5, DEF bertambah 10\n"); break;
+                    case 4 : PSTR(*P) = PSTR(*P) + 20; PDEF(*P) = PDEF(*P) + 5; printf("STR bertambah 20, DEF bertambah 5\n"); break;
+                    case 5 : PSTR(*P) = PSTR(*P) + 15; PDEF(*P) = PDEF(*P) + 10; printf("STR bertambah 15, DEF bertambah 10\n"); break;
+                    case 6 : PSTR(*P) = PSTR(*P) + 10; PDEF(*P) = PDEF(*P) + 15; printf("STR bertambah 10, DEF bertambah 15\n"); break;
+                    case 7 : PSTR(*P) = PSTR(*P) + 5; PDEF(*P) = PDEF(*P) + 20; printf("STR bertambah 5, DEF bertambah 20\n"); break;
+                    case 8 : PSTR(*P) = PSTR(*P) + 40; PDEF(*P) = PDEF(*P) + 5; printf("STR bertambah 40, DEF bertambah 5\n"); break;
+                    case 9 : PSTR(*P) = PSTR(*P) + 35; PDEF(*P) = PDEF(*P) + 10; printf("STR bertambah 35, DEF bertambah 10\n"); break;
+                    case 10 : PSTR(*P) = PSTR(*P) + 30; PDEF(*P) = PDEF(*P) + 15; printf("STR bertambah 30, DEF bertambah 15\n"); break;
+                    case 11 : PSTR(*P) = PSTR(*P) + 25; PDEF(*P) = PDEF(*P) + 20; printf("STR bertambah 25, DEF bertambah 20\n"); break;
+                    case 12 : PSTR(*P) = PSTR(*P) + 20; PDEF(*P) = PDEF(*P) + 25; printf("STR bertambah 20, DEF bertambah 25\n"); break;
+                    case 13 : PSTR(*P) = PSTR(*P) + 15; PDEF(*P) = PDEF(*P) + 30; printf("STR bertambah 15, DEF bertambah 30\n"); break;
+                    case 14 : PSTR(*P) = PSTR(*P) + 10; PDEF(*P) = PDEF(*P) + 35; printf("STR bertambah 10, DEF bertambah 35\n"); break;
+                    case 15 : PSTR(*P) = PSTR(*P) + 5; PDEF(*P) = PDEF(*P) + 40; printf("STR bertambah 5, DEF bertambah 40\n"); break;
+                }
             }
             else
             {
