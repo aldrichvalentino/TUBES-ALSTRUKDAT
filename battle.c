@@ -630,16 +630,16 @@ void InitBattle (PLAYER *P, TE T, int *result)
     LevelUp (P);
     PrintBorder();
 
-    printf("Enter any key to return!\n");
-    scanf("%c",&buang);
+    printf("Press enter to continue!\n");
+    do scanf("%c",&buang); while (buang!='\n');
 
     }
     else //lawan boss
     {
 
     NarasiBoss();
-    printf("Enter any key to return!\n");
-    scanf("%c",&buang);
+    printf("Press enter to continue!\n");
+    do scanf("%c",&buang); while (buang!='\n');
 
 
     //pertarungan
@@ -734,7 +734,10 @@ void InitBattle (PLAYER *P, TE T, int *result)
             PEXP(*P) += EEXP(E);
             PrintWin();
             NarasiClosing(PName(*P));
-
+    	    printf("Press enter to continue!\n");
+    	    do scanf("%c",&buang); while (buang!='\n');
+	    clrscr();
+	    PrintCredits();
         } else {
 			*result = 2;
             PrintKata(EName(E));printf(" fled!\n");
